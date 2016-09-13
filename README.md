@@ -1,3 +1,4 @@
 # harambe5
-This is going to be a 3d dating sim game using irrlicht and bullet physics
-In this game you play as harambe in summer school; build your own harem while you teach plebs algebra 1.
+In this game, you play as Harambe during the time where he was stuck in the Labyrinth. Save grills, clear dungeons, and defeat the Minotaur as you attempt to escape. 
+# Tools
+This game will be made using irrlicht and bullet physics. The assets will be created using Maya LT.
