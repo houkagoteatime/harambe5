@@ -8,7 +8,8 @@ public:
   ~Player();
   virtual void initialize();
   virtual void update(float delta);
-  static const float SPEED = 30;
+  static const float SPEED = 50;
+  InputProcessor* getProcessor();
 private:
   irr::IrrlichtDevice* device;
   irr::scene::ISceneNode* mapParent;
