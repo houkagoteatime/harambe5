@@ -1,5 +1,5 @@
 #include <irrlicht.h>
-
+#include "entities/Player.h"
 using namespace irr;
 using namespace core;
 using namespace scene;
@@ -24,24 +24,29 @@ int main(int argc, char **argv) {
 		device->drop();
 		return 1;
 	}
-	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh);
+	
+	irr::scene::IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh);
 	if(node) {
 		node->setMaterialFlag(EMF_LIGHTING, false);
 		node->setMD2Animation(scene::EMAT_STAND);
 		node->setMaterialTexture(0, driver->getTexture("media/sydney.bmp"));
 	}
-	device->getFileSystem()->addFileArchive("media/mxl_school.pk3");
-	IAnimatedMesh* mapMesh = smgr->getMesh("mxl_school.bsp");
+	device->getFileSystem()->addFileArchive("media/map-20kdm2.pk3");
+	IAnimatedMesh* mapMesh = smgr->getMesh("20kdm2.bsp");
 	ISceneNode* mapNode = 0;
 	if(mapMesh) {
 	  mapNode = smgr->addOctreeSceneNode(mapMesh->getMesh(0),0, -1, 1024);
 	}
 	if(mapNode)
 	  mapNode->setPosition(vector3df(-1300, -144, -1249));
-	smgr->addCameraSceneNodeFPS();
+	Player* player = new Player(device,"media/gun.md2", vector3df(0,0,0),vector3df(0,0,0));
+	int start = device->getTimer()->getTime();
+	int delta = 0;
 	while(device->run()) {
+	  device->getTimer()->getTime();
 	  if(device->isWindowActive()) {
 		driver->beginScene(true, true, SColor(255, 100, 101, 140));
+		player->update(delta - start);
 		smgr->drawAll();
 		driver->endScene();
 	  } else 
