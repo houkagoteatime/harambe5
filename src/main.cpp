@@ -13,6 +13,7 @@ using namespace gui;
 #endif
 
 int main(int argc, char **argv) {
+	
 	IrrlichtDevice* device = createDevice(EDT_OPENGL, dimension2d<u32>(640, 480));
 	if(!device)
 		return 1;
@@ -40,17 +41,19 @@ int main(int argc, char **argv) {
 	if(mapNode)
 	  mapNode->setPosition(vector3df(-1300, -144, -1249));
 	Player* player = new Player(device,"media/gun.md2", vector3df(0,0,0),vector3df(0,0,0));
+	device->setEventReceiver(player->getProcessor());
 	int start = device->getTimer()->getTime();
 	int delta = 0;
 	while(device->run()) {
-	  device->getTimer()->getTime();
+	  delta = device->getTimer()->getTime();
 	  if(device->isWindowActive()) {
 		driver->beginScene(true, true, SColor(255, 100, 101, 140));
-		player->update(delta - start);
+		player->update((delta - start)/1000.0f);
 		smgr->drawAll();
 		driver->endScene();
 	  } else 
 	      device->yield();
+	  start = delta;
 	}
 	
 	device->drop();

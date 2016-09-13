@@ -14,14 +14,18 @@ Player::~Player()
 }
 
 void Player::update(float delta) {
-  if(proc->isKeyDown(irr::KEY_KEY_W))
-   pos.Y += delta * SPEED; 
-  else if(proc->isKeyDown(irr::KEY_KEY_S))
-    pos.Y -= delta * SPEED;
-  if(proc->isKeyDown(irr::KEY_KEY_A))
+  if(proc->isKeyDown(irr::KEY_KEY_W)) {
+   pos.Z += delta * SPEED; 
+  }
+  else if(proc->isKeyDown(irr::KEY_KEY_S)) {
+    pos.Z -= delta * SPEED;
+  }
+  if(proc->isKeyDown(irr::KEY_KEY_A)) {
     pos.X -= delta * SPEED;
-  else if(proc->isKeyDown(irr::KEY_KEY_D)) 
+  }
+  else if(proc->isKeyDown(irr::KEY_KEY_D)) { 
     pos.X += delta * SPEED;
+  }
   camera->setPosition(pos);
 }
 
@@ -42,3 +46,7 @@ void Player::initialize()
   weaponNode->setLoopMode(false);
 }
 
+InputProcessor* Player::getProcessor()
+{
+  return proc;
+}
