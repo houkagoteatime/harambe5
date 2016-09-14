@@ -46,7 +46,7 @@ void Player::initialize()
 {
   irr::scene::ISceneManager* manager = device->getSceneManager();
   irr::video::IVideoDriver* driver = device->getVideoDriver();
-  irr::SKeyMap keys[4];
+  irr::SKeyMap keys[6];
   keys[0].Action = irr::EKA_MOVE_FORWARD;
   keys[0].KeyCode = irr::KEY_KEY_W;
   keys[1].Action = irr::EKA_MOVE_BACKWARD;
@@ -55,6 +55,10 @@ void Player::initialize()
   keys[2].Action = irr::EKA_STRAFE_LEFT;
   keys[3].KeyCode = irr::KEY_KEY_D;
   keys[3].Action = irr::EKA_STRAFE_RIGHT;
+  keys[4].KeyCode = irr::KEY_SPACE;
+  keys[4].Action = irr::EKA_JUMP_UP;
+  keys[5].KeyCode = irr::KEY_SHIFT;
+  keys[5].Action = irr::EKA_CROUCH;
   camera = manager->addCameraSceneNodeFPS(0, 100.0f, .3f, -1, keys, 4, true, 3.f);
   if(camera) {
     camera->setPosition(pos);
@@ -92,13 +96,17 @@ void Player::initialize()
   
   if (selector)
 	{
+	  //change to example
 		irr::scene::ISceneNodeAnimator* anim = manager->createCollisionResponseAnimator(
 			selector, camera, irr::core::vector3df(30,50,30),
-			irr::core::vector3df(0,0,0), irr::core::vector3df(0,30,0));
+			irr::core::vector3df(0,-10,0), irr::core::vector3df(0,30,0));
+		
 		selector->drop(); // As soon as we're done with the selector, drop it.
 		camera->addAnimator(anim);
 		anim->drop();  // And likewise, drop the animator when we're done referring to it.
 	}
+	
+	device->getCursorControl()->setVisible(false);
 }
 
 InputProcessor* Player::getProcessor()
