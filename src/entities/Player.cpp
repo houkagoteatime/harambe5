@@ -15,25 +15,34 @@ Player::~Player()
 
 void Player::update(float delta) {
   if(proc->isKeyDown(irr::KEY_KEY_W)) {
-   pos.Z += delta * SPEED; 
+//    pos.Z += delta * SPEED; 
   }
   else if(proc->isKeyDown(irr::KEY_KEY_S)) {
-    pos.Z -= delta * SPEED;
+//     pos.Z -= delta * SPEED;
   }
   if(proc->isKeyDown(irr::KEY_KEY_A)) {
-    pos.X -= delta * SPEED;
+//     pos.X -= delta * SPEED;
   }
   else if(proc->isKeyDown(irr::KEY_KEY_D)) { 
-    pos.X += delta * SPEED;
+//     pos.X += delta * SPEED;
   }
-  camera->setPosition(pos);
+//   camera->setPosition(pos);
 }
 
 void Player::initialize()
 {
   irr::scene::ISceneManager* manager = device->getSceneManager();
   irr::video::IVideoDriver* driver = device->getVideoDriver();
-  camera = manager->addCameraSceneNodeFPS(0, 100.0f, .3f, 0, 0, 0, true, 3.f);
+  irr::SKeyMap keys[4];
+  keys[0].Action = irr::EKA_MOVE_FORWARD;
+  keys[0].KeyCode = irr::KEY_KEY_W;
+  keys[1].Action = irr::EKA_MOVE_BACKWARD;
+  keys[1].KeyCode = irr::KEY_KEY_S;
+  keys[2].KeyCode = irr::KEY_KEY_A;
+  keys[2].Action = irr::EKA_STRAFE_LEFT;
+  keys[3].KeyCode = irr::KEY_KEY_D;
+  keys[3].Action = irr::EKA_STRAFE_RIGHT;
+  camera = manager->addCameraSceneNodeFPS(0, 100.0f, .3f, -1, keys, 4, true, 3.f);
   if(camera) {
     camera->setPosition(pos);
     camera->setRotation(rot);

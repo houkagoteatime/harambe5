@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
 	if(mapNode)
 	  mapNode->setPosition(vector3df(-1300, -144, -1249));
 	Player* player = new Player(device,"media/gun.md2", vector3df(0,0,0),vector3df(0,0,0));
-	device->setEventReceiver(player->getProcessor());
+// 	device->setEventReceiver(player->getProcessor());
 	int start = device->getTimer()->getTime();
 	int delta = 0;
 	while(device->run()) {
