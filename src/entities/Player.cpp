@@ -80,7 +80,7 @@ void Player::initialize()
 
 	if (q3node)
 	{
-		q3node->setPosition(irr::core::vector3df(0,0,0));
+		q3node->setPosition(irr::core::vector3df(-1350,-130,-1400));
 
 		selector = device->getSceneManager()->createOctreeTriangleSelector(
 				q3node->getMesh(), q3node, 128);
@@ -93,7 +93,7 @@ void Player::initialize()
 	{
 		irr::scene::ISceneNodeAnimator* anim = manager->createCollisionResponseAnimator(
 			selector, camera, irr::core::vector3df(30,50,30),
-			irr::core::vector3df(0,-10,0), irr::core::vector3df(0,30,0));
+			irr::core::vector3df(0,0,0), irr::core::vector3df(0,30,0));
 		selector->drop(); // As soon as we're done with the selector, drop it.
 		camera->addAnimator(anim);
 		anim->drop();  // And likewise, drop the animator when we're done referring to it.
