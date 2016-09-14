@@ -1,7 +1,12 @@
 
 #include "Player.h"
 
-Player::Player(irr::IrrlichtDevice* dev, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation) : Entity(mediaPath, position, rotation), device(dev) {
+Player::Player(irr::IrrlichtDevice* dev, 
+	       const std::string& mediaPath, 
+	       irr::core::vector3df position, 
+	       irr::core::vector3df rotation) : 
+	       Entity(mediaPath, position, rotation), 
+	       device(dev) {
 
   proc = new InputProcessor();
   initialize();
@@ -12,6 +17,13 @@ Player::~Player()
   if(proc)
     delete proc;
 }
+
+enum
+{
+	ID_IsNotPickable = 0,
+	IDFlag_IsPickable = 1 << 0,
+	IDFlag_IsHighlightable = 1 << 1
+};
 
 void Player::update(float delta) {
   if(proc->isKeyDown(irr::KEY_KEY_W)) {
@@ -29,7 +41,7 @@ void Player::update(float delta) {
 //   camera->setPosition(pos);
 }
 
-void Player::initialize()
+void Player::initialize() 
 {
   irr::scene::ISceneManager* manager = device->getSceneManager();
   irr::video::IVideoDriver* driver = device->getVideoDriver();
@@ -53,6 +65,39 @@ void Player::initialize()
   weaponNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
   weaponNode->setMaterialTexture(0, driver->getTexture("media/gun.jpg"));
   weaponNode->setLoopMode(false);
+  
+  //collision
+  
+   device->getFileSystem()->addFileArchive("media/map-20kdm2.pk3");
+   irr::scene::IAnimatedMesh* q3levelmesh = manager->getMesh("20kdm2.bsp");
+   irr::scene::IMeshSceneNode* q3node = 0;
+  
+  if (q3levelmesh)
+		q3node = manager->addOctreeSceneNode(q3levelmesh->getMesh(0), 0, IDFlag_IsPickable);
+
+  
+  irr::scene::ITriangleSelector* selector = 0;
+
+	if (q3node)
+	{
+		q3node->setPosition(irr::core::vector3df(0,0,0));
+
+		selector = device->getSceneManager()->createOctreeTriangleSelector(
+				q3node->getMesh(), q3node, 128);
+		q3node->setTriangleSelector(selector);
+		// We're not done with this selector yet, so don't drop it.
+	}
+  camera->setTarget(irr::core::vector3df(-70,30,-60));
+  
+  if (selector)
+	{
+		irr::scene::ISceneNodeAnimator* anim = manager->createCollisionResponseAnimator(
+			selector, camera, irr::core::vector3df(30,50,30),
+			irr::core::vector3df(0,-10,0), irr::core::vector3df(0,30,0));
+		selector->drop(); // As soon as we're done with the selector, drop it.
+		camera->addAnimator(anim);
+		anim->drop();  // And likewise, drop the animator when we're done referring to it.
+	}
 }
 
 InputProcessor* Player::getProcessor()
