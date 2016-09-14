@@ -14,7 +14,7 @@ InputProcessor::~InputProcessor()
 
 bool InputProcessor::OnEvent(const irr::SEvent& event)
 {
-  //printf("donezo");
+  printf("donezo");
   if(event.EventType == irr::EET_KEY_INPUT_EVENT) {
     keyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
   }
