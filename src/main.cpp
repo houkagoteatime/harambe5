@@ -20,6 +20,7 @@ int main(int argc, char **argv) {
 	device->setWindowCaption(L"Harambe 5: Summer School");
 	IVideoDriver* driver = device->getVideoDriver();
 	ISceneManager* smgr = device->getSceneManager();
+	/*
 	IAnimatedMesh* mesh = smgr->getMesh("media/sydney.md2");
 	if(!mesh) {
 		device->drop();
@@ -32,6 +33,7 @@ int main(int argc, char **argv) {
 		node->setMD2Animation(scene::EMAT_STAND);
 		node->setMaterialTexture(0, driver->getTexture("media/sydney.bmp"));
 	}
+	*/
 	device->getFileSystem()->addFileArchive("media/map-20kdm2.pk3");
 	IAnimatedMesh* mapMesh = smgr->getMesh("20kdm2.bsp");
 	ISceneNode* mapNode = 0;
@@ -40,7 +42,7 @@ int main(int argc, char **argv) {
 	}
 	if(mapNode)
 	  mapNode->setPosition(vector3df(-1300, -144, -1249));
-	Player* player = new Player(device,"media/gun.md2", vector3df(0,0,0),vector3df(0,0,0));
+	Player* player = new Player(device,"media/gun.md2", vector3df(0,15,0),vector3df(0,0,0));
 // 	device->setEventReceiver(player->getProcessor());
 	int start = device->getTimer()->getTime();
 	int delta = 0;
