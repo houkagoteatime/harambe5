@@ -36,13 +36,13 @@ int main(int argc, char **argv) {
 	*/
 	device->getFileSystem()->addFileArchive("media/map-20kdm2.pk3");
 	IAnimatedMesh* mapMesh = smgr->getMesh("20kdm2.bsp");
-	ISceneNode* mapNode = 0;
+	IMeshSceneNode* mapNode;
 	if(mapMesh) {
-	  mapNode = smgr->addOctreeSceneNode(mapMesh->getMesh(0),0, -1, 1024);
+	  mapNode = smgr->addOctreeSceneNode(mapMesh->getMesh(0),0, 1);
 	}
 	if(mapNode)
 	  mapNode->setPosition(vector3df(-1300, -144, -1249));
-	Player* player = new Player(device,"media/gun.md2", vector3df(0,15,0),vector3df(0,0,0));
+	Player* player = new Player(device,"media/gun.md2", vector3df(0,15,0),vector3df(0,0,0), mapNode);
 // 	device->setEventReceiver(player->getProcessor());
 	int start = device->getTimer()->getTime();
 	int delta = 0;

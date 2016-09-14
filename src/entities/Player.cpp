@@ -4,9 +4,10 @@
 Player::Player(irr::IrrlichtDevice* dev, 
 	       const std::string& mediaPath, 
 	       irr::core::vector3df position, 
-	       irr::core::vector3df rotation) : 
+	       irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map) : 
 	       Entity(mediaPath, position, rotation), 
-	       device(dev) {
+	       device(dev),
+	       mapNode(map){
 
   proc = new InputProcessor();
   initialize();
@@ -21,7 +22,7 @@ Player::~Player()
 enum
 {
 	ID_IsNotPickable = 0,
-	IDFlag_IsPickable = 1 << 0,
+	IDFlag_IsPickable = 1 ,
 	IDFlag_IsHighlightable = 1 << 1
 };
 
@@ -61,30 +62,30 @@ void Player::initialize()
     camera->setFarValue(8000.0f);
   }
   irr::scene::IAnimatedMeshMD2* weapon = static_cast<irr::scene::IAnimatedMeshMD2*>(manager->getMesh("media/gun.md2"));
-  weaponNode = manager->addAnimatedMeshSceneNode(weapon, manager->getActiveCamera(), 10, irr::core::vector3df(0, 0, 0), irr::core::vector3df(-90, 90, 90));
+  weaponNode = manager->addAnimatedMeshSceneNode(weapon, manager->getActiveCamera(), 10	, irr::core::vector3df(0, 0, 0), irr::core::vector3df(-90, 90, 90));
   weaponNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
   weaponNode->setMaterialTexture(0, driver->getTexture("media/gun.jpg"));
   weaponNode->setLoopMode(false);
   
   //collision
   
-   device->getFileSystem()->addFileArchive("media/map-20kdm2.pk3");
-   irr::scene::IAnimatedMesh* q3levelmesh = manager->getMesh("20kdm2.bsp");
-   irr::scene::IMeshSceneNode* q3node = 0;
+//    device->getFileSystem()->addFileArchive("media/map-20kdm2.pk3");
+//    irr::scene::IAnimatedMesh* q3levelmesh = manager->getMesh("20kdm2.bsp");
+//    irr::scene::IMeshSceneNode* q3node = 0;
   
-  if (q3levelmesh)
-		q3node = manager->addOctreeSceneNode(q3levelmesh->getMesh(0), 0, IDFlag_IsPickable);
+//   if (q3levelmesh)
+// 		q3node = manager->addOctreeSceneNode(q3levelmesh->getMesh(0), 0, IDFlag_IsPickable);
 
   
   irr::scene::ITriangleSelector* selector = 0;
 
-	if (q3node)
+	if (mapNode)
 	{
-		q3node->setPosition(irr::core::vector3df(-1350,-130,-1400));
+		mapNode->setPosition(irr::core::vector3df(-1350,-130,-1400));
 
 		selector = device->getSceneManager()->createOctreeTriangleSelector(
-				q3node->getMesh(), q3node, 128);
-		q3node->setTriangleSelector(selector);
+				mapNode->getMesh(), mapNode, 128);
+		mapNode->setTriangleSelector(selector);
 		// We're not done with this selector yet, so don't drop it.
 	}
   camera->setTarget(irr::core::vector3df(-70,30,-60));
