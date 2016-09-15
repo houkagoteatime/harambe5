@@ -82,42 +82,6 @@ void Player::initialize()
   camera->addAnimator(anim);
   anim->drop();
   device->getCursorControl()->setVisible(false);
-  //collision
-  
-//    device->getFileSystem()->addFileArchive("media/map-20kdm2.pk3");
-//    irr::scene::IAnimatedMesh* q3levelmesh = manager->getMesh("20kdm2.bsp");
-//    irr::scene::IMeshSceneNode* q3node = 0;
-  
-//   if (q3levelmesh)
-// 		q3node = manager->addOctreeSceneNode(q3levelmesh->getMesh(0), 0, IDFlag_IsPickable);
-
-  
-  irr::scene::ITriangleSelector* selector = 0;
-
-	if (mapNode)
-	{
-		mapNode->setPosition(irr::core::vector3df(-1350,-130,-1400));
-
-		selector = device->getSceneManager()->createOctreeTriangleSelector(
-				mapNode->getMesh(), mapNode, 128);
-		mapNode->setTriangleSelector(selector);
-		// We're not done with this selector yet, so don't drop it.
-	}
-  camera->setTarget(irr::core::vector3df(-70,30,-60));
-  
-  if (selector)
-	{
-	  //change to example
-		irr::scene::ISceneNodeAnimator* anim = manager->createCollisionResponseAnimator(
-			selector, camera, irr::core::vector3df(30,50,30),
-			irr::core::vector3df(0,-10,0), irr::core::vector3df(0,30,0));
-		
-		selector->drop(); // As soon as we're done with the selector, drop it.
-		camera->addAnimator(anim);
-		anim->drop();  // And likewise, drop the animator when we're done referring to it.
-	}
-	
-	device->getCursorControl()->setVisible(false);
 }
 
 InputProcessor* Player::getProcessor()

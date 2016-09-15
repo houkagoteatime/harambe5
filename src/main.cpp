@@ -54,7 +54,7 @@ int main(int argc, char **argv) {
 	}
 	
 	Player* player = new Player(device,"media/gun.md2", vector3df(0,15,0),vector3df(0,0,0), mapNode, 0);
-// 	device->setEventReceiver(player->getProcessor());
+ 	device->setEventReceiver(player->getProcessor());
 	int start = device->getTimer()->getTime();
 	int delta = 0;
 	while(device->run()) {
