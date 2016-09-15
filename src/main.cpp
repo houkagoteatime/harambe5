@@ -43,15 +43,16 @@ int main(int argc, char **argv) {
 		return 1;
 	}
 	
-	irr::scene::IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh,
-	0, IDFlag_IsPickable | IDFlag_IsHighlightable);
+	//irr::scene::IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh,
+	//0, IDFlag_IsPickable | IDFlag_IsHighlightable);
+	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode( mesh );
 	if(node) {
-		node->setMaterialFlag(EMF_LIGHTING, false);
+		node->setMaterialFlag(video::EMF_LIGHTING, false);
 		node->setMD2Animation(scene::EMAT_STAND);
 		node->setMaterialTexture(0, driver->getTexture("media/sydney.bmp"));
 		node->setPosition(core::vector3df(-90,-15,-140)); // Put its feet on the floor.
 		node->setScale(core::vector3df(1.6f)); // Make it appear realistically scaled
-		node->setMD2Animation(scene::EMAT_POINT);
+		//node->setMD2Animation(scene::EMAT_POINT);
 		node->setAnimationSpeed(20.f);
 		//node->setID(666);
 	}
@@ -106,7 +107,7 @@ int main(int argc, char **argv) {
 		
 		if (highlightedSceneNode)
 		{
-			highlightedSceneNode->setMaterialFlag(video::EMF_LIGHTING, true);
+			highlightedSceneNode->setMaterialFlag(video::EMF_LIGHTING, false);
 			highlightedSceneNode = 0;
 		}
 
@@ -148,8 +149,9 @@ int main(int argc, char **argv) {
 			 if(smgr->getActiveCamera()->getPosition().getDistanceFrom(highlightedSceneNode->getPosition()) < 100) {
 			   
 			      std::cout << "hit" << delta << "\n";
-			      highlightedSceneNode->setMaterialFlag(video::EMF_LIGHTING, false);
+			      highlightedSceneNode->setMaterialFlag(video::EMF_LIGHTING, true);
 			 }
+			 //highlightedSceneNode->setMaterialFlag(video::EMF_LIGHTING, false);
 			}
 			bill->setPosition(intersection);
 
