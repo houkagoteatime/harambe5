@@ -29,9 +29,81 @@ enum
 	IDFlag_IsHighlightable = 1 << 1
 };
 
+class MyEventReceiver : public IEventReceiver
+{
+public:
+	// We'll create a struct to record info on the mouse state
+	struct SMouseState
+	{
+		core::position2di Position;
+		bool LeftButtonDown;
+		SMouseState() : LeftButtonDown(false) { }
+	} MouseState;
+
+	// This is the one method that we have to implement
+	virtual bool OnEvent(const SEvent& event)
+	{
+		// Remember the mouse state
+		if (event.EventType == irr::EET_MOUSE_INPUT_EVENT)
+		{
+			switch(event.MouseInput.Event)
+			{
+			case EMIE_LMOUSE_PRESSED_DOWN:
+				MouseState.LeftButtonDown = true;
+				break;
+
+			case EMIE_LMOUSE_LEFT_UP:
+				MouseState.LeftButtonDown = false;
+				break;
+
+			case EMIE_MOUSE_MOVED:
+				MouseState.Position.X = event.MouseInput.X;
+				MouseState.Position.Y = event.MouseInput.Y;
+				break;
+
+			default:
+				// We won't use the wheel
+				break;
+			}
+		}
+
+		// The state of each connected joystick is sent to us
+		// once every run() of the Irrlicht device.  Store the
+		// state of the first joystick, ignoring other joysticks.
+		// This is currently only supported on Windows and Linux.
+		if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT
+			&& event.JoystickEvent.Joystick == 0)
+		{
+			JoystickState = event.JoystickEvent;
+		}
+
+		return false;
+	}
+
+	const SEvent::SJoystickEvent & GetJoystickState(void) const
+	{
+		return JoystickState;
+	}
+
+	const SMouseState & GetMouseState(void) const
+	{
+		return MouseState;
+	}
+
+
+	MyEventReceiver()
+	{
+	}
+
+private:
+	SEvent::SJoystickEvent JoystickState;
+};
+
 int main(int argc, char **argv) {
 	
-	IrrlichtDevice* device = createDevice(EDT_OPENGL, dimension2d<u32>(640, 480));
+  
+	MyEventReceiver receiver;
+	IrrlichtDevice* device = createDevice(EDT_OPENGL, dimension2d<u32>(640, 480),16, false, false, false, &receiver);
 	if(!device)
 		return 1;
 	device->setWindowCaption(L"Harambe 5: The Labyrinth");
@@ -46,8 +118,9 @@ int main(int argc, char **argv) {
 	
 	//irr::scene::IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh,
 	//0, IDFlag_IsPickable | IDFlag_IsHighlightable);
-	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode( mesh );
+	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode( mesh);
 	if(node) {
+	  node ->setName("Sydney");
 		node->setMaterialFlag(video::EMF_LIGHTING, false);
 		node->setMD2Animation(scene::EMAT_STAND);
 		node->setMaterialTexture(0, driver->getTexture("media/sydney.bmp"));
@@ -97,7 +170,7 @@ int main(int argc, char **argv) {
 	scene::ISceneNode* highlightedSceneNode = 0;
 	scene::ISceneCollisionManager* collMan = smgr->getSceneCollisionManager();
 	
-	
+
 	
 // 	device->setEventReceiver(player->getProcessor());
 	Enemy* testEnemy = new Enemy(device,"media/sydney.md2", vector3df(30, 15, 30), vector3df(0,0,0));
@@ -108,6 +181,8 @@ int main(int argc, char **argv) {
 	  current = device->getTimer()->getTime();
 	  if(device->isWindowActive()) {
 		driver->beginScene(true, true, SColor(255, 100, 101, 140));
+		
+		const SEvent::SJoystickEvent & joystickData = receiver.GetJoystickState();
 		
 		if (highlightedSceneNode)
 		{
@@ -143,16 +218,25 @@ int main(int argc, char **argv) {
 							// set up to be pickable are considered
 					0); // Check the entire scene (this is actually the implicit default)
 
+		std::cout << selectedSceneNode->getName();
+		string<irr::c8> name = selectedSceneNode->getName();
 		// If the ray hit anything, move the billboard to the collision position
 		// and draw the triangle that was hit.
 		if(selectedSceneNode)
 		{
-			if((selectedSceneNode->getID() & IDFlag_IsHighlightable) == IDFlag_IsHighlightable)
+		  //check mouse is on it
+			//if((selectedSceneNode->getID() & IDFlag_IsHighlightable) == IDFlag_IsHighlightable)
+		  if(name == "Sydney") 
 			{
+			  std::cout << "sydneyfound";
 			 highlightedSceneNode = selectedSceneNode;
+			 //check if is the correct object
 			 if(smgr->getActiveCamera()->getPosition().getDistanceFrom(highlightedSceneNode->getPosition()) < 100) {
-			   
-			      highlightedSceneNode->setMaterialFlag(video::EMF_LIGHTING, true);
+
+			   //do whatever when you click
+			      highlightedSceneNode->setMaterialFlag(video::EMF_LIGHTING, receiver.GetMouseState().LeftButtonDown);
+			     
+			      //highlightedSceneNode->setMaterialFlag(video::EMF_LIGHTING, true);
 			 }
 			 //highlightedSceneNode->setMaterialFlag(video::EMF_LIGHTING, false);
 			}
