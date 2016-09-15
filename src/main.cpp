@@ -14,9 +14,7 @@ using namespace gui;
 
 int main(int argc, char **argv) {
 	
-	//IrrlichtDevice* device = createDevice(EDT_OPENGL, dimension2d<u32>(640, 480));
-	//1.33
-	IrrlichtDevice* device = createDevice(EDT_OPENGL, dimension2d<u32>(832, 640));
+	IrrlichtDevice* device = createDevice(EDT_OPENGL, dimension2d<u32>(640, 480));
 	if(!device)
 		return 1;
 	device->setWindowCaption(L"Harambe 5: Summer School");
