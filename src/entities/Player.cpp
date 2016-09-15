@@ -6,7 +6,6 @@ Player::Player(irr::IrrlichtDevice* dev,
 	       irr::core::vector3df position, 
 	       irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map, int t) : 
 	       test(t),
-	       irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map) : 
 	       Entity(mediaPath, position, rotation), 
 	       device(dev),
 	       mapNode(map){
