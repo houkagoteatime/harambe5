@@ -22,6 +22,7 @@ void Enemy::initialize()
     entityNode->setMD2Animation(irr::scene::EMAT_ATTACK);
     }
   }
+  state = STATIONARY;
 }
 
 void Enemy::update(float delta)
@@ -29,6 +30,34 @@ void Enemy::update(float delta)
   const irr::core::vector3df playerPos = player->getCamera()->getPosition();
   rotateTowardsPosition(playerPos);
   entityNode->setRotation(rot);
+  if(isPlayerNearby(100)) {
+    state = AGGRO;
+  }
+  switch(state) {
+    case AGGRO:
+      updateAggroState(playerPos);
+      break;
+    default:
+      break;
+  }
   rot = entityNode->getRotation();
   pos = entityNode->getPosition();
+}
+
+void Enemy::updateAggroState(const irr::core::vector3df playerPos)
+{
+  rotateTowardsPosition(playerPos);
+  irr::core::vector3df direction = (playerPos - pos).normalize();
+  entityNode->setPosition(entityNode->getPosition() + direction * speed);
+}
+
+
+bool Enemy::isPlayerNearby(float range)
+{
+  if(range<=0) {
+    return false;
+  }
+  const irr::core::vector3df playerPos = player->getCamera()->getPosition();
+  float distance = std::sqrt((std::pow<float>( (playerPos.X - pos.X), 2) - std::pow<float>((playerPos.Y - pos.Y), 2)));
+  return std::abs(distance) <= range;
 }
