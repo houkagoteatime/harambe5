@@ -1,6 +1,7 @@
 #include <irrlicht.h>
 #include "entities/Player.h"
 #include <iostream>
+#include "entities/Enemy.h"
 using namespace irr;
 using namespace core;
 using namespace scene;
@@ -33,7 +34,7 @@ int main(int argc, char **argv) {
 	IrrlichtDevice* device = createDevice(EDT_OPENGL, dimension2d<u32>(640, 480));
 	if(!device)
 		return 1;
-	device->setWindowCaption(L"Harambe 5: Summer School");
+	device->setWindowCaption(L"Harambe 5: The Labyrinth");
 	IVideoDriver* driver = device->getVideoDriver();
 	ISceneManager* smgr = device->getSceneManager();
 	
@@ -81,10 +82,8 @@ int main(int argc, char **argv) {
 		// We're not done with this selector yet, so don't drop it.
 	}
 	
-	Player* player = new Player(device,"media/gun.md2", vector3df(0,15,0),vector3df(0,0,0), mapNode, 0);
+	Player* player = new Player(device,"media/gun.md2", vector3df(0,15,0),vector3df(0,0,0), mapNode);
  	//device->setEventReceiver(player->getProcessor());
-	int start = device->getTimer()->getTime();
-	int delta = 0;
 	
 	
 	scene::IBillboardSceneNode * bill = smgr->addBillboardSceneNode();
@@ -100,8 +99,13 @@ int main(int argc, char **argv) {
 	
 	
 	
+// 	device->setEventReceiver(player->getProcessor());
+	Enemy* testEnemy = new Enemy(device,"media/sydney.md2", vector3df(30, 15, 30), vector3df(0,0,0));
+	testEnemy->setPlayer(player);
+	int prev = device->getTimer()->getTime();
+	int current = 0;
 	while(device->run()) {
-	  delta = device->getTimer()->getTime();
+	  current = device->getTimer()->getTime();
 	  if(device->isWindowActive()) {
 		driver->beginScene(true, true, SColor(255, 100, 101, 140));
 		
@@ -148,7 +152,6 @@ int main(int argc, char **argv) {
 			 highlightedSceneNode = selectedSceneNode;
 			 if(smgr->getActiveCamera()->getPosition().getDistanceFrom(highlightedSceneNode->getPosition()) < 100) {
 			   
-			      std::cout << "hit" << delta << "\n";
 			      highlightedSceneNode->setMaterialFlag(video::EMF_LIGHTING, true);
 			 }
 			 //highlightedSceneNode->setMaterialFlag(video::EMF_LIGHTING, false);
@@ -157,12 +160,13 @@ int main(int argc, char **argv) {
 
 		}
 		
-		player->update((delta - start)/1000.0f);
+		player->update((current - prev)/1000.0f);
+		testEnemy->update((current - prev)/1000.0f);
 		smgr->drawAll();
 		driver->endScene();
 	  } else 
 	      device->yield();
-	  start = delta;
+	  prev = current;
 	}
 	
 	device->drop();

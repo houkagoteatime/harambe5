@@ -11,12 +11,11 @@ public:
   virtual void update(float delta);
   static const float SPEED = 50;
   InputProcessor* getProcessor();
+  irr::scene::ICameraSceneNode* getCamera();
 private:
-  int test;
-  irr::IrrlichtDevice* device;
   irr::scene::ISceneNode* mapParent;
   irr::scene::IAnimatedMeshSceneNode* weaponNode;
-  irr::scene::ICameraSceneNode *camera;
+  irr::scene::ICameraSceneNode* camera;
   irr::scene::IMeshSceneNode* mapNode;
   InputProcessor* proc;
 };
