@@ -14,7 +14,9 @@ using namespace gui;
 
 int main(int argc, char **argv) {
 	
-	IrrlichtDevice* device = createDevice(EDT_OPENGL, dimension2d<u32>(640, 480));
+	//IrrlichtDevice* device = createDevice(EDT_OPENGL, dimension2d<u32>(640, 480));
+	//1.33
+	IrrlichtDevice* device = createDevice(EDT_OPENGL, dimension2d<u32>(832, 640));
 	if(!device)
 		return 1;
 	device->setWindowCaption(L"Harambe 5: Summer School");
@@ -40,9 +42,20 @@ int main(int argc, char **argv) {
 	if(mapMesh) {
 	  mapNode = smgr->addOctreeSceneNode(mapMesh->getMesh(0),0, 1);
 	}
+	
+	irr::scene::ITriangleSelector* selector = 0;
 	if(mapNode)
+	{
 	  mapNode->setPosition(vector3df(-1300, -144, -1249));
-	Player* player = new Player(device,"media/gun.md2", vector3df(0,15,0),vector3df(0,0,0), mapNode);
+	  mapNode->setPosition(irr::core::vector3df(-1350,-130,-1400));
+
+		selector = device->getSceneManager()->createOctreeTriangleSelector(
+				mapNode->getMesh(), mapNode, 128);
+		mapNode->setTriangleSelector(selector);
+		// We're not done with this selector yet, so don't drop it.
+	}
+	
+	Player* player = new Player(device,"media/gun.md2", vector3df(0,15,0),vector3df(0,0,0), mapNode, 0);
 // 	device->setEventReceiver(player->getProcessor());
 	int start = device->getTimer()->getTime();
 	int delta = 0;
