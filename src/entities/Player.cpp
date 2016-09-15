@@ -49,7 +49,7 @@ void Player::initialize()
   weaponNode = manager->addAnimatedMeshSceneNode(weapon, manager->getActiveCamera(), 10	, irr::core::vector3df(0, 0, 0), irr::core::vector3df(-90, -90, 90));
   weaponNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
   weaponNode->setMaterialTexture(0, driver->getTexture("media/gun.jpg"));
-  weaponNode->setLoopMode(false);
+  weaponNode->setLoopMode(true);
   
   //in main.cpp initialize triangleselector and add it to the mapNode
   //player constructor accepts mapNode as a paramter and grabs the selector from there

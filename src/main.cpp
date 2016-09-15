@@ -161,7 +161,7 @@ int main(int argc, char **argv) {
 	
 	scene::IBillboardSceneNode * bill = smgr->addBillboardSceneNode();
 	bill->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR );
-	bill->setMaterialTexture(0, driver->getTexture("../../media/particle.bmp"));
+	bill->setMaterialTexture(0, driver->getTexture("media/particle.bmp"));
 	bill->setMaterialFlag(video::EMF_LIGHTING, false);
 	bill->setMaterialFlag(video::EMF_ZBUFFER, false);
 	bill->setSize(core::dimension2d<f32>(20.0f, 20.0f));
@@ -217,9 +217,11 @@ int main(int argc, char **argv) {
 					IDFlag_IsPickable, // This ensures that only nodes that we have
 							// set up to be pickable are considered
 					0); // Check the entire scene (this is actually the implicit default)
-
-		std::cout << selectedSceneNode->getName();
-		string<irr::c8> name = selectedSceneNode->getName();
+		string<irr::c8> name;
+		if(selectedSceneNode) {
+		  std::cout << selectedSceneNode->getName();
+		  name = selectedSceneNode->getName();
+		}
 		// If the ray hit anything, move the billboard to the collision position
 		// and draw the triangle that was hit.
 		if(selectedSceneNode)
