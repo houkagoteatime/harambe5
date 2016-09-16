@@ -8,7 +8,7 @@ public:
   typedef struct MouseState
   {
     irr::core::position2di Position;
-    bool LeftButtonDown = false;
+    bool LeftButtonDown;
   }MouseState;
   MouseState m;
   const EventReceiver::MouseState* GetMouseState(void);

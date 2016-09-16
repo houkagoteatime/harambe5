@@ -7,15 +7,14 @@ Player::Player(irr::IrrlichtDevice* dev,
 	       irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map) : 
 	       Entity(dev, mediaPath, position, rotation), 
 	       mapNode(map){
-
-  proc = new InputProcessor();
+  receiver = new EventReceiver();
   initialize();
 }
 
 Player::~Player()
 {
-  if(proc)
-    delete proc;
+  if(receiver)
+    delete receiver;
 }
 
 void Player::update(float delta) {
@@ -54,10 +53,7 @@ void Player::initialize()
   //in main.cpp initialize triangleselector and add it to the mapNode
   //player constructor accepts mapNode as a paramter and grabs the selector from there
   //constructor param(ITriangleSelector mapWalls, ISceneNode cameraSceneNode
-  //,Vector3df bounding box
-  //,Vector3df gravity
-  //,Vector3df cameraDisplacement
-  //,float slidingValue
+
   irr::scene::ISceneNodeAnimator* anim =
   manager->createCollisionResponseAnimator( mapNode->getTriangleSelector(), camera,
             irr::core::vector3df(30,50,30),
@@ -69,15 +65,6 @@ void Player::initialize()
   anim->drop();
   device->getCursorControl()->setVisible(false);
   //collision
-  
-//    device->getFileSystem()->addFileArchive("media/map-20kdm2.pk3");
-//     irr::scene::IAnimatedMesh* q3levelmesh = manager->getMesh("20kdm2.bsp");
-//     irr::scene::IAnimatedMeshSceneNode* dun;
-//    irr::scene::IMeshSceneNode* q3node = 0;
-  
-//   if (q3levelmesh)
-// 		q3node = manager->addOctreeSceneNode(q3levelmesh->getMesh(0), 0, IDFlag_IsPickable);
-
   
   irr::scene::ITriangleSelector* selector = 0;
 
@@ -107,13 +94,12 @@ void Player::initialize()
 	device->getCursorControl()->setVisible(false);
 }
 
-InputProcessor* Player::getProcessor()
-{
-  return proc;
-}
-
 irr::scene::ICameraSceneNode* Player::getCamera()
 {
   return camera;
 }
 
+EventReceiver* Player::getEventReceiver()
+{
+  return receiver;
+}

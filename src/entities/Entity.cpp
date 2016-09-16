@@ -12,12 +12,7 @@ Entity::Entity(irr::IrrlichtDevice* dev, const std::string& mediaPath,
 
 void Entity::rotateTowardsPosition(irr::core::vector3df target)
 {
-  rot.Y = std::atan((pos.Z - target.Z) / (pos.X - target.X)) * 180.0f / irr::core::PI;
-  
-  if((target.X - pos.X) > 0) {
-    rot.Y = 180 - rot.Y;
-  } else if((target.X - pos.X) < 0) {
-    rot.Y = -180 - rot.Y;
-  }
-  
+  irr::core::vector3df distance = pos - target;
+  distance.Y = distance.getHorizontalAngle().Y + 90;
+  rot = irr::core::vector3df(0,distance.Y,0);
 }

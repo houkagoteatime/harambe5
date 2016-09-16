@@ -1,7 +1,7 @@
 #include "EventReceiver.h"
 EventReceiver::EventReceiver()
 {
-
+  m.LeftButtonDown = false;
 }
 
 EventReceiver::~EventReceiver()

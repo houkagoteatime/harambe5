@@ -22,19 +22,19 @@ enum
 
 	// I use this flag in ISceneNode IDs to indicate that the
 	// scene node can be picked by ray selection.
-	IDFlag_IsPickable = 1 << 0,
+	IDFlag_IsPickable = 1,
 
 	// I use this flag in ISceneNode IDs to indicate that the
 	// scene node can be highlighted.  In this example, the
 	// homonids can be highlighted, but the level mesh can't.
-	IDFlag_IsHighlightable = 1 << 1
+	IDFlag_IsHighlightable = 2
 };
 
 int main(int argc, char **argv) {
 	
   
 	EventReceiver* receiver = new EventReceiver();
-	IrrlichtDevice* device = createDevice(EDT_OPENGL, dimension2d<u32>(640, 480),16, false, false, false, receiver);
+	IrrlichtDevice* device = createDevice(EDT_OPENGL, dimension2d<u32>(640, 480),16, false, false, false);
 	if(!device)
 		return 1;
 	device->setWindowCaption(L"Harambe 5: The Labyrinth");
@@ -78,7 +78,6 @@ int main(int argc, char **argv) {
 	
 	Player* player = new Player(device,"media/gun.md2", vector3df(0,15,0),vector3df(0,0,0), mapNode);
 	
-	
 	scene::IBillboardSceneNode * bill = smgr->addBillboardSceneNode();
 	bill->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR );
 	bill->setMaterialTexture(0, driver->getTexture("media/particle.bmp"));
@@ -92,7 +91,7 @@ int main(int argc, char **argv) {
 	
 
 	
-// 	device->setEventReceiver(player->getProcessor());
+ 	device->setEventReceiver(player->getEventReceiver());
 	Enemy* testEnemy = new Enemy(device,"media/sydney.md2", vector3df(30, 15, 30), vector3df(0,0,0));
 	testEnemy->setPlayer(player);
 	int prev = device->getTimer()->getTime();
