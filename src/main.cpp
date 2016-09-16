@@ -115,9 +115,6 @@ int main(int argc, char **argv) {
 		device->drop();
 		return 1;
 	}
-	
-	//irr::scene::IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh,
-	//0, IDFlag_IsPickable | IDFlag_IsHighlightable);
 	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode( mesh);
 	if(node) {
 	  node ->setName("Sydney");
@@ -128,9 +125,7 @@ int main(int argc, char **argv) {
 		node->setScale(core::vector3df(1.6f)); // Make it appear realistically scaled
 		//node->setMD2Animation(scene::EMAT_POINT);
 		node->setAnimationSpeed(20.f);
-		//node->setID(666);
 	}
-	
 	irr::scene::ITriangleSelector* selector = 0;
 	selector = smgr->createTriangleSelector(node);
 	node->setTriangleSelector(selector);
@@ -138,12 +133,7 @@ int main(int argc, char **argv) {
 	
 	device->getFileSystem()->addFileArchive("media/map-20kdm2.pk3");
 	IAnimatedMesh* mapMesh = smgr->getMesh("20kdm2.bsp");
-	IMeshSceneNode* mapNode;
-	if(mapMesh) {
-	  mapNode = smgr->addOctreeSceneNode(mapMesh->getMesh(0),0, 1);
-	}
-	
-	//irr::scene::ITriangleSelector* selector = 0;
+	IMeshSceneNode* mapNode = smgr->addOctreeSceneNode(mapMesh->getMesh(0),0, 1);
 	if(mapNode)
 	{
 	  mapNode->setPosition(vector3df(-1300, -144, -1249));
@@ -152,11 +142,9 @@ int main(int argc, char **argv) {
 		selector = device->getSceneManager()->createOctreeTriangleSelector(
 				mapNode->getMesh(), mapNode, 128);
 		mapNode->setTriangleSelector(selector);
-		// We're not done with this selector yet, so don't drop it.
 	}
 	
 	Player* player = new Player(device,"media/gun.md2", vector3df(0,15,0),vector3df(0,0,0), mapNode);
- 	//device->setEventReceiver(player->getProcessor());
 	
 	
 	scene::IBillboardSceneNode * bill = smgr->addBillboardSceneNode();
@@ -190,60 +178,24 @@ int main(int argc, char **argv) {
 			highlightedSceneNode = 0;
 		}
 
-		// All intersections in this example are done with a ray cast out from the camera to
-		// a distance of 1000.  You can easily modify this to check (e.g.) a bullet
-		// trajectory or a sword's position, or create a ray from a mouse click position using
-		// ISceneCollisionManager::getRayFromScreenCoordinates()
 		core::line3d<f32> ray;
 		ray.start = smgr->getActiveCamera()->getPosition();
 		ray.end = ray.start + (smgr->getActiveCamera()->getTarget() - ray.start).normalize() * 1000.0f;
 
-		// Tracks the current intersection point with the level or a mesh
 		core::vector3df intersection;
-		// Used to show with triangle has been hit
 		core::triangle3df hitTriangle;
-
-		// This call is all you need to perform ray/triangle collision on every scene node
-		// that has a triangle selector, including the Quake level mesh.  It finds the nearest
-		// collision point/triangle, and returns the scene node containing that point.
-		// Irrlicht provides other types of selection, including ray/triangle selector,
-		// ray/box and ellipse/triangle selector, plus associated helpers.
-		// See the methods of ISceneCollisionManager
-		scene::ISceneNode * selectedSceneNode =
-			collMan->getSceneNodeAndCollisionPointFromRay(
-					ray,
-					intersection, // This will be the position of the collision
-					hitTriangle, // This will be the triangle hit in the collision
-					IDFlag_IsPickable, // This ensures that only nodes that we have
-							// set up to be pickable are considered
-					0); // Check the entire scene (this is actually the implicit default)
-		string<irr::c8> name;
-		if(selectedSceneNode) {
-		  std::cout << selectedSceneNode->getName();
-		  name = selectedSceneNode->getName();
-		}
-		// If the ray hit anything, move the billboard to the collision position
-		// and draw the triangle that was hit.
+		scene::ISceneNode * selectedSceneNode = collMan->getSceneNodeAndCollisionPointFromRay(ray,intersection, hitTriangle, IDFlag_IsPickable,0);
 		if(selectedSceneNode)
 		{
-		  //check mouse is on it
-			//if((selectedSceneNode->getID() & IDFlag_IsHighlightable) == IDFlag_IsHighlightable)
+		  string<irr::c8> name = selectedSceneNode->getName();
 		  if(name == "Sydney") 
 			{
-			  std::cout << "sydneyfound";
 			 highlightedSceneNode = selectedSceneNode;
-			 //check if is the correct object
-			 if(smgr->getActiveCamera()->getPosition().getDistanceFrom(highlightedSceneNode->getPosition()) < 100) {
-
-			   //do whatever when you click
+			 if(smgr->getActiveCamera()->getPosition().getDistanceFrom(highlightedSceneNode->getPosition()) < 200) {
 			      highlightedSceneNode->setMaterialFlag(video::EMF_LIGHTING, receiver.GetMouseState().LeftButtonDown);
-			     
-			      //highlightedSceneNode->setMaterialFlag(video::EMF_LIGHTING, true);
 			 }
-			 //highlightedSceneNode->setMaterialFlag(video::EMF_LIGHTING, false);
 			}
-			bill->setPosition(intersection);
-
+		  bill->setPosition(intersection);
 		}
 		
 		player->update((current - prev)/1000.0f);

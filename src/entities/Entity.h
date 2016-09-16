@@ -14,5 +14,5 @@ protected:
   irr::core::vector3df rot;
   irr::IrrlichtDevice* device;
   std::string path;
-  const static float speed = 0.1;
+  const static float speed = 0.3;
 };

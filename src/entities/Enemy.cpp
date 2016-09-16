@@ -13,6 +13,7 @@ void Enemy::setPlayer(Player* play)
 void Enemy::initialize()
 {
   irr::scene::ISceneManager* manager = device->getSceneManager();
+  irr::video::IVideoDriver* driver = device->getVideoDriver();
   irr::scene::IAnimatedMesh* mesh = manager->getMesh("media/sydney.md2");
   if(mesh) {
     entityNode = manager->addAnimatedMeshSceneNode(mesh);
@@ -20,6 +21,10 @@ void Enemy::initialize()
     entityNode->setPosition(pos);
     entityNode->setRotation(rot);
     entityNode->setMD2Animation(irr::scene::EMAT_ATTACK);
+    entityNode->setMaterialTexture(0, driver->getTexture("media/sydney.bmp"));
+    entityNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+    entityNode->setName("Sydney");
+    entityNode->setTriangleSelector(manager->createTriangleSelector(entityNode));
     }
   }
   state = STATIONARY;
