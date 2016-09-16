@@ -2,6 +2,7 @@
 #include "entities/Player.h"
 #include <iostream>
 #include "entities/Enemy.h"
+#include "EventReceiver.h"
 using namespace irr;
 using namespace core;
 using namespace scene;
@@ -29,81 +30,11 @@ enum
 	IDFlag_IsHighlightable = 1 << 1
 };
 
-class MyEventReceiver : public IEventReceiver
-{
-public:
-	// We'll create a struct to record info on the mouse state
-	struct SMouseState
-	{
-		core::position2di Position;
-		bool LeftButtonDown;
-		SMouseState() : LeftButtonDown(false) { }
-	} MouseState;
-
-	// This is the one method that we have to implement
-	virtual bool OnEvent(const SEvent& event)
-	{
-		// Remember the mouse state
-		if (event.EventType == irr::EET_MOUSE_INPUT_EVENT)
-		{
-			switch(event.MouseInput.Event)
-			{
-			case EMIE_LMOUSE_PRESSED_DOWN:
-				MouseState.LeftButtonDown = true;
-				break;
-
-			case EMIE_LMOUSE_LEFT_UP:
-				MouseState.LeftButtonDown = false;
-				break;
-
-			case EMIE_MOUSE_MOVED:
-				MouseState.Position.X = event.MouseInput.X;
-				MouseState.Position.Y = event.MouseInput.Y;
-				break;
-
-			default:
-				// We won't use the wheel
-				break;
-			}
-		}
-
-		// The state of each connected joystick is sent to us
-		// once every run() of the Irrlicht device.  Store the
-		// state of the first joystick, ignoring other joysticks.
-		// This is currently only supported on Windows and Linux.
-		if (event.EventType == irr::EET_JOYSTICK_INPUT_EVENT
-			&& event.JoystickEvent.Joystick == 0)
-		{
-			JoystickState = event.JoystickEvent;
-		}
-
-		return false;
-	}
-
-	const SEvent::SJoystickEvent & GetJoystickState(void) const
-	{
-		return JoystickState;
-	}
-
-	const SMouseState & GetMouseState(void) const
-	{
-		return MouseState;
-	}
-
-
-	MyEventReceiver()
-	{
-	}
-
-private:
-	SEvent::SJoystickEvent JoystickState;
-};
-
 int main(int argc, char **argv) {
 	
   
-	MyEventReceiver receiver;
-	IrrlichtDevice* device = createDevice(EDT_OPENGL, dimension2d<u32>(640, 480),16, false, false, false, &receiver);
+	EventReceiver* receiver = new EventReceiver();
+	IrrlichtDevice* device = createDevice(EDT_OPENGL, dimension2d<u32>(640, 480),16, false, false, false, receiver);
 	if(!device)
 		return 1;
 	device->setWindowCaption(L"Harambe 5: The Labyrinth");
@@ -115,7 +46,7 @@ int main(int argc, char **argv) {
 		device->drop();
 		return 1;
 	}
-	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode( mesh);
+	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh);
 	if(node) {
 	  node ->setName("Sydney");
 		node->setMaterialFlag(video::EMF_LIGHTING, false);
@@ -134,6 +65,7 @@ int main(int argc, char **argv) {
 	device->getFileSystem()->addFileArchive("media/map-20kdm2.pk3");
 	IAnimatedMesh* mapMesh = smgr->getMesh("20kdm2.bsp");
 	IMeshSceneNode* mapNode = smgr->addOctreeSceneNode(mapMesh->getMesh(0),0, 1);
+	
 	if(mapNode)
 	{
 	  mapNode->setPosition(vector3df(-1300, -144, -1249));
@@ -170,7 +102,6 @@ int main(int argc, char **argv) {
 	  if(device->isWindowActive()) {
 		driver->beginScene(true, true, SColor(255, 100, 101, 140));
 		
-		const SEvent::SJoystickEvent & joystickData = receiver.GetJoystickState();
 		
 		if (highlightedSceneNode)
 		{
@@ -192,7 +123,7 @@ int main(int argc, char **argv) {
 			{
 			 highlightedSceneNode = selectedSceneNode;
 			 if(smgr->getActiveCamera()->getPosition().getDistanceFrom(highlightedSceneNode->getPosition()) < 200) {
-			      highlightedSceneNode->setMaterialFlag(video::EMF_LIGHTING, receiver.GetMouseState().LeftButtonDown);
+			      highlightedSceneNode->setMaterialFlag(video::EMF_LIGHTING, receiver->GetMouseState()->LeftButtonDown);
 			 }
 			}
 		  bill->setPosition(intersection);
