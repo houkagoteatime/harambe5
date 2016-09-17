@@ -12,6 +12,7 @@ public:
   bool onClick(bool MouseEvent);
   void setPlayer(Player* play);
   void updateAggroState(const irr::core::vector3df playerPos);
+  void gui();
 protected:
   Player* player;
 };

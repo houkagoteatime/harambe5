@@ -27,11 +27,14 @@ enum
 int main(int argc, char **argv) {
 
 	IrrlichtDevice* device = createDevice(EDT_OPENGL, dimension2d<u32>(640, 480),16, false, false, false);
+	
+	
 	if(!device)
 		return 1;
 	device->setWindowCaption(L"Harambe 5: The Labyrinth");
 	IVideoDriver* driver = device->getVideoDriver();
 	ISceneManager* smgr = device->getSceneManager();
+	
 	
 	IAnimatedMesh* mesh = smgr->getMesh("media/sydney.md2");
 	if(!mesh) {
@@ -96,12 +99,24 @@ int main(int argc, char **argv) {
 		core::line3d<f32> ray;
 		ray.start = smgr->getActiveCamera()->getPosition();
 		ray.end = ray.start + (smgr->getActiveCamera()->getTarget() - ray.start).normalize() * 1000.0f;
-
+		//std::cout << ray.end.X << "," << ray.end.Y << ","<< ray.end.Z << std::endl;
 		core::vector3df intersection;
 		core::triangle3df hitTriangle;
 		scene::ISceneNode * selectedSceneNode = collMan->getSceneNodeAndCollisionPointFromRay(ray,intersection, hitTriangle, IDFlag_IsPickable,0);
 		if(selectedSceneNode)
 		{
+		std::cout << selectedSceneNode->getPosition().X << ","
+		<< selectedSceneNode->getPosition().Y << ","
+		<< selectedSceneNode->getPosition().Z << std::endl;
+		
+		std::cout << smgr->getActiveCamera()->getPosition().X << "," 
+		<< smgr->getActiveCamera()->getPosition().Y << "," 
+		<< smgr->getActiveCamera()->getPosition().Z <<  std::endl << std::endl;
+		
+		//"RANGE ON INTERACT"
+		if(selectedSceneNode->getAbsolutePosition().getDistanceFrom(smgr->getActiveCamera()->getAbsolutePosition()) < 200) {
+		  
+		bill->setPosition(intersection);
 		  highlightedSceneNode = selectedSceneNode;
 		  string<irr::c8> name = selectedSceneNode->getName();
 		    int i = 0;
@@ -112,12 +127,13 @@ int main(int argc, char **argv) {
 			   }
 			}
 		      }
-		  bill->setPosition(intersection);
 		 }
+		} 
 		
 		player->update((current - prev)/1000.0f);
-		testEnemy->update((current - prev)/1000.0f);
+		//testEnemy->update((current - prev)/1000.0f);
 		smgr->drawAll();
+		
 		driver->endScene();
 	  } else 
 	      device->yield();
