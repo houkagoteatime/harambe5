@@ -5,7 +5,7 @@
 # Name of the executable created (.exe will be added automatically if necessary)
 Target := harambe5
 # List of source files, separated by spaces
-Sources := src/main.cpp src/entities/Player.cpp src/entities/Entity.cpp src/entities/Enemy.cpp src/EventReceiver.cpp src/entities/Npc.cpp src/ui/Gui.cpp
+Sources := src/*.cpp src/entities/*.cpp src/levels/*.cpp src/states/*.cpp src/ui/*.cpp
 # Path to Irrlicht direct
 # Path to Irrlicht directory, should contain include/ and lib/
 IrrlichtHome := .

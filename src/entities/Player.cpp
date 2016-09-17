@@ -20,7 +20,6 @@ void Player::update(float delta) {
 
 void Player::initialize() 
 {
-  manager = device->getSceneManager();
   driver = device->getVideoDriver();
   irr::SKeyMap keys[6];
   keys[0].Action = irr::EKA_MOVE_FORWARD;
@@ -47,6 +46,7 @@ void Player::initialize()
   weaponNode->setMaterialTexture(0, driver->getTexture("media/gun.jpg"));
   weaponNode->setLoopMode(true);
   addCollision();
+  addBillboard();
 }
 
 void Player::addCollision()
@@ -58,6 +58,17 @@ void Player::addCollision()
   anim->drop();
   device->getCursorControl()->setVisible(false);
 }
+void Player::addBillboard()
+{
+	
+	bill = manager->addBillboardSceneNode();
+	bill->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR );
+	bill->setMaterialTexture(0, driver->getTexture("media/particle.bmp"));
+	bill->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+	bill->setMaterialFlag(irr::video::EMF_ZBUFFER, false);
+	bill->setSize(irr::core::dimension2d<irr::f32>(20.0f, 20.0f));
+	bill->setID(0);
+}
 
 irr::scene::ICameraSceneNode* Player::getCamera()
 {
@@ -68,3 +79,9 @@ EventReceiver* Player::getEventReceiver()
 {
   return receiver;
 }
+
+irr::scene::IBillboardSceneNode* Player::getBillBoard()
+{
+  return bill;
+}
+

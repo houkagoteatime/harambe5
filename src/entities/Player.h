@@ -8,6 +8,8 @@ public:
   virtual void initialize();
   virtual void update(float delta);
   virtual void addCollision();
+  void addBillboard();
+  irr::scene::IBillboardSceneNode* getBillBoard();
   EventReceiver* getEventReceiver();
   static const float SPEED = 50;
   irr::scene::ICameraSceneNode* getCamera();
@@ -15,4 +17,6 @@ protected:
   irr::scene::IAnimatedMeshSceneNode* weaponNode;
   irr::scene::ICameraSceneNode* camera;
   EventReceiver* receiver;
+private:
+  irr::scene::IBillboardSceneNode * bill;
 };

@@ -5,7 +5,7 @@
 #include "EventReceiver.h"
 #include "entities/Npc.h"
 #include <vector>
-
+#include "states/StateManager.h"
 using namespace irr;
 using namespace core;
 using namespace scene;
@@ -34,15 +34,16 @@ int main(int argc, char **argv) {
 	IVideoDriver* driver = device->getVideoDriver();
 	ISceneManager* smgr = device->getSceneManager();
 	
-	
+	/*
 	IAnimatedMesh* mesh = smgr->getMesh("media/sydney.md2");
 	if(!mesh) {
 		device->drop();
 		return 1;
 	}
 	irr::scene::ITriangleSelector* selector = 0;
-	
+	*/
 	device->getFileSystem()->addFileArchive("media/map-20kdm2.pk3");
+	/*
 	IAnimatedMesh* mapMesh = smgr->getMesh("20kdm2.bsp");
 	IMeshSceneNode* mapNode = smgr->addOctreeSceneNode(mapMesh->getMesh(0),0, 1);
 	
@@ -83,12 +84,16 @@ int main(int argc, char **argv) {
 	int current = 0;
 	std::vector <Npc*> npcs;
 	npcs.push_back(testNpc);
+	*/
+	StateManager manager(device);
+	int prev = device->getTimer()->getTime();
+	int current = 0;
 	while(device->run()) {
 	  current = device->getTimer()->getTime();
 	  if(device->isWindowActive()) {
 		driver->beginScene(true, true, SColor(255, 100, 101, 140));
 		
-		
+		/*
 		if (highlightedSceneNode)
 		{
 			highlightedSceneNode->setMaterialFlag(video::EMF_LIGHTING, false);
@@ -120,6 +125,8 @@ int main(int argc, char **argv) {
 		player->update((current - prev)/1000.0f);
 		//testEnemy->update((current - prev)/1000.0f);
 		testNpc->update((current - prev)/1000.0f);
+		*/
+		manager.update((current - prev)/1000.0f);
 		smgr->drawAll();
 		device->getGUIEnvironment()->drawAll();
 		driver->endScene();
