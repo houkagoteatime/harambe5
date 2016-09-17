@@ -1,3 +1,4 @@
+#pragma once
 #include <irrlicht.h>
 #define dropElement(x)	if (x) { x->remove(); x = 0; }
 class Gui {

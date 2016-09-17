@@ -5,6 +5,7 @@ Player::Player(irr::IrrlichtDevice* dev, const std::string& mediaPath,  irr::cor
 	       Entity(dev, mediaPath, position, rotation, map)
 {
   receiver = new EventReceiver();
+  dev->setEventReceiver(receiver);
   initialize();
 }
 

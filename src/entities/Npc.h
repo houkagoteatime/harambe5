@@ -13,8 +13,9 @@ public:
   bool isPlayerNearby(float range);
   bool onClick(bool MouseEvent);
   void setPlayer(Player* play);
+  void setGui(Gui* gui);
   void updateAggroState(const irr::core::vector3df playerPos);
 protected:
   Player* player;
-  Gui gui;
+  Gui* gui;
 };

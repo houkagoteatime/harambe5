@@ -5,7 +5,7 @@ Milestones
 - [x] 3: Render map and different entities
 - [x] 4: Add collision and gravity
 - [x] 5: Create entity classes: seperate into enemy, player, and npc
-- [ ] 6: Create state manager and level classes
+- [x] 6: Create state manager and level classes
 - [ ] 7: Create assets: 3d animated models(.ms3d files) and map(.stl file)
 - [ ] 8: Implement basic combat for player: range ??, melee. Will need to discuss core mechanics
 - [ ] 9: Create different types of enemies with different combat styles

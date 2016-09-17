@@ -9,7 +9,7 @@ using namespace gui;
 
 
 Npc::Npc(irr::IrrlichtDevice* dev, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map): 
-Entity(dev, mediaPath, position, rotation, map),gui(dev)
+Entity(dev, mediaPath, position, rotation, map)
 {
   initialize();
 }
@@ -18,6 +18,12 @@ void Npc::setPlayer(Player* play)
 {
   player = play;
 }
+
+void Npc::setGui(Gui* gui)
+{
+  this->gui = gui;
+}
+
 void Npc::initialize()
 {
   entityNode->setPosition(irr::core::vector3df(-90,-15,-140)); // Put its feet on the floor.
@@ -46,7 +52,7 @@ void Npc::update(float delta)
 
 bool Npc::onClick(bool MouseEvent) {
   entityNode->setMaterialFlag(irr::video::EMF_LIGHTING, MouseEvent);
-  gui.setVisibleImage(MouseEvent);
+  gui->setVisibleImage(MouseEvent);
   return false;
 }
 
