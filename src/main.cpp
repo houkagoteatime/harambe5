@@ -4,6 +4,8 @@
 #include "entities/Enemy.h"
 #include "EventReceiver.h"
 #include "entities/Npc.h"
+#include <vector>
+
 using namespace irr;
 using namespace core;
 using namespace scene;
@@ -73,8 +75,12 @@ int main(int argc, char **argv) {
 	Npc* testNpc = new Npc(device,"media/sydney.md2", vector3df(-90,-15,-140), vector3df(0,0,0), mapNode);
 	Enemy* testEnemy = new Enemy(device,"media/sydney.md2", vector3df(30, 15, 30), vector3df(0,0,0), mapNode);
 	testEnemy->setPlayer(player);
+	testNpc->setPlayer(player);
 	int prev = device->getTimer()->getTime();
 	int current = 0;
+	
+	std::vector <Npc*> npcs;
+	npcs.push_back(testNpc);
 	while(device->run()) {
 	  current = device->getTimer()->getTime();
 	  if(device->isWindowActive()) {
@@ -96,16 +102,18 @@ int main(int argc, char **argv) {
 		scene::ISceneNode * selectedSceneNode = collMan->getSceneNodeAndCollisionPointFromRay(ray,intersection, hitTriangle, IDFlag_IsPickable,0);
 		if(selectedSceneNode)
 		{
+		  highlightedSceneNode = selectedSceneNode;
 		  string<irr::c8> name = selectedSceneNode->getName();
-		  if(name == "Sydney") 
+		    int i = 0;
+		    for(i = 0; i < npcs.size(); i++) {
 			{
-			 highlightedSceneNode = selectedSceneNode;
-			 if(smgr->getActiveCamera()->getPosition().getDistanceFrom(highlightedSceneNode->getPosition()) < 200) {
-			      highlightedSceneNode->setMaterialFlag(video::EMF_LIGHTING, receiver->GetMouseState()->LeftButtonDown);
-			 }
+			   if(name == "Sydney") {
+			    npcs[i]->onClick(receiver->GetMouseState()->LeftButtonDown);
+			   }
 			}
+		      }
 		  bill->setPosition(intersection);
-		}
+		 }
 		
 		player->update((current - prev)/1000.0f);
 		testEnemy->update((current - prev)/1000.0f);

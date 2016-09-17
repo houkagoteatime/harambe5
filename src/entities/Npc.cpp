@@ -35,9 +35,11 @@ void Npc::update(float delta)
   pos = entityNode->getPosition();
 }
 
-bool Npc::onClick() {
-  entityNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
-  return true;
+bool Npc::onClick(bool MouseEvent) {
+  if(isPlayerNearby(200)) {
+    entityNode->setMaterialFlag(irr::video::EMF_LIGHTING, MouseEvent);
+  } 
+  return false;
 }
 
 bool Npc::isPlayerNearby(float range)

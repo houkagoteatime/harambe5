@@ -9,7 +9,7 @@ public:
   virtual void initialize();
   virtual void update(float delta);
   bool isPlayerNearby(float range);
-  bool onClick();
+  bool onClick(bool MouseEvent);
   void setPlayer(Player* play);
   void updateAggroState(const irr::core::vector3df playerPos);
 protected:
