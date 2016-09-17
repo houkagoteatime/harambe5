@@ -1,13 +1,23 @@
 #include "Entity.h"
 #include <cmath>
-Entity::Entity(irr::IrrlichtDevice* dev, const std::string& mediaPath, 
-	       irr::core::vector3df position, 
-	       irr::core::vector3df rotation) : device(dev),
-	       path(mediaPath), 
-	       pos(position), 
-	       rot(rotation)
+#include <iostream>
+Entity::Entity(irr::IrrlichtDevice* dev, const std::string& mediaPath,irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map) 
+		: device(dev),path(mediaPath), pos(position), rot(rotation),mapNode(map)
 {
+  manager = device->getSceneManager();
+  driver = device->getVideoDriver();
+  mesh = manager->getMesh("media/sydney.md2");
+  entityNode = manager->addAnimatedMeshSceneNode(mesh);
+  addCollision();
+}
 
+void Entity::addCollision()
+{
+  if(entityNode) {
+  irr::scene::ISceneNodeAnimator* anim = manager->createCollisionResponseAnimator( mapNode->getTriangleSelector(), entityNode, irr::core::vector3df(30,50,30),irr::core::vector3df(0,-10,0),irr::core::vector3df(0,30,0),0.0005f);
+  entityNode->addAnimator(anim);
+  anim->drop();
+  }
 }
 
 void Entity::rotateTowardsPosition(irr::core::vector3df target)

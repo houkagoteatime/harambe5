@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include <cmath>
-Enemy::Enemy(irr::IrrlichtDevice* dev, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation): Entity(dev, mediaPath, position, rotation)
+Enemy::Enemy(irr::IrrlichtDevice* dev, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map): 
+Entity(dev, mediaPath, position, rotation, map)
 {
 	initialize();
 }
@@ -12,21 +13,13 @@ void Enemy::setPlayer(Player* play)
 
 void Enemy::initialize()
 {
-  irr::scene::ISceneManager* manager = device->getSceneManager();
-  irr::video::IVideoDriver* driver = device->getVideoDriver();
-  irr::scene::IAnimatedMesh* mesh = manager->getMesh("media/sydney.md2");
-  if(mesh) {
-    entityNode = manager->addAnimatedMeshSceneNode(mesh);
-    if(entityNode) {
-    entityNode->setPosition(pos);
-    entityNode->setRotation(rot);
-    entityNode->setMD2Animation(irr::scene::EMAT_ATTACK);
-    entityNode->setMaterialTexture(0, driver->getTexture("media/sydney.bmp"));
-    entityNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-    entityNode->setName("Sydney");
-    entityNode->setTriangleSelector(manager->createTriangleSelector(entityNode));
-    }
-  }
+  entityNode->setPosition(pos);
+  entityNode->setRotation(rot);
+  entityNode->setMD2Animation(irr::scene::EMAT_ATTACK);
+  entityNode->setMaterialTexture(0, driver->getTexture("media/sydney.bmp"));
+  entityNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+  entityNode->setName("Sydney");
+  entityNode->setTriangleSelector(manager->createTriangleSelector(entityNode));
   state = STATIONARY;
 }
 
@@ -49,13 +42,13 @@ void Enemy::update(float delta)
   pos = entityNode->getPosition();
 }
 
+
 void Enemy::updateAggroState(const irr::core::vector3df playerPos)
 {
   rotateTowardsPosition(playerPos);
   irr::core::vector3df direction = (playerPos - pos).normalize();
   entityNode->setPosition(entityNode->getPosition() + direction * speed);
 }
-
 
 bool Enemy::isPlayerNearby(float range)
 {
@@ -66,3 +59,5 @@ bool Enemy::isPlayerNearby(float range)
   float distance = std::sqrt((std::pow<float>( (playerPos.X - pos.X), 2) - std::pow<float>((playerPos.Y - pos.Y), 2)));
   return std::abs(distance) <= range;
 }
+
+

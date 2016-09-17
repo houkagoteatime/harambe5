@@ -1,12 +1,9 @@
 
 #include "Player.h"
 
-Player::Player(irr::IrrlichtDevice* dev, 
-	       const std::string& mediaPath, 
-	       irr::core::vector3df position, 
-	       irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map) : 
-	       Entity(dev, mediaPath, position, rotation), 
-	       mapNode(map){
+Player::Player(irr::IrrlichtDevice* dev, const std::string& mediaPath,  irr::core::vector3df position,  irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map) : 
+	       Entity(dev, mediaPath, position, rotation, map)
+{
   receiver = new EventReceiver();
   initialize();
 }
@@ -23,8 +20,8 @@ void Player::update(float delta) {
 
 void Player::initialize() 
 {
-  irr::scene::ISceneManager* manager = device->getSceneManager();
-  irr::video::IVideoDriver* driver = device->getVideoDriver();
+  manager = device->getSceneManager();
+  driver = device->getVideoDriver();
   irr::SKeyMap keys[6];
   keys[0].Action = irr::EKA_MOVE_FORWARD;
   keys[0].KeyCode = irr::KEY_KEY_W;
@@ -49,49 +46,15 @@ void Player::initialize()
   weaponNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
   weaponNode->setMaterialTexture(0, driver->getTexture("media/gun.jpg"));
   weaponNode->setLoopMode(true);
-  
-  //in main.cpp initialize triangleselector and add it to the mapNode
-  //player constructor accepts mapNode as a paramter and grabs the selector from there
-  //constructor param(ITriangleSelector mapWalls, ISceneNode cameraSceneNode
+  addCollision();
+}
 
-  irr::scene::ISceneNodeAnimator* anim =
-  manager->createCollisionResponseAnimator( mapNode->getTriangleSelector(), camera,
-            irr::core::vector3df(30,50,30),
-            irr::core::vector3df(0,-10,0),
-            irr::core::vector3df(0,30,0),
-            0.0005f
-  );
+void Player::addCollision()
+{
+  irr::scene::ISceneNodeAnimator* anim = manager->createCollisionResponseAnimator( mapNode->getTriangleSelector(), camera, irr::core::vector3df(30,50,30),irr::core::vector3df(0,-10,0),irr::core::vector3df(0,30,0),0.0005f);
   camera->addAnimator(anim);
   anim->drop();
   device->getCursorControl()->setVisible(false);
-  //collision
-  
-  irr::scene::ITriangleSelector* selector = 0;
-
-	if (mapNode)
-	{
-		mapNode->setPosition(irr::core::vector3df(-1350,-130,-1400));
-
-		selector = device->getSceneManager()->createOctreeTriangleSelector(
-				mapNode->getMesh(), mapNode, 128);
-		mapNode->setTriangleSelector(selector);
-		// We're not done with this selector yet, so don't drop it.
-	}
-  camera->setTarget(irr::core::vector3df(-70,30,-60));
-  
-  if (selector)
-	{
-	  //change to example
-		irr::scene::ISceneNodeAnimator* anim = manager->createCollisionResponseAnimator(
-			selector, camera, irr::core::vector3df(30,50,30),
-			irr::core::vector3df(0,-10,0), irr::core::vector3df(0,30,0));
-		
-		selector->drop(); // As soon as we're done with the selector, drop it.
-		camera->addAnimator(anim);
-		anim->drop();  // And likewise, drop the animator when we're done referring to it.
-	}
-	
-	device->getCursorControl()->setVisible(false);
 }
 
 irr::scene::ICameraSceneNode* Player::getCamera()

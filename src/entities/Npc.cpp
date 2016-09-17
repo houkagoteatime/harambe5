@@ -1,54 +1,46 @@
-#include "Npc.h>
+#include "Npc.h"
 #include <cmath>
-Npc::Npc(irr::IrrlichtDevice* dev, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation): Entity(dev, mediaPath, position, rotation)
+Npc::Npc(irr::IrrlichtDevice* dev, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map): 
+Entity(dev, mediaPath, position, rotation, map)
 {
-	initialize();
+  initialize();
 }
 
-void Enemy::setPlayer(Player* play)
+void Npc::setPlayer(Player* play)
 {
   player = play;
 }
-
-void Enemy::initialize()
+void Npc::initialize()
 {
-  irr::scene::ISceneManager* manager = device->getSceneManager();
-  irr::video::IVideoDriver* driver = device->getVideoDriver();
-  irr::scene::IAnimatedMesh* mesh = manager->getMesh("media/sydney.md2");
-  if(mesh) {
-    entityNode = manager->addAnimatedMeshSceneNode(mesh);
-    if(entityNode) {
-    entityNode->setPosition(pos);
-    entityNode->setRotation(rot);
-    entityNode->setMD2Animation(irr::scene::EMAT_ATTACK);
-    entityNode->setMaterialTexture(0, driver->getTexture("media/sydney.bmp"));
-    entityNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-    entityNode->setName("Sydney");
-    entityNode->setTriangleSelector(manager->createTriangleSelector(entityNode));
-    }
-  }
-  state = STATIONARY;
+  entityNode->setPosition(irr::core::vector3df(-90,-15,-140)); // Put its feet on the floor.
+  entityNode->setPosition(pos);
+  entityNode->setRotation(rot);
+  entityNode->setMD2Animation(irr::scene::EMAT_ATTACK);
+  entityNode->setMaterialTexture(0, driver->getTexture("media/sydney.bmp"));
+  entityNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+  entityNode->setName("Sydney");
+  entityNode->setTriangleSelector(manager->createTriangleSelector(entityNode));
 }
 
-void Enemy::update(float delta)
+void Npc::update(float delta)
 {
   const irr::core::vector3df playerPos = player->getCamera()->getPosition();
   rotateTowardsPosition(playerPos);
   entityNode->setRotation(rot);
   if(isPlayerNearby(100)) {
-    state = AGGRO;
+    //
   }
  
   rot = entityNode->getRotation();
   pos = entityNode->getPosition();
 }
 
-bool onClick() {
-  
-  
+bool Npc::onClick() {
+  entityNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
+  return true;
 }
 
-bool Enemy::isPlayerNearby(float range)
+bool Npc::isPlayerNearby(float range)
 {
   if(range<=0) {
     return false;

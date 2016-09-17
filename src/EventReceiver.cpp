@@ -35,7 +35,7 @@ bool EventReceiver::OnEvent(const irr::SEvent& event)
     case irr::EMIE_MOUSE_MOVED:
       //m.Position.X = event.MouseInput.X;
      // m.Position.Y = event.MouseInput.Y;
-     break;
+    break;
 
     default:
     // We won't use the wheel

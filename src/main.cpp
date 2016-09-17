@@ -3,6 +3,7 @@
 #include <iostream>
 #include "entities/Enemy.h"
 #include "EventReceiver.h"
+#include "entities/Npc.h"
 using namespace irr;
 using namespace core;
 using namespace scene;
@@ -16,24 +17,13 @@ using namespace gui;
 #endif
 enum
 {
-	// I use this ISceneNode ID to indicate a scene node that is
-	// not pickable by getSceneNodeAndCollisionPointFromRay()
 	ID_IsNotPickable = 0,
-
-	// I use this flag in ISceneNode IDs to indicate that the
-	// scene node can be picked by ray selection.
 	IDFlag_IsPickable = 1,
-
-	// I use this flag in ISceneNode IDs to indicate that the
-	// scene node can be highlighted.  In this example, the
-	// homonids can be highlighted, but the level mesh can't.
 	IDFlag_IsHighlightable = 2
 };
 
 int main(int argc, char **argv) {
-	
-  
-	EventReceiver* receiver = new EventReceiver();
+
 	IrrlichtDevice* device = createDevice(EDT_OPENGL, dimension2d<u32>(640, 480),16, false, false, false);
 	if(!device)
 		return 1;
@@ -46,21 +36,7 @@ int main(int argc, char **argv) {
 		device->drop();
 		return 1;
 	}
-	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh);
-	if(node) {
-	  node ->setName("Sydney");
-		node->setMaterialFlag(video::EMF_LIGHTING, false);
-		node->setMD2Animation(scene::EMAT_STAND);
-		node->setMaterialTexture(0, driver->getTexture("media/sydney.bmp"));
-		node->setPosition(core::vector3df(-90,-15,-140)); // Put its feet on the floor.
-		node->setScale(core::vector3df(1.6f)); // Make it appear realistically scaled
-		//node->setMD2Animation(scene::EMAT_POINT);
-		node->setAnimationSpeed(20.f);
-	}
 	irr::scene::ITriangleSelector* selector = 0;
-	selector = smgr->createTriangleSelector(node);
-	node->setTriangleSelector(selector);
-	selector->drop(); // We're done with this selector, so drop it now.
 	
 	device->getFileSystem()->addFileArchive("media/map-20kdm2.pk3");
 	IAnimatedMesh* mapMesh = smgr->getMesh("20kdm2.bsp");
@@ -92,7 +68,10 @@ int main(int argc, char **argv) {
 
 	
  	device->setEventReceiver(player->getEventReceiver());
-	Enemy* testEnemy = new Enemy(device,"media/sydney.md2", vector3df(30, 15, 30), vector3df(0,0,0));
+	
+	EventReceiver* receiver = player->getEventReceiver();
+	Npc* testNpc = new Npc(device,"media/sydney.md2", vector3df(-90,-15,-140), vector3df(0,0,0), mapNode);
+	Enemy* testEnemy = new Enemy(device,"media/sydney.md2", vector3df(30, 15, 30), vector3df(0,0,0), mapNode);
 	testEnemy->setPlayer(player);
 	int prev = device->getTimer()->getTime();
 	int current = 0;
@@ -136,7 +115,6 @@ int main(int argc, char **argv) {
 	      device->yield();
 	  prev = current;
 	}
-	
 	device->drop();
 	return 0;
 
