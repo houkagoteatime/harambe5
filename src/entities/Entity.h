@@ -10,6 +10,9 @@ public:
   virtual void update(float delta) = 0;
   virtual void addCollision();
   void rotateTowardsPosition(irr::core::vector3df target);
+  irr::scene::IAnimatedMeshSceneNode* getEntityNode() { 
+    return entityNode;
+  };
 protected:
   std::string path;
   const static float speed = 1.0;
@@ -17,6 +20,7 @@ protected:
   irr::core::vector3df pos;
   irr::core::vector3df rot;
   
+  irr::gui::IGUIEnvironment* gui;
   irr::IrrlichtDevice* device;
   irr::scene::ISceneManager* manager;
   irr::video::IVideoDriver* driver;

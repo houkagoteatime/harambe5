@@ -8,6 +8,7 @@ Entity::Entity(irr::IrrlichtDevice* dev, const std::string& mediaPath,irr::core:
   driver = device->getVideoDriver();
   mesh = manager->getMesh("media/sydney.md2");
   entityNode = manager->addAnimatedMeshSceneNode(mesh);
+  gui = device->getGUIEnvironment();
   addCollision();
 }
 

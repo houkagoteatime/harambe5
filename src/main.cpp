@@ -28,7 +28,6 @@ int main(int argc, char **argv) {
 
 	IrrlichtDevice* device = createDevice(EDT_OPENGL, dimension2d<u32>(640, 480),16, false, false, false);
 	
-	
 	if(!device)
 		return 1;
 	device->setWindowCaption(L"Harambe 5: The Labyrinth");
@@ -76,12 +75,12 @@ int main(int argc, char **argv) {
 	
 	EventReceiver* receiver = player->getEventReceiver();
 	Npc* testNpc = new Npc(device,"media/sydney.md2", vector3df(-90,-15,-140), vector3df(0,0,0), mapNode);
+
 	Enemy* testEnemy = new Enemy(device,"media/sydney.md2", vector3df(30, 15, 30), vector3df(0,0,0), mapNode);
 	testEnemy->setPlayer(player);
 	testNpc->setPlayer(player);
 	int prev = device->getTimer()->getTime();
 	int current = 0;
-	
 	std::vector <Npc*> npcs;
 	npcs.push_back(testNpc);
 	while(device->run()) {
@@ -99,41 +98,30 @@ int main(int argc, char **argv) {
 		core::line3d<f32> ray;
 		ray.start = smgr->getActiveCamera()->getPosition();
 		ray.end = ray.start + (smgr->getActiveCamera()->getTarget() - ray.start).normalize() * 1000.0f;
-		//std::cout << ray.end.X << "," << ray.end.Y << ","<< ray.end.Z << std::endl;
 		core::vector3df intersection;
 		core::triangle3df hitTriangle;
 		scene::ISceneNode * selectedSceneNode = collMan->getSceneNodeAndCollisionPointFromRay(ray,intersection, hitTriangle, IDFlag_IsPickable,0);
+		
 		if(selectedSceneNode)
 		{
-		std::cout << selectedSceneNode->getPosition().X << ","
-		<< selectedSceneNode->getPosition().Y << ","
-		<< selectedSceneNode->getPosition().Z << std::endl;
-		
-		std::cout << smgr->getActiveCamera()->getPosition().X << "," 
-		<< smgr->getActiveCamera()->getPosition().Y << "," 
-		<< smgr->getActiveCamera()->getPosition().Z <<  std::endl << std::endl;
-		
-		//"RANGE ON INTERACT"
-		if(selectedSceneNode->getAbsolutePosition().getDistanceFrom(smgr->getActiveCamera()->getAbsolutePosition()) < 200) {
-		  
-		bill->setPosition(intersection);
+		if(selectedSceneNode->getAbsolutePosition().getDistanceFrom(smgr->getActiveCamera()->getAbsolutePosition()) < 200) 
+		{
+		  bill->setPosition(intersection);
 		  highlightedSceneNode = selectedSceneNode;
-		  string<irr::c8> name = selectedSceneNode->getName();
-		    int i = 0;
-		    for(i = 0; i < npcs.size(); i++) {
-			{
-			   if(name == "Sydney") {
-			    npcs[i]->onClick(receiver->GetMouseState()->LeftButtonDown);
-			   }
-			}
+		   int j = 0;
+		    for(j = 0; j < npcs.size(); j++) {
+		      if(selectedSceneNode = npcs[j]->getEntityNode()) {
+		      npcs[j]->onClick(receiver->GetMouseState()->LeftButtonDown);
 		      }
-		 }
-		} 
+		    }
+		  }
+		}
 		
 		player->update((current - prev)/1000.0f);
 		//testEnemy->update((current - prev)/1000.0f);
+		testNpc->update((current - prev)/1000.0f);
 		smgr->drawAll();
-		
+		device->getGUIEnvironment()->drawAll();
 		driver->endScene();
 	  } else 
 	      device->yield();
@@ -143,4 +131,3 @@ int main(int argc, char **argv) {
 	return 0;
 
 }
-
