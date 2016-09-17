@@ -8,8 +8,8 @@ using namespace io;
 using namespace gui;
 
 
-Npc::Npc(irr::IrrlichtDevice* dev, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map): 
-Entity(dev, mediaPath, position, rotation, map)
+Npc::Npc(irr::IrrlichtDevice* dev, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map, int id): 
+Entity(dev, mediaPath, position, rotation, map, id)
 {
   initialize();
 }

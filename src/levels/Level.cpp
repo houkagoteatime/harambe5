@@ -24,8 +24,8 @@ void Level::createLevel()
   collMan = device->getSceneManager()->getSceneCollisionManager();
   Gui *gui = new Gui(device);
   player = new Player(device,"media/gun.md2", irr::core::vector3df(0,15,0),irr::core::vector3df(0,0,0), mapNode);
-  Enemy* testEnemy = new Enemy(device,"media/sydney.md2", irr::core::vector3df(30, 15, 30), irr::core::vector3df(0,0,0), mapNode);
-  Npc* testNpc = new Npc(device,"media/sydney.md2", irr::core::vector3df(-90,-15,-140), irr::core::vector3df(0,0,0), mapNode);
+  Enemy* testEnemy = new Enemy(device,"media/sydney.md2", irr::core::vector3df(30, 15, 30), irr::core::vector3df(0,0,0), mapNode, 2);
+  Npc* testNpc = new Npc(device,"media/sydney.md2", irr::core::vector3df(-90,-15,-140), irr::core::vector3df(0,0,0), mapNode, 1);
   enemies.push_back(testEnemy);
   npcs.push_back(testNpc);
   int8_t i;

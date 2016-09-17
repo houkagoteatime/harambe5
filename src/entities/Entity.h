@@ -5,7 +5,7 @@
 
 class Entity {
 public:
-  Entity(irr::IrrlichtDevice* dev, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map);
+  Entity(irr::IrrlichtDevice* dev, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map, int id);
   virtual void initialize() = 0;
   virtual void update(float delta) = 0;
   virtual void addCollision();
@@ -16,7 +16,7 @@ public:
 protected:
   std::string path;
   const static float speed = 1.0;
-  
+  int id;
   irr::core::vector3df pos;
   irr::core::vector3df rot;
   

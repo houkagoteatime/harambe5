@@ -6,7 +6,7 @@
 #include "../ui/Gui.h"
 class Npc : public Entity {
 public:
-  Npc(irr::IrrlichtDevice* dev, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map);
+  Npc(irr::IrrlichtDevice* dev, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map, int id);
   virtual void initialize();
   virtual void update(float delta);
   irr::gui::IGUIEnvironment* guiEnv;

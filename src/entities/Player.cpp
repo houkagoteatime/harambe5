@@ -2,7 +2,7 @@
 #include "Player.h"
 
 Player::Player(irr::IrrlichtDevice* dev, const std::string& mediaPath,  irr::core::vector3df position,  irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map) : 
-	       Entity(dev, mediaPath, position, rotation, map)
+	       Entity(dev, mediaPath, position, rotation, map, -1)
 {
   receiver = new EventReceiver();
   dev->setEventReceiver(receiver);
