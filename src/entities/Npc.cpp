@@ -7,10 +7,9 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
-#include <irrlicht.h>
 
 Npc::Npc(irr::IrrlichtDevice* dev, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map): 
-Entity(dev, mediaPath, position, rotation, map)
+Entity(dev, mediaPath, position, rotation, map),gui(dev)
 {
   initialize();
 }
@@ -29,16 +28,6 @@ void Npc::initialize()
   entityNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
   entityNode->setName("Sydney");
   entityNode->setTriangleSelector(manager->createTriangleSelector(entityNode));
-  
-  irr::gui::IGUISkin* skin = gui->getSkin();
-  irr::gui::IGUIFont* font = gui->getFont("media/fonthaettenschweiler.bmp");
-  if (font) {
-    skin->setFont(font);
-    skin->setFont(gui->getBuiltInFont(), irr::gui::EGDF_TOOLTIP);
-  }
-  skin->setFont(gui->getBuiltInFont(), EGDF_TOOLTIP);
-
-  
 
 }
 
@@ -56,12 +45,8 @@ void Npc::update(float delta)
 }
 
 bool Npc::onClick(bool MouseEvent) {
-    entityNode->setMaterialFlag(irr::video::EMF_LIGHTING, MouseEvent);
-    if(MouseEvent) {
-     gui->addImage(driver->getTexture("media/irrlichtlogo2.png"),position2d<int>(20,20), false);
-      return true;
-    }
-    gui->clear();
+  entityNode->setMaterialFlag(irr::video::EMF_LIGHTING, MouseEvent);
+  gui.setVisibleImage(MouseEvent);
   return false;
 }
 
