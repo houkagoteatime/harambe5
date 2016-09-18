@@ -1,9 +1,11 @@
 #include "StateManager.h"
-
+#include <iostream>
 StateManager::StateManager(irr::IrrlichtDevice* device) : dev(device)
 {
-  gameState = new GameState(dev);
-  currentState = GAME;
+  //gameState = new GameState(dev);
+  gameState = new MenuState(dev);
+  currentState = MENU;
+  prevState = MENU;
 }
 
 
@@ -16,6 +18,11 @@ StateManager::~StateManager()
 States StateManager::getState()
 {
   return currentState;
+}
+
+States StateManager::getPrevState()
+{
+  return prevState;
 }
 
 void StateManager::update(float dt)

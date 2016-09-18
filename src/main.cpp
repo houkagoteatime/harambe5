@@ -34,13 +34,17 @@ int main(int argc, char **argv) {
 	IVideoDriver* driver = device->getVideoDriver();
 	ISceneManager* smgr = device->getSceneManager();
 	device->getFileSystem()->addFileArchive("media/map-20kdm2.pk3");
+
 	StateManager manager(device);
 	int prev = device->getTimer()->getTime();
 	int current = 0;
 	while(device->run()) {
+	  
+	  States appState = manager.getState();
 	  current = device->getTimer()->getTime();
 	  if(device->isWindowActive()) {
 		driver->beginScene(true, true, SColor(255, 100, 101, 140));
+
 		manager.update((current - prev)/1000.0f);
 		smgr->drawAll();
 		device->getGUIEnvironment()->drawAll();

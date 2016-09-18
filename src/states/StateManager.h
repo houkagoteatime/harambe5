@@ -9,8 +9,11 @@ public:
   ~StateManager();
   void update(float dt);
   States getState();
-private:
+  States getPrevState();
   States currentState;
+  States prevState;
+private:
+  
   State* gameState;
   irr::IrrlichtDevice* dev;
 };

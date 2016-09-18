@@ -1,4 +1,5 @@
 #include "Gui.h"
+#include <iostream>
 
 struct guiElements
 {
@@ -9,18 +10,21 @@ struct guiElements
 
 	void drop()
 	{
-		dropElement ( Window );
-		dropElement ( Image );
-		dropElement( staticText);
+		dropElement(Window);
+		dropElement(Image);
+		dropElement(staticText);
+		dropElement(startButton);
 	}
 	
 	irr::gui::IGUIImage* Image;
 	irr::gui::IGUIWindow* Window;
 	irr::gui::IGUIStaticText* staticText;
+	irr::gui::IGUIButton* startButton;
 }elements;
 
 Gui::Gui(irr::IrrlichtDevice* dev):device(dev)
 {
+  
   manager = device->getSceneManager();
   driver = device->getVideoDriver();
   gui = device->getGUIEnvironment();
@@ -29,20 +33,22 @@ Gui::Gui(irr::IrrlichtDevice* dev):device(dev)
   width = driver->getScreenSize().Width;
   
   loadGuiElements();
+  
+  //initialized as Gui::GuiEventReceiver
+  //but doesnt it extend irr::IEventReceiver
+  //Gui::GuiEventReceiver receiver();
+  //device->setEventReceiver(receiver);
 }
 
 void Gui::loadGuiElements()
 {
-  elements.Image = gui->addImage(driver->getTexture("media/irrlichtlogo2.png"),irr::core::position2d<int>(20,20));
-  std::string text = "test";
-  std::wstring wideText = std::wstring(text.begin(), text.end());
-  const wchar_t* wideCText = wideText.c_str();
-  irr::core::rect<irr::s32> box(width/8, height * 0.8, width - (width/8), height * 0.9);
-  //elements.staticText = gui->addStaticText(wideCText, box, true);
-  //elements.staticText->setMinSize(irr::core::dimension2d<irr::u32>(20,20));
-  //elements.staticText->setBackgroundColor(irr::video::SColor(192,192,192,192));
-  setVisibleImage(false);
-  //setVisibleStaticText(false);
+  irr::gui::IGUIFont* font = gui->getFont("media/bigfont.png");
+  if(font) {
+    gui->getSkin()->setFont(font);
+  }
+  addImage();
+  addStartButton();
+  addStaticText("haram");
 }
 
 void Gui::setVisibleStaticText(bool visible)
@@ -57,10 +63,12 @@ void Gui::addStaticText(std::string text)
   }
   std::wstring wideText = std::wstring(text.begin(), text.end());
   const wchar_t* wideCText = wideText.c_str();
-  irr::core::rect<irr::s32> box(width/8, height * 0.8, width - (width/8), height * 0.9);
-  elements.staticText = gui->addStaticText(wideCText, box, true);
+  elements.staticText = gui->addStaticText(wideCText, 
+  irr::core::rect<irr::s32>(width/8, height * 0.8, width - (width/8), height * 0.9), 
+					   true);
   elements.staticText->setMinSize(irr::core::dimension2d<irr::u32>(20,20));
   elements.staticText->setBackgroundColor(irr::video::SColor(192,192,192,192));
+  elements.staticText->setVisible(false);
 }
 
 
@@ -69,8 +77,68 @@ void Gui::setVisibleImage(bool visible)
   elements.Image->setVisible(visible);
 }
 
+void Gui::addImage()
+{
+  elements.Image = gui->addImage(driver->getTexture("media/irrlichtlogo2.png"),irr::core::position2d<int>(20,20));
+  setVisibleImage(false);
+}
+
+void Gui::addStartButton()
+{
+  //999 = id
+  elements.startButton = gui->addButton(
+    irr::core::rect<irr::s32>((width/3) + 20, height * 0.4, (width*0.666), height * 0.5), 
+    0, 999, L"START", L"Enter the dungeon of Dank MEmes");
+  setVisibleStartButton(false);
+}
+
+void Gui::setVisibleStartButton(bool visible)
+{
+  elements.startButton->setVisible(visible);
+}
+
 void Gui::clear() 
 {
   elements.drop();
 }
+/*
+Gui::GuiEventReceiver::GuiEventReceiver(Gui * g)
+{
+  gui = g;
+}
 
+bool Gui::GuiEventReceiver::OnEvent(const irr::SEvent& event)
+{
+  if (event.EventType == irr::EET_GUI_EVENT)
+		{
+			irr::s32 id = event.GUIEvent.Caller->getID();
+
+			switch(event.GUIEvent.EventType)
+			{
+			  case EGET_BUTTON_CLICKED:
+				switch(id)
+				{
+				case 999:
+					gui->start = true;
+					std::cout << "true" << std::endl;
+					return true;
+				default:
+				break;
+				}
+			}
+		}
+
+		return false;
+}
+
+Gui::GuiEventReceiver::GuiEventReceiver()
+{
+
+}
+
+Gui::GuiEventReceiver::~GuiEventReceiver()
+{
+
+}
+
+*/

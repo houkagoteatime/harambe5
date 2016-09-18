@@ -3,7 +3,6 @@
 State::State(irr::IrrlichtDevice* dev) : dev(dev)
 {
   smgr = dev->getSceneManager();
-  guienv = dev->getGUIEnvironment();
 }
 
 State::~State()
