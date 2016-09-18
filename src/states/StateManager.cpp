@@ -30,9 +30,10 @@ void StateManager::update(float dt)
   if(!gameState)
     return;
   gameState->update(dt);
+  States curr = gameState->getState();
   if(gameState->getState() != currentState) {
     delete gameState;
-    switch(currentState) {
+    switch(curr) {
       case MENU:
 	gameState = new MenuState(dev);
 	break;
@@ -43,4 +44,5 @@ void StateManager::update(float dt)
 	break;
     }
   }
+  currentState = curr;
 }
