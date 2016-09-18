@@ -6,12 +6,13 @@ using namespace scene;
 using namespace video;
 using namespace io;
 using namespace gui;
-
+#include <iostream>
 
 Npc::Npc(irr::IrrlichtDevice* dev, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map, int id): 
 Entity(dev, mediaPath, position, rotation, map, id)
 {
   initialize();
+  initMessages();
 }
 
 void Npc::setPlayer(Player* play)
@@ -34,6 +35,7 @@ void Npc::initialize()
   entityNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
   entityNode->setName("Sydney");
   entityNode->setTriangleSelector(manager->createTriangleSelector(entityNode));
+  
 
 }
 
@@ -42,22 +44,25 @@ void Npc::update(float delta)
   const irr::core::vector3df playerPos = player->getCamera()->getPosition();
   rotateTowardsPosition(playerPos);
   entityNode->setRotation(rot);
-  if(isPlayerNearby(100)) {
-    //
+  if(inDialogue) {
+    if(!(isPlayerNearby(200))) {
+      exitDialogue();
+    }
   }
- 
   rot = entityNode->getRotation();
   pos = entityNode->getPosition();
 }
 
 bool Npc::onClick(bool MouseEvent) {
   entityNode->setMaterialFlag(irr::video::EMF_LIGHTING, MouseEvent);
-  gui->setVisibleImage(MouseEvent);
-  return false;
+  if(MouseEvent) {
+     dialogue(MouseEvent);
+  }
 }
 
 bool Npc::isPlayerNearby(float range)
 {
+  return player->getCamera()->getPosition().getDistanceFrom(entityNode->getPosition()) < range;
   if(range<=0) {
     return false;
   }
@@ -65,3 +70,41 @@ bool Npc::isPlayerNearby(float range)
   float distance = std::sqrt((std::pow<float>( (playerPos.X - pos.X), 2) - std::pow<float>((playerPos.Y - pos.Y), 2)));
   return std::abs(distance) <= range;
 }
+
+void Npc::initMessages()
+{
+  messages.push_back("Welcome to harambe5");
+  messages.push_back("This is the Labyritnh of Dank Memes");
+  messageIt = 0;
+  inDialogue = false;
+  textAdvanceTimer = device->getTimer()->getTime();
+}
+
+void Npc::dialogue(bool MouseEvent)
+{
+  
+  //std::cout << device->getTimer()->getTime() << "::" << textAdvanceTimer << "::" << device->getTimer()->getTime() - textAdvanceTimer << std::endl;
+  if((device->getTimer()->getTime() - textAdvanceTimer) > 500) {
+  textAdvanceTimer = device->getTimer()->getTime();
+  
+  if(messageIt >= messages.size()) {
+    messageIt = messageIt % messages.size();
+    exitDialogue();
+    return;
+  }
+  inDialogue = true;
+  gui->addStaticText(messages[messageIt++]);
+  gui->setVisibleStaticText(true);
+  }
+}
+
+void Npc::exitDialogue()
+{
+  gui->setVisibleStaticText(false);
+  inDialogue = false;
+  messageIt = 0;
+}
+
+
+
+

@@ -52,6 +52,7 @@ void Enemy::updateAggroState(const irr::core::vector3df playerPos)
 
 bool Enemy::isPlayerNearby(float range)
 {
+  return player->getCamera()->getPosition().getDistanceFrom(entityNode->getPosition()) < range;
   if(range<=0) {
     return false;
   }
