@@ -3,6 +3,7 @@
 
 GameState::GameState(irr::IrrlichtDevice* dev): State(dev)
 {
+  soundManager = new SoundManager();
   currentState = GAME;
   init();
 }
@@ -12,6 +13,8 @@ GameState::~GameState()
 {
   if(level1)
     delete level1;
+  if(soundManager)
+    delete soundManager;
 }
 
 void GameState::init()
@@ -27,12 +30,14 @@ void GameState::init()
     mapNode->setTriangleSelector(selector);    
   }
   level1 = new Level(dev, mapNode);
+  soundManager->startMusic("media/music/flight.mp3", smgr->getActiveCamera()->getPosition());
 }
 
 
 void GameState::update(float dt)
 {
   level1->update(dt);
+  soundManager->updateMusic(smgr->getActiveCamera()->getPosition());
 }
 
 

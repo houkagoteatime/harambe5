@@ -1,6 +1,7 @@
 #pragma once
 #include "State.h"
 #include "../levels/Level.h"
+#include "../SoundManager.h"
 class GameState : public State {
 public:
     GameState(irr::IrrlichtDevice* dev);
@@ -9,4 +10,5 @@ public:
     void init();
 private:
   Level* level1;
+  SoundManager* soundManager;
 };
