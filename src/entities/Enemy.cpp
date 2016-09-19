@@ -13,13 +13,14 @@ void Enemy::setPlayer(Player* play)
 
 void Enemy::initialize()
 {
+  /*
   entityNode->setPosition(pos);
   entityNode->setRotation(rot);
   entityNode->setMD2Animation(irr::scene::EMAT_ATTACK);
   entityNode->setMaterialTexture(0, driver->getTexture("media/faerie2.bmp"));
   entityNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-  entityNode->setName("Sydney");
   entityNode->setTriangleSelector(manager->createTriangleSelector(entityNode));
+  */
   state = STATIONARY;
 }
 
@@ -53,12 +54,6 @@ void Enemy::updateAggroState(const irr::core::vector3df playerPos)
 bool Enemy::isPlayerNearby(float range)
 {
   return player->getCamera()->getPosition().getDistanceFrom(entityNode->getPosition()) < range;
-  if(range<=0) {
-    return false;
-  }
-  const irr::core::vector3df playerPos = player->getCamera()->getPosition();
-  float distance = std::sqrt((std::pow<float>( (playerPos.X - pos.X), 2) - std::pow<float>((playerPos.Y - pos.Y), 2)));
-  return std::abs(distance) <= range;
 }
 
 

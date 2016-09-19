@@ -26,7 +26,5 @@ protected:
   std::vector<std::string> messages;
   int messageIt;
   bool inDialogue;
-  
-  //temporary
   int textAdvanceTimer;
 };

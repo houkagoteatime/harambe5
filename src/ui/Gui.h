@@ -22,14 +22,4 @@ private:
   irr::scene::ISceneManager* manager;
   irr::video::IVideoDriver* driver;
   struct guiElements {};
-  /*
-  class GuiEventReceiver : public irr::IEventReceiver {
-  public:
-    GuiEventReceiver();
-    ~GuiEventReceiver();
-    GuiEventReceiver(Gui * g);
-    virtual bool OnEvent(const irr::SEvent& event);
-    Gui* gui;
-  };
-  */
 };

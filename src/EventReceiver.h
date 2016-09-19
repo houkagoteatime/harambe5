@@ -4,7 +4,6 @@
 class EventReceiver : public irr::IEventReceiver {
 public:
   EventReceiver();
- ~EventReceiver();
   typedef struct MouseState
   {
     irr::core::position2di Position;
@@ -13,6 +12,5 @@ public:
   MouseState m;
   const EventReceiver::MouseState* GetMouseState(void);
   virtual bool OnEvent(const irr::SEvent& event);
-  
   bool start;
 };

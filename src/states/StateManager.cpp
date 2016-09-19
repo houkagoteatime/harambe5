@@ -1,8 +1,6 @@
 #include "StateManager.h"
-#include <iostream>
 StateManager::StateManager(irr::IrrlichtDevice* device) : dev(device)
 {
-  //gameState = new GameState(dev);
   gameState = new MenuState(dev);
   currentState = MENU;
   prevState = MENU;

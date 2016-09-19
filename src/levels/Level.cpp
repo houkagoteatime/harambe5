@@ -24,8 +24,8 @@ void Level::createLevel()
   collMan = device->getSceneManager()->getSceneCollisionManager();
   Gui *gui = new Gui(device);
   player = new Player(device,"media/gun.md2", irr::core::vector3df(0,15,0),irr::core::vector3df(0,0,0), mapNode);
-  Enemy* testEnemy = new Enemy(device,"media/faerie2.md2", irr::core::vector3df(30, 15, 30), irr::core::vector3df(0,0,0), mapNode, 2);
-  Npc* testNpc = new Npc(device,"media/sydney.md2", irr::core::vector3df(-90,-15,-140), irr::core::vector3df(0,0,0), mapNode, 1);
+  Enemy* testEnemy = new Enemy(device,"media/faerie.md2", irr::core::vector3df(30, 15, 30), irr::core::vector3df(0,0,0), mapNode, 7);
+  Npc* testNpc = new Npc(device,"media/sydney.md2", irr::core::vector3df(-90,-15,-140), irr::core::vector3df(0,0,0), mapNode, 5);
   enemies.push_back(testEnemy);
   npcs.push_back(testNpc);
   int8_t i;
@@ -68,7 +68,8 @@ void Level::handlePlayerClick()
 	  player->getBillBoard()->setPosition(intersection);
 	  int j = 0;
 	  for(j = 0; j < npcs.size(); j++) {
-	    if(selectedSceneNode = npcs[j]->getEntityNode()) {
+	    //if(selectedSceneNode = npcs[j]->getEntityNode()) {
+	    if(selectedSceneNode == npcs[j]->getEntityNode()) {
 	      npcs[j]->onClick(player->getEventReceiver()->GetMouseState()->LeftButtonDown);
 	    }
 	  }

@@ -1,5 +1,4 @@
 #include "Gui.h"
-#include <iostream>
 
 struct guiElements
 {
@@ -44,7 +43,6 @@ void Gui::loadGuiElements()
   }
   addImage();
   addStartButton();
-  addStaticText("haram");
 }
 
 void Gui::setVisibleStaticText(bool visible)
@@ -64,6 +62,7 @@ void Gui::addStaticText(std::string text)
 					   true);
   elements.staticText->setMinSize(irr::core::dimension2d<irr::u32>(20,20));
   elements.staticText->setBackgroundColor(irr::video::SColor(192,192,192,192));
+  elements.staticText->setWordWrap(true);
   elements.staticText->setVisible(false);
 }
 
@@ -75,7 +74,6 @@ void Gui::setVisibleImage(bool visible)
 
 void Gui::addImage()
 {
-  //creates menuMonkeys
   //elements.Image = gui->addImage(driver->getTexture("media/monkey.png"),irr::core::position2d<int>(20,20));
   setVisibleImage(false);
 }
@@ -84,8 +82,8 @@ void Gui::addStartButton()
 {
   //999 = id
   elements.startButton = gui->addButton(
-    irr::core::rect<irr::s32>((width/3) + 20, height * 0.4, (width*0.666), height * 0.5), 
-    0, 999, L"START", L"Enter the dungeon of Dank MEmes");
+  irr::core::rect<irr::s32>((width/3) + 20, height * 0.4, (width*0.666), height * 0.5), 
+  0, 999, L"START", L"Enter the dungeon of Dank MEmes");
   setVisibleStartButton(false);
 }
 
@@ -98,44 +96,3 @@ void Gui::clear()
 {
   elements.drop();
 }
-/*
-Gui::GuiEventReceiver::GuiEventReceiver(Gui * g)
-{
-  gui = g;
-}
-
-bool Gui::GuiEventReceiver::OnEvent(const irr::SEvent& event)
-{
-  if (event.EventType == irr::EET_GUI_EVENT)
-		{
-			irr::s32 id = event.GUIEvent.Caller->getID();
-
-			switch(event.GUIEvent.EventType)
-			{
-			  case EGET_BUTTON_CLICKED:
-				switch(id)
-				{
-				case 999:
-					gui->start = true;
-					std::cout << "true" << std::endl;
-					return true;
-				default:
-				break;
-				}
-			}
-		}
-
-		return false;
-}
-
-Gui::GuiEventReceiver::GuiEventReceiver()
-{
-
-}
-
-Gui::GuiEventReceiver::~GuiEventReceiver()
-{
-
-}
-
-*/

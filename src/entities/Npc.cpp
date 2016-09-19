@@ -6,7 +6,6 @@ using namespace scene;
 using namespace video;
 using namespace io;
 using namespace gui;
-#include <iostream>
 
 Npc::Npc(irr::IrrlichtDevice* dev, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map, int id): 
 Entity(dev, mediaPath, position, rotation, map, id)
@@ -27,15 +26,15 @@ void Npc::setGui(Gui* gui)
 
 void Npc::initialize()
 {
+  /*
   entityNode->setPosition(irr::core::vector3df(-90,-15,-140)); // Put its feet on the floor.
   entityNode->setPosition(pos);
   entityNode->setRotation(rot);
   entityNode->setMD2Animation(irr::scene::EMAT_ATTACK);
   entityNode->setMaterialTexture(0, driver->getTexture("media/sydney.bmp"));
   entityNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-  entityNode->setName("Sydney");
   entityNode->setTriangleSelector(manager->createTriangleSelector(entityNode));
-  
+  */
 
 }
 
@@ -63,18 +62,11 @@ bool Npc::onClick(bool MouseEvent) {
 bool Npc::isPlayerNearby(float range)
 {
   return player->getCamera()->getPosition().getDistanceFrom(entityNode->getPosition()) < range;
-  if(range<=0) {
-    return false;
-  }
-  const irr::core::vector3df playerPos = player->getCamera()->getPosition();
-  float distance = std::sqrt((std::pow<float>( (playerPos.X - pos.X), 2) - std::pow<float>((playerPos.Y - pos.Y), 2)));
-  return std::abs(distance) <= range;
 }
 
 void Npc::initMessages()
 {
   messages.push_back("Welcome to harambe5");
-  //messages.push_back("This is the Labyritnh of Dank Memes");
   messages.push_back("H");
   messages.push_back("A");
   messages.push_back("R");
@@ -87,9 +79,7 @@ void Npc::initMessages()
 
 void Npc::dialogue(bool MouseEvent)
 {
-  
-  //std::cout << device->getTimer()->getTime() << "::" << textAdvanceTimer << "::" << device->getTimer()->getTime() - textAdvanceTimer << std::endl;
-  if((device->getTimer()->getTime() - textAdvanceTimer) > 500) {
+ if((device->getTimer()->getTime() - textAdvanceTimer) > 500) {
   textAdvanceTimer = device->getTimer()->getTime();
   
   if(messageIt >= messages.size()) {

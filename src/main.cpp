@@ -18,12 +18,6 @@ using namespace gui;
 #pragma comment(lib, "Irrlicht.lib")
 #pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
 #endif
-enum
-{
-	ID_IsNotPickable = 0,
-	IDFlag_IsPickable = 1,
-	IDFlag_IsHighlightable = 2
-};
 
 int main(int argc, char **argv) {
 

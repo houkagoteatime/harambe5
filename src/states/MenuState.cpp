@@ -29,7 +29,6 @@ void MenuState::init()
 void MenuState::update(float dt)
 {
   if(receiver->start == true) {
-   //printf("%d",1);
    currentState = GAME; 
    gui->clear();
   }
