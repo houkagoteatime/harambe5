@@ -34,6 +34,11 @@ Gui::Gui(irr::IrrlichtDevice* dev):device(dev)
   loadGuiElements();
 }
 
+Gui::~Gui()
+{
+  elements.drop();
+}
+
 void Gui::loadGuiElements()
 {
   elements.Image = gui->addImage(driver->getTexture("media/MonkeyHeaven.png"),irr::core::position2d<int>(0,0));
@@ -90,9 +95,4 @@ void Gui::addStartButton()
 void Gui::setVisibleStartButton(bool visible)
 {
   elements.startButton->setVisible(visible);
-}
-
-void Gui::clear() 
-{
-  elements.drop();
 }

@@ -30,7 +30,7 @@ void GameState::init()
     mapNode->setTriangleSelector(selector);    
   }
   level1 = new Level(dev, mapNode);
-  soundManager->startMusic("media/music/flight.mp3", smgr->getActiveCamera()->getPosition());
+  soundManager->startMusic("media/music/aomine.mp3", smgr->getActiveCamera()->getPosition());
 }
 
 

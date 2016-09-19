@@ -6,9 +6,9 @@ class Gui {
   
 public:
   Gui(irr::IrrlichtDevice* dev);
+  ~Gui();
   void setVisibleImage(bool visible);
   void setVisibleStaticText(bool visible);
-  void clear();
   void loadGuiElements();
   void addStaticText(std::string s);
   void addStartButton();

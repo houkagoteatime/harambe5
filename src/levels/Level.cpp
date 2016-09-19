@@ -17,12 +17,14 @@ Level::~Level()
 {
   if(player)
     delete player;
+  if(gui)
+    delete gui;
 }
 
 void Level::createLevel()
 {
   collMan = device->getSceneManager()->getSceneCollisionManager();
-  Gui *gui = new Gui(device);
+  gui = new Gui(device);
   player = new Player(device,"media/gun.md2", irr::core::vector3df(0,15,0),irr::core::vector3df(0,0,0), mapNode);
   Enemy* testEnemy = new Enemy(device,"media/faerie.md2", irr::core::vector3df(30, 15, 30), irr::core::vector3df(0,0,0), mapNode, 7);
   Npc* testNpc = new Npc(device,"media/sydney.md2", irr::core::vector3df(-90,-15,-140), irr::core::vector3df(0,0,0), mapNode, 5);

@@ -4,6 +4,7 @@
 #include "../entities/Player.h"
 #include "../entities/Enemy.h"
 #include "../entities/Npc.h"
+#include "../ui/Gui.h"
 #include <vector>
 class Level {
 public:
@@ -16,6 +17,7 @@ private:
   std::vector<Enemy*> enemies;
   std::vector<Npc*> npcs;
   Player *player;
+  Gui* gui;
   float prevTime;
   irr::IrrlichtDevice* device;
   irr::scene::IMeshSceneNode* mapNode;

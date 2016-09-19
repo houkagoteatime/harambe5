@@ -14,7 +14,6 @@ MenuState::MenuState(irr::IrrlichtDevice* dev): State(dev)
 MenuState::~MenuState()
 {
   if(gui) {
-    gui->clear();
     delete gui;
   }
 }
@@ -30,6 +29,5 @@ void MenuState::update(float dt)
 {
   if(receiver->start == true) {
    currentState = GAME; 
-   gui->clear();
   }
 }
