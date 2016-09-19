@@ -33,15 +33,11 @@ Gui::Gui(irr::IrrlichtDevice* dev):device(dev)
   width = driver->getScreenSize().Width;
   
   loadGuiElements();
-  
-  //initialized as Gui::GuiEventReceiver
-  //but doesnt it extend irr::IEventReceiver
-  //Gui::GuiEventReceiver receiver();
-  //device->setEventReceiver(receiver);
 }
 
 void Gui::loadGuiElements()
 {
+  elements.Image = gui->addImage(driver->getTexture("media/MonkeyHeaven.png"),irr::core::position2d<int>(0,0));
   irr::gui::IGUIFont* font = gui->getFont("media/bigfont.png");
   if(font) {
     gui->getSkin()->setFont(font);
@@ -79,7 +75,8 @@ void Gui::setVisibleImage(bool visible)
 
 void Gui::addImage()
 {
-  elements.Image = gui->addImage(driver->getTexture("media/irrlichtlogo2.png"),irr::core::position2d<int>(20,20));
+  //creates menuMonkeys
+  //elements.Image = gui->addImage(driver->getTexture("media/monkey.png"),irr::core::position2d<int>(20,20));
   setVisibleImage(false);
 }
 

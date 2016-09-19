@@ -74,7 +74,12 @@ bool Npc::isPlayerNearby(float range)
 void Npc::initMessages()
 {
   messages.push_back("Welcome to harambe5");
-  messages.push_back("This is the Labyritnh of Dank Memes");
+  //messages.push_back("This is the Labyritnh of Dank Memes");
+  messages.push_back("H");
+  messages.push_back("A");
+  messages.push_back("R");
+  messages.push_back("A");
+  messages.push_back("M");
   messageIt = 0;
   inDialogue = false;
   textAdvanceTimer = device->getTimer()->getTime();

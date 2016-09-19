@@ -6,7 +6,12 @@ Entity::Entity(irr::IrrlichtDevice* dev, const std::string& mediaPath,irr::core:
 {
   manager = device->getSceneManager();
   driver = device->getVideoDriver();
-  mesh = manager->getMesh("media/sydney.md2");
+  //mesh = manager->getMesh(mediaPath.c_str());
+  //why can pass in param
+  mesh = manager->getMesh(irr::core::string<irr::fschar_t>(mediaPath.c_str()));
+  if(!mesh) {
+    mesh = manager->getMesh("media/sydney.md2");
+  }
   entityNode = manager->addAnimatedMeshSceneNode(mesh, 0, id);
   gui = device->getGUIEnvironment();
   addCollision();

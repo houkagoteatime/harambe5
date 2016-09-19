@@ -37,7 +37,7 @@ void GameState::init()
 void GameState::update(float dt)
 {
   level1->update(dt);
-  soundManager->updateMusic(smgr->getActiveCamera()->getPosition());
+  //soundManager->updateMusic(smgr->getActiveCamera()->getPosition());
 }
 
 
