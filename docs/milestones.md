@@ -10,7 +10,7 @@ Milestones
 - [ ] 8: Implement basic combat for player: range ??, melee. Will need to discuss core mechanics
 - [ ] 9: Create different types of enemies with different combat styles
 - [ ] 10: Extend functionality of npcs, create multiple ones with different dialogues
-- [ ] 11: Add musicsal
+- [x] 11: Add music
 - [ ] 12: Create in game objects: health pots, key to unlock room 
 
 Rest tbd 
