@@ -10,8 +10,8 @@ Entity::Entity(irr::IrrlichtDevice* dev, const std::string& mediaPath,irr::core:
   if(!mesh) {
     mesh = manager->getMesh("media/sydney.md2");
   }
-  //entityNode = manager->addAnimatedMeshSceneNode(mesh, 0, id);
-  entityNode = manager->addAnimatedMeshSceneNode(mesh, 0);
+  entityNode = manager->addAnimatedMeshSceneNode(mesh, 0, id);
+  //entityNode = manager->addAnimatedMeshSceneNode(mesh, 0);
   gui = device->getGUIEnvironment();
   if(id != -1) {
   entityNode->setPosition(pos);

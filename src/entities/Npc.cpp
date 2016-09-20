@@ -26,16 +26,7 @@ void Npc::setGui(Gui* gui)
 
 void Npc::initialize()
 {
-  /*
-  entityNode->setPosition(irr::core::vector3df(-90,-15,-140)); // Put its feet on the floor.
-  entityNode->setPosition(pos);
-  entityNode->setRotation(rot);
-  entityNode->setMD2Animation(irr::scene::EMAT_ATTACK);
-  entityNode->setMaterialTexture(0, driver->getTexture("media/sydney.bmp"));
-  entityNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-  entityNode->setTriangleSelector(manager->createTriangleSelector(entityNode));
-  */
-
+  
 }
 
 void Npc::update(float delta)
@@ -88,8 +79,7 @@ void Npc::dialogue(bool MouseEvent)
     return;
   }
   inDialogue = true;
-  gui->addStaticText(messages[messageIt++]);
-  gui->setVisibleStaticText(true);
+  gui->addStaticText(messages[messageIt++], true);
   }
 }
 

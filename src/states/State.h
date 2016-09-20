@@ -1,6 +1,6 @@
 #pragma once
 #include <irrlicht.h>
-#include "../ui/Gui.h"
+#include "../ui/MenuGui.h"
 enum States {
   MENU,
   GAME
@@ -11,7 +11,7 @@ protected :
     States currentState;
     irr::IrrlichtDevice* dev;
     irr::scene::ISceneManager* smgr;
-    Gui* gui;
+    MenuGui* menuGui;
 public:
   State(irr::IrrlichtDevice* dev);
   virtual ~State();

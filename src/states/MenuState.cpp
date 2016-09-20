@@ -3,9 +3,9 @@
 MenuState::MenuState(irr::IrrlichtDevice* dev): State(dev)
 {
   //@@@@@@@@@@@@@@@@@@@@@@@
-  receiver = new EventReceiver();
-  gui = new Gui(dev);
-  dev->setEventReceiver(receiver);
+  guiReceiver = new GuiEventReceiver();
+  menuGui = new MenuGui(dev);
+  dev->setEventReceiver(guiReceiver);
   currentState = MENU;
   init();
 }
@@ -13,21 +13,20 @@ MenuState::MenuState(irr::IrrlichtDevice* dev): State(dev)
 
 MenuState::~MenuState()
 {
-  if(gui) {
-    delete gui;
+  if(menuGui) {
+    delete menuGui;
   }
 }
 
 void MenuState::init()
 {
- gui->setVisibleImage(true);
- gui->setVisibleStartButton(true);
+  
 }
 
 
 void MenuState::update(float dt)
 {
-  if(receiver->start == true) {
+  if(guiReceiver->GuiVariables.start == true) {
    currentState = GAME; 
   }
 }

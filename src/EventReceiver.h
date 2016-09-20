@@ -12,5 +12,4 @@ public:
   MouseState m;
   const EventReceiver::MouseState* GetMouseState(void);
   virtual bool OnEvent(const irr::SEvent& event);
-  bool start;
 };
