@@ -8,6 +8,7 @@ public:
   {
     irr::core::position2di Position;
     bool LeftButtonDown;
+    bool spaceKeyDown;
   }MouseState;
   MouseState m;
   const EventReceiver::MouseState* GetMouseState(void);

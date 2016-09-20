@@ -2,6 +2,7 @@
 EventReceiver::EventReceiver()
 {
   m.LeftButtonDown = false;
+  m.spaceKeyDown = false;
 }
 
 const EventReceiver::MouseState* EventReceiver::GetMouseState(void)
@@ -13,6 +14,13 @@ const EventReceiver::MouseState* EventReceiver::GetMouseState(void)
 bool EventReceiver::OnEvent(const irr::SEvent& event)
 {
   
+  //m.spaceKeyDown = false;
+  //if(event.EventType == irr::EET_KEY_INPUT_EVENT)
+ // {
+    //m.spaceKeyDown = event.KeyInput.Key == irr::KEY_SPACE;
+  m.spaceKeyDown = true;
+ // }
+ 
   if (event.EventType == irr::EET_MOUSE_INPUT_EVENT)
   {
   switch(event.MouseInput.Event)

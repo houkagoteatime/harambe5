@@ -3,7 +3,7 @@
 
 Player::Player(irr::IrrlichtDevice* dev, const std::string& mediaPath,  irr::core::vector3df position,  irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map) : 
 	       Entity(dev, mediaPath, position, rotation, map, -1)
-{
+	       {
   receiver = new EventReceiver();
   dev->setEventReceiver(receiver);
   initialize();
@@ -16,11 +16,25 @@ Player::~Player()
 }
 
 void Player::update(float delta) {
- 
+  
+  
+  //if((device->getTimer()->getTime() - jumpDelay) > 3000) {
+  //  jumpDelay = device->getTimer()->getTime();
+  //if(receiver->m.spaceKeyDown) {
+     jump();
+  //}
+  //}
+}
+
+void Player::jump()
+{
+    camera->setPosition(irr::core::vector3df(camera->getPosition().X, camera->getPosition().Y + 10, camera->getPosition().Z));
+  
 }
 
 void Player::initialize() 
 {
+  jumpDelay = device->getTimer()->getTime();
   driver = device->getVideoDriver();
   irr::SKeyMap keys[6];
   keys[0].Action = irr::EKA_MOVE_FORWARD;
