@@ -25,9 +25,9 @@ void Level::createLevel()
 {
   collMan = device->getSceneManager()->getSceneCollisionManager();
   gui = new Gui(device);
-  player = new Player(device,"media/gun.md2", irr::core::vector3df(0,15,0),irr::core::vector3df(0,0,0), mapNode);
-  Enemy* testEnemy = new Enemy(device,"media/faerie.md2", irr::core::vector3df(30, 15, 30), irr::core::vector3df(0,0,0), mapNode, 7);
-  Npc* testNpc = new Npc(device,"media/sydney.md2", irr::core::vector3df(-90,-15,-140), irr::core::vector3df(0,0,0), mapNode, 5);
+  player = new Player(this,"media/gun.md2", irr::core::vector3df(0,15,0),irr::core::vector3df(0,0,0), mapNode);
+  Enemy* testEnemy = new Enemy(this,"media/faerie.md2", irr::core::vector3df(30, 15, 30), irr::core::vector3df(0,0,0), mapNode, 7);
+  Npc* testNpc = new Npc(this,"media/sydney.md2", irr::core::vector3df(-90,-15,-140), irr::core::vector3df(0,0,0), mapNode, 5);
   enemies.push_back(testEnemy);
   npcs.push_back(testNpc);
   int8_t i;
@@ -52,6 +52,15 @@ void Level::update(float dt)
       npcs.at(i)->update(dt);
     }
     
+}
+
+void Level::updateProjectiles(float dt)
+{/*
+  int8_t i;
+  for(i = 0; i<projectiles.size(); i++) {
+    projectiles.at(i)->update(dt);
+  }
+  */
 }
 
 void Level::handlePlayerClick()
@@ -79,3 +88,7 @@ void Level::handlePlayerClick()
   }
 }
 
+irr::IrrlichtDevice* Level::getDevice()
+{
+  return device;
+}

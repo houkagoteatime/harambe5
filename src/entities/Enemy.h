@@ -3,6 +3,7 @@
 #include <irrlicht.h>
 #include "Entity.h"
 #include "Player.h"
+#include "../levels/Level.h"
 class Enemy : public Entity {
 public:
   Enemy(irr::IrrlichtDevice* dev, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map, int id);

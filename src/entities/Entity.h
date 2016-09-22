@@ -2,10 +2,10 @@
 
 #include <irrlicht.h>
 #include <string>
-
+#include "../levels/Level.h"
 class Entity {
 public:
-  Entity(irr::IrrlichtDevice* dev, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map, int id);
+  Entity(Level* level, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map, int id);
   virtual void initialize() = 0;
   virtual void update(float delta) = 0;
   virtual void addCollision();
@@ -27,4 +27,5 @@ protected:
   irr::scene::IAnimatedMesh* mesh;
   irr::scene::IMeshSceneNode* mapNode;
   irr::scene::IAnimatedMeshSceneNode* entityNode;
+  Level* lev;
 };

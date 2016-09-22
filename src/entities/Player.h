@@ -1,13 +1,16 @@
 #pragma once
 #include "Entity.h"
 #include "../EventReceiver.h"
+//#include "../weapons/Projectile.h"
+#include "../levels/Level.h"
 class Player : public Entity  {
 public:
-  Player(irr::IrrlichtDevice* dev, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map);
+  Player(Level* level, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map);
   ~Player();
   virtual void initialize();
   virtual void update(float delta);
   virtual void addCollision();
+  void attack();
   void addBillboard();
   irr::scene::IBillboardSceneNode* getBillBoard();
   EventReceiver* getEventReceiver();

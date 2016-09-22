@@ -1,8 +1,9 @@
+#include "../levels/Level.h"
 #include "Entity.h"
 #include <cmath>
 #include <iostream>
-Entity::Entity(irr::IrrlichtDevice* dev, const std::string& mediaPath,irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map, int id) 
-		: device(dev),path(mediaPath), pos(position), rot(rotation),mapNode(map)
+Entity::Entity(Level* level, const std::string& mediaPath,irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map, int id) 
+		: lev(level),path(mediaPath), pos(position), rot(rotation),mapNode(map)
 {
   manager = device->getSceneManager();
   driver = device->getVideoDriver();

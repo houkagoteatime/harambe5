@@ -1,12 +1,14 @@
 
 #include "Player.h"
 
-Player::Player(irr::IrrlichtDevice* dev, const std::string& mediaPath,  irr::core::vector3df position,  irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map) : 
-	       Entity(dev, mediaPath, position, rotation, map, -1)
+Player::Player(Level* level, const std::string& mediaPath,  irr::core::vector3df position,  irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map) : 
+	       Entity(level, mediaPath, position, rotation, map, -1)
 	       {
   receiver = new EventReceiver();
-  dev->setEventReceiver(receiver);
+  device = level->getDevice();
+  device->setEventReceiver(receiver);
   initialize();
+  jumpDelay = 0;
 }
 
 Player::~Player()
@@ -17,19 +19,26 @@ Player::~Player()
 
 void Player::update(float delta) {
   
-  
-  //if((device->getTimer()->getTime() - jumpDelay) > 3000) {
-  //  jumpDelay = device->getTimer()->getTime();
-  //if(receiver->m.spaceKeyDown) {
-     jump();
-  //}
-  //}
+ if((device->getTimer()->getTime() - jumpDelay) > 2000) {
+  if(receiver->m.spaceKeyDown) {
+    jumpDelay = device->getTimer()->getTime();
+    jump();
+  }
+ }
+ 
 }
 
 void Player::jump()
 {
-    camera->setPosition(irr::core::vector3df(camera->getPosition().X, camera->getPosition().Y + 10, camera->getPosition().Z));
+    camera->setPosition(irr::core::vector3df(camera->getPosition().X, camera->getPosition().Y + 5, camera->getPosition().Z));
   
+}
+
+void Player::attack()
+{
+  if(receiver->GetMouseState()->LeftButtonDown) {
+     
+  }
 }
 
 void Player::initialize() 
@@ -49,7 +58,7 @@ void Player::initialize()
   keys[4].Action = irr::EKA_JUMP_UP;
   keys[5].KeyCode = irr::KEY_SHIFT;
   keys[5].Action = irr::EKA_CROUCH;
-  camera = manager->addCameraSceneNodeFPS(0, 100.0f, .3f, -1, keys, 4, true, 3.f);
+  camera = manager->addCameraSceneNodeFPS(0, 100.0f, .3f, -1, keys, 6, false, 10.0f);
   if(camera) {
     camera->setPosition(pos);
     camera->setRotation(rot);
@@ -66,7 +75,7 @@ void Player::initialize()
 
 void Player::addCollision()
 {
-  irr::scene::ISceneNodeAnimator* anim = manager->createCollisionResponseAnimator( mapNode->getTriangleSelector(), camera, irr::core::vector3df(30,50,30),irr::core::vector3df(0,-10,0),irr::core::vector3df(0,30,0),0.0005f);
+  irr::scene::ISceneNodeAnimator* anim = manager->createCollisionResponseAnimator( mapNode->getTriangleSelector(), camera, irr::core::vector3df(30,50,30),irr::core::vector3df(0,-9.8,0),irr::core::vector3df(0,30,0),0.0005f);
   camera->addAnimator(anim);
   anim->drop();
   device->getCursorControl()->setVisible(false);
