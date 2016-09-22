@@ -1,11 +1,9 @@
-
 #include "Player.h"
 
 Player::Player(Level* level, const std::string& mediaPath,  irr::core::vector3df position,  irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map) : 
 	       Entity(level, mediaPath, position, rotation, map, -1)
 	       {
   receiver = new EventReceiver();
-  device = level->getDevice();
   device->setEventReceiver(receiver);
   initialize();
   jumpDelay = 0;

@@ -1,8 +1,8 @@
 #pragma once
 #include "irrlicht.h"
-#include "../entities/Player.h"
-#include "../entities/Enemy.h"
-#include "../entities/Npc.h"
+class Player;
+class Enemy;
+class Npc;
 #include "../ui/Gui.h"
 //#include "../weapons/Projectile.h"
 #include <vector>

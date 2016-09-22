@@ -1,4 +1,8 @@
 #include "Level.h"
+#include "../entities/Player.h"
+#include "../entities/Enemy.h"
+#include "../entities/Npc.h"
+#include "../entities/Entity.h"
 #include "../ui/Gui.h"
 enum
 {

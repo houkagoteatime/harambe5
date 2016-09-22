@@ -1,14 +1,10 @@
 #include "Npc.h"
+#include "Entity.h"
+#include "../levels/Level.h"
 #include <cmath>
-using namespace irr;
-using namespace core;
-using namespace scene;
-using namespace video;
-using namespace io;
-using namespace gui;
 
-Npc::Npc(irr::IrrlichtDevice* dev, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map, int id): 
-Entity(dev, mediaPath, position, rotation, map, id)
+Npc::Npc(Level* level, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map, int id): 
+Entity(level, mediaPath, position, rotation, map, id)
 {
   initialize();
   initMessages();

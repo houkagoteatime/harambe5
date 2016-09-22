@@ -3,8 +3,9 @@
 #include <cmath>
 #include <iostream>
 Entity::Entity(Level* level, const std::string& mediaPath,irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map, int id) 
-		: lev(level),path(mediaPath), pos(position), rot(rotation),mapNode(map)
+		: level(level),path(mediaPath), pos(position), rot(rotation),mapNode(map)
 {
+  device =level->getDevice();
   manager = device->getSceneManager();
   driver = device->getVideoDriver();
   mesh = manager->getMesh(mediaPath.c_str());
@@ -23,6 +24,11 @@ Entity::Entity(Level* level, const std::string& mediaPath,irr::core::vector3df p
   entityNode->setTriangleSelector(manager->createTriangleSelector(entityNode));
   addCollision();
   }
+}
+
+irr::scene::IAnimatedMeshSceneNode* Entity::getEntityNode()
+{
+  return entityNode;
 }
 
 void Entity::addCollision()

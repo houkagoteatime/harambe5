@@ -1,7 +1,8 @@
 #include "Enemy.h"
+#include "Player.h"
 #include <cmath>
-Enemy::Enemy(irr::IrrlichtDevice* dev, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map, int id): 
-Entity(dev, mediaPath, position, rotation, map, id)
+Enemy::Enemy(Level* level, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map, int id): 
+Entity(level, mediaPath, position, rotation, map, id)
 {
 	initialize();
 }

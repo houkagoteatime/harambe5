@@ -1,8 +1,8 @@
 #pragma once
-
 #include <irrlicht.h>
 #include <string>
 #include "../levels/Level.h"
+class Level;
 class Entity {
 public:
   Entity(Level* level, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map, int id);
@@ -10,10 +10,9 @@ public:
   virtual void update(float delta) = 0;
   virtual void addCollision();
   void rotateTowardsPosition(irr::core::vector3df target);
-  irr::scene::IAnimatedMeshSceneNode* getEntityNode() { 
-    return entityNode;
-  };
+  irr::scene::IAnimatedMeshSceneNode* getEntityNode();
 protected:
+  Level* level;
   std::string path;
   const static float speed = 1.0;
   int id;
@@ -27,5 +26,4 @@ protected:
   irr::scene::IAnimatedMesh* mesh;
   irr::scene::IMeshSceneNode* mapNode;
   irr::scene::IAnimatedMeshSceneNode* entityNode;
-  Level* lev;
 };
