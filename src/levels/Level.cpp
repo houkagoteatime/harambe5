@@ -4,6 +4,8 @@
 #include "../entities/Npc.h"
 #include "../entities/Entity.h"
 #include "../ui/Gui.h"
+
+#include "../scenes/Level1Scene.h"
 enum
 {
 	ID_IsNotPickable = 0,
@@ -42,10 +44,18 @@ void Level::createLevel()
     npcs.at(i)->setPlayer(player);
     npcs.at(i)->setGui(gui);
   }
+  scene = new Level1Scene(this);
+  
 }
 
 void Level::update(float dt)
 {
+  scene->startScene();
+  if(scene->sceneStarted) {
+  if(player->getEventReceiver()->GetMouseState()->LeftButtonDown == true) {
+   device->getSceneManager()->setActiveCamera(player->getCamera()); 
+  }
+  }
     player->update(dt);
     handlePlayerClick();
     int8_t i;

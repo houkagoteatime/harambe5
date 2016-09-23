@@ -29,7 +29,7 @@ void Player::update(float delta) {
 
 void Player::jump()
 {
-    camera->setPosition(irr::core::vector3df(camera->getPosition().X, camera->getPosition().Y + 3.5f, camera->getPosition().Z));
+    camera->setPosition(irr::core::vector3df(camera->getPosition().X, camera->getPosition().Y + 0.000025, camera->getPosition().Z));
 }
 
 void Player::attack()

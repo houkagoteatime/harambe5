@@ -6,6 +6,7 @@
 #include "../ui/Gui.h"
 #include <vector>
 #include <string>
+class Entity;
 class Npc : public Entity {
 public:
   Npc(Level* level, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map, int id);

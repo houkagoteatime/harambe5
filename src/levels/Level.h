@@ -6,6 +6,7 @@ class Npc;
 #include "../ui/Gui.h"
 //#include "../weapons/Projectile.h"
 #include <vector>
+class Level1Scene;
 class Level {
 public:
   Level(irr::IrrlichtDevice* dev,irr::scene::IMeshSceneNode* map);
@@ -15,6 +16,7 @@ public:
   void updateProjectiles(float dt);
   irr::IrrlichtDevice* getDevice();
   void handlePlayerClick();
+  Level1Scene* scene;
 private:
   std::vector<Enemy*> enemies;
   std::vector<Npc*> npcs;

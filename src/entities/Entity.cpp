@@ -1,4 +1,3 @@
-#include "../levels/Level.h"
 #include "Entity.h"
 #include <cmath>
 #include <iostream>
@@ -8,6 +7,7 @@ Entity::Entity(Level* level, const std::string& mediaPath,irr::core::vector3df p
   device =level->getDevice();
   manager = device->getSceneManager();
   driver = device->getVideoDriver();
+  device = level->getDevice();
   mesh = manager->getMesh(mediaPath.c_str());
   if(!mesh) {
     mesh = manager->getMesh("media/sydney.md2");
