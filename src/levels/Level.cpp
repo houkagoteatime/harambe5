@@ -6,6 +6,7 @@
 #include "../ui/Gui.h"
 
 #include "../scenes/Level1Scene.h"
+#include <iostream>
 enum
 {
 	ID_IsNotPickable = 0,
@@ -50,12 +51,21 @@ void Level::createLevel()
 
 void Level::update(float dt)
 {
+  std::cout << player->getCamera()->getPosition().X  << ","
+  << player->getCamera()->getPosition().Y << "," 
+  << player->getCamera()->getPosition().Z << std::endl;
   scene->startScene();
   if(scene->sceneStarted) {
   if(player->getEventReceiver()->GetMouseState()->LeftButtonDown == true) {
    device->getSceneManager()->setActiveCamera(player->getCamera()); 
   }
   }
+  
+  if(scene->sa->hasFinished()) {
+    device->getSceneManager()->setActiveCamera(player->getCamera()); 
+    scene->sceneStarted = true;
+  }
+  
     player->update(dt);
     handlePlayerClick();
     int8_t i;

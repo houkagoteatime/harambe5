@@ -74,7 +74,7 @@ void Player::initialize()
 void Player::addCollision()
 {
   irr::scene::ISceneNodeAnimator* anim = manager->createCollisionResponseAnimator( mapNode->getTriangleSelector(), camera, irr::core::vector3df(30,50,30),irr::core::vector3df(0,-9.8,0),irr::core::vector3df(0,30,0),0.0005f);
-  camera->addAnimator(anim);
+  //camera->addAnimator(anim);
   anim->drop();
   device->getCursorControl()->setVisible(false);
 }
