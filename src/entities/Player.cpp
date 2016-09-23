@@ -5,6 +5,7 @@ Player::Player(Level* level, const std::string& mediaPath,  irr::core::vector3df
 	       {
   receiver = new EventReceiver();
   device->setEventReceiver(receiver);
+  device->getTimer()->setTime(0);
   initialize();
   jumpDelay = 0;
 }
@@ -17,19 +18,18 @@ Player::~Player()
 
 void Player::update(float delta) {
   
- if((device->getTimer()->getTime() - jumpDelay) > 2000) {
+ //if((device->getTimer()->getTime() - jumpDelay) > 2000) {
   if(receiver->m.spaceKeyDown) {
-    jumpDelay = device->getTimer()->getTime();
+    //jumpDelay = device->getTimer()->getTime();
     jump();
   }
- }
+ //}
  
 }
 
 void Player::jump()
 {
-    camera->setPosition(irr::core::vector3df(camera->getPosition().X, camera->getPosition().Y + 5, camera->getPosition().Z));
-  
+    camera->setPosition(irr::core::vector3df(camera->getPosition().X, camera->getPosition().Y + 3.5f, camera->getPosition().Z));
 }
 
 void Player::attack()

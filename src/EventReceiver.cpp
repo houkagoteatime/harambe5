@@ -18,7 +18,7 @@ bool EventReceiver::OnEvent(const irr::SEvent& event)
   //if(event.EventType == irr::EET_KEY_INPUT_EVENT)
  // {
     //m.spaceKeyDown = event.KeyInput.Key == irr::KEY_SPACE;
-  m.spaceKeyDown = false;
+  //m.spaceKeyDown = false;
  // }
  
   if (event.EventType == irr::EET_MOUSE_INPUT_EVENT)
