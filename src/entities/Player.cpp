@@ -29,7 +29,7 @@ void Player::update(float delta) {
 
 void Player::jump()
 {
-    camera->setPosition(irr::core::vector3df(camera->getPosition().X, camera->getPosition().Y + 0.000025, camera->getPosition().Z));
+    camera->setPosition(irr::core::vector3df(camera->getPosition().X, camera->getPosition().Y + 0.0000001, camera->getPosition().Z));
 }
 
 void Player::attack()
@@ -56,7 +56,7 @@ void Player::initialize()
   keys[4].Action = irr::EKA_JUMP_UP;
   keys[5].KeyCode = irr::KEY_SHIFT;
   keys[5].Action = irr::EKA_CROUCH;
-  camera = manager->addCameraSceneNodeFPS(0, 100.0f, .3f, -1, keys, 6, false, 10.0f);
+  camera = manager->addCameraSceneNodeFPS(0, 100.0f, .3f, -1, keys, 6, false, 3.f);
   if(camera) {
     camera->setPosition(pos);
     camera->setRotation(rot);
@@ -74,7 +74,7 @@ void Player::initialize()
 void Player::addCollision()
 {
   irr::scene::ISceneNodeAnimator* anim = manager->createCollisionResponseAnimator( mapNode->getTriangleSelector(), camera, irr::core::vector3df(30,50,30),irr::core::vector3df(0,-9.8,0),irr::core::vector3df(0,30,0),0.0005f);
-  //camera->addAnimator(anim);
+  camera->addAnimator(anim);
   anim->drop();
   device->getCursorControl()->setVisible(false);
 }
