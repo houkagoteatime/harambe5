@@ -75,16 +75,24 @@ void Level::update(float dt)
     for(i = 0; i<npcs.size(); i++) {
       npcs.at(i)->update(dt);
     }
-    
+    updateProjectiles(dt);
+}
+
+void Level::addProjectile(Projectile* proj)
+{
+  projectiles.push_back(proj);
 }
 
 void Level::updateProjectiles(float dt)
-{/*
+{
   int8_t i;
   for(i = 0; i<projectiles.size(); i++) {
-    projectiles.at(i)->update(dt);
+    //projectiles.at(i)->update(dt);
+    if(projectiles[i]->getNode()->getAnimators().empty()) {
+	projectiles.erase(projectiles.begin() + i);
+    }
   }
-  */
+  
 }
 
 void Level::handlePlayerClick()

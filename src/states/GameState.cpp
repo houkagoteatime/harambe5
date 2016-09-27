@@ -19,7 +19,7 @@ GameState::~GameState()
 
 void GameState::init()
 {
-  irr::scene::IAnimatedMesh* mapMesh = smgr->getMesh("20kdm2.bsp");
+  irr::scene::IAnimatedMesh* mapMesh = smgr->getMesh("maps/20kdm2.bsp");
   irr::scene::IMeshSceneNode* mapNode = smgr->addOctreeSceneNode(mapMesh->getMesh(0),0, 1);
   irr::scene::ITriangleSelector* selector = 0;
   if(mapNode) {

@@ -24,6 +24,9 @@ void Player::update(float delta) {
     jump();
   }
  //}
+ if(receiver->GetMouseState()->LeftButtonDown) {
+  attack();
+ }
  
 }
 
@@ -34,9 +37,13 @@ void Player::jump()
 
 void Player::attack()
 {
-  if(receiver->GetMouseState()->LeftButtonDown) {
-     
-  }
+    irr::core::vector3df startPos = camera->getPosition();
+    irr::core::vector3df endPos = camera->getTarget() - startPos;
+    endPos.normalize();
+    startPos+=endPos*20.0f;
+    endPos = startPos + endPos * camera->getFarValue();
+    Projectile* proj = new Projectile(device, startPos, endPos); 
+    level->addProjectile(proj);
 }
 
 void Player::initialize() 

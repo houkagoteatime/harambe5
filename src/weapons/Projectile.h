@@ -3,9 +3,10 @@
 
 class Projectile {
 public:
-  Projectile(irr::IrrlichtDevice* dev, irr::core::vector3df start, irr::core::vector3df end, float time);
+  Projectile(irr::IrrlichtDevice* dev, irr::core::vector3df start, irr::core::vector3df end);
   ~Projectile();
-  virtual void update();
+  virtual void update(float dt);
+  irr::scene::ISceneNode* getNode();
 private:
   irr::scene::ISceneNode* projNode;
   float ttl;

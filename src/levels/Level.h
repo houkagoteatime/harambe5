@@ -4,7 +4,7 @@ class Player;
 class Enemy;
 class Npc;
 #include "../ui/Gui.h"
-//#include "../weapons/Projectile.h"
+#include "../weapons/Projectile.h"
 #include <vector>
 class Level1Scene;
 class Level {
@@ -17,10 +17,11 @@ public:
   irr::IrrlichtDevice* getDevice();
   void handlePlayerClick();
   Level1Scene* scene;
+  void addProjectile(Projectile* proj);
 private:
   std::vector<Enemy*> enemies;
   std::vector<Npc*> npcs;
-  //std::vector<Projectile*> projectiles;
+  std::vector<Projectile*> projectiles;
   Player *player;
   Gui* gui;
   float prevTime;
