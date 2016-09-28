@@ -26,14 +26,15 @@ Level::~Level()
     delete player;
   if(gui)
     delete gui;
+  enemies.clear();
 }
 
 void Level::createLevel()
 {
   collMan = device->getSceneManager()->getSceneCollisionManager();
   gui = new Gui(device);
-  player = new Player(this,"media/gun.md2", irr::core::vector3df(0,15,0),irr::core::vector3df(0,0,0), mapNode);
-  Enemy* testEnemy = new Enemy(this,"media/faerie.md2", irr::core::vector3df(30, 15, 30), irr::core::vector3df(0,0,0), mapNode, 7);
+  player = new Player(this,"media/gun.md2", irr::core::vector3df(40,200,0),irr::core::vector3df(0,0,0), mapNode);
+  Enemy* testEnemy = new Enemy(this,"media/faerie.md2", irr::core::vector3df(40, 200, 0), irr::core::vector3df(0,0,0), mapNode, 7);
   Npc* testNpc = new Npc(this,"media/sydney.md2", irr::core::vector3df(-90,-15,-140), irr::core::vector3df(0,0,0), mapNode, 5);
   enemies.push_back(testEnemy);
   npcs.push_back(testNpc);
@@ -51,9 +52,9 @@ void Level::createLevel()
 
 void Level::update(float dt)
 {
-  std::cout << player->getCamera()->getPosition().X  << ","
-  << player->getCamera()->getPosition().Y << "," 
-  << player->getCamera()->getPosition().Z << std::endl;
+  //std::cout << player->getCamera()->getPosition().X  << ","
+  //<< player->getCamera()->getPosition().Y << "," 
+  //<< player->getCamera()->getPosition().Z << std::endl;
   scene->startScene();
   if(scene->sceneStarted) {
   if(player->getEventReceiver()->GetMouseState()->LeftButtonDown == true) {
@@ -71,6 +72,11 @@ void Level::update(float dt)
     int8_t i;
     for(i = 0; i<enemies.size(); i++) {
       enemies.at(i)->update(dt);
+      if(enemies.at(i)->isDead()) {
+	delete enemies.at(i);
+	enemies.erase(enemies.begin() + i);
+	std::cout << "dead" << std::endl;
+      }
     }
     for(i = 0; i<npcs.size(); i++) {
       npcs.at(i)->update(dt);
@@ -86,7 +92,15 @@ void Level::addProjectile(Projectile* proj)
 void Level::updateProjectiles(float dt)
 {
   int8_t i;
+  int8_t j;
   for(i = 0; i<projectiles.size(); i++) {
+    for(j = 0; j<enemies.size(); j++) {
+      if(projectiles[i]->getNode()->getBoundingBox().intersectsWithBox(enemies[j]->getEntityNode()->getBoundingBox())) {
+	enemies[j]->takeDamage(projectiles[i]->getDamage());
+	printf("damaged\n");
+	projectiles.erase(projectiles.begin() + i);
+      }
+    }
     //projectiles.at(i)->update(dt);
     if(projectiles[i]->getNode()->getAnimators().empty()) {
 	projectiles.erase(projectiles.begin() + i);
@@ -108,7 +122,7 @@ void Level::handlePlayerClick()
   {
 	if(selectedSceneNode->getAbsolutePosition().getDistanceFrom(player->getCamera()->getAbsolutePosition()) < 200) 
 	{
-	  player->getBillBoard()->setPosition(intersection);
+	  //player->getBillBoard()->setPosition(intersection);
 	  int j = 0;
 	  for(j = 0; j < npcs.size(); j++) {
 	    //if(selectedSceneNode = npcs[j]->getEntityNode()) {

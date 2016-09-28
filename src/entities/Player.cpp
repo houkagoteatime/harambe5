@@ -8,6 +8,8 @@ Player::Player(Level* level, const std::string& mediaPath,  irr::core::vector3df
   device->getTimer()->setTime(0);
   initialize();
   jumpDelay = 0;
+  damage = 20;
+  health = 240;
 }
 
 Player::~Player()

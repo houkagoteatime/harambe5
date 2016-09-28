@@ -12,9 +12,16 @@ void Enemy::setPlayer(Player* play)
   player = play;
 }
 
+void Enemy::takeDamage(float dmg)
+{
+  health -= dmg;
+}
+
 void Enemy::initialize()
 {
   state = STATIONARY;
+  health = 200;
+  damage = 10;
 }
 
 void Enemy::update(float delta)
@@ -49,4 +56,9 @@ bool Enemy::isPlayerNearby(float range)
   return player->getCamera()->getPosition().getDistanceFrom(entityNode->getPosition()) < range;
 }
 
+bool Enemy::onClick(bool MouseEvent)
+{
+  //health -= player->getDamage();
+  return false;
+}
 

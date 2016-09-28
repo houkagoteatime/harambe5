@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
 	IVideoDriver* driver = device->getVideoDriver();
 	ISceneManager* smgr = device->getSceneManager();
 	device->getFileSystem()->addFileArchive("media/map-20kdm2.pk3");
-
+	device->getFileSystem()->addFileArchive("media/maps/lemap.pk3");
 	StateManager manager(device);
 	int prev = device->getTimer()->getTime();
 	int current = 0;

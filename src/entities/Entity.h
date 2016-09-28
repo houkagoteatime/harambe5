@@ -6,9 +6,12 @@ class Level;
 class Entity {
 public:
   Entity(Level* level, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map, int id);
+  virtual ~Entity();
   virtual void initialize() = 0;
   virtual void update(float delta) = 0;
   virtual void addCollision();
+  float getDamage();
+  bool isDead();
   void rotateTowardsPosition(irr::core::vector3df target);
   irr::scene::IAnimatedMeshSceneNode* getEntityNode();
 protected:
@@ -18,7 +21,8 @@ protected:
   int id;
   irr::core::vector3df pos;
   irr::core::vector3df rot;
-  
+  float health;
+  float damage;
   irr::gui::IGUIEnvironment* gui;
   irr::IrrlichtDevice* device;
   irr::scene::ISceneManager* manager;

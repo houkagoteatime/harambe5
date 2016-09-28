@@ -2,6 +2,7 @@
 
 Projectile::Projectile(irr::IrrlichtDevice* dev,irr::core::vector3df start, irr::core::vector3df end) : start(start), end(end)
 {
+  damage = 1;
   float time = 1000;
   ttl = time;
   irr::core::vector3df stor = end;
@@ -40,4 +41,9 @@ void Projectile::update(float dt)
 irr::scene::ISceneNode* Projectile::getNode()
 {
   return projNode;
+}
+
+float Projectile::getDamage()
+{
+  return damage;
 }

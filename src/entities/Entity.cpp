@@ -26,9 +26,27 @@ Entity::Entity(Level* level, const std::string& mediaPath,irr::core::vector3df p
   }
 }
 
+Entity::~Entity()
+{
+  if(entityNode)
+    delete entityNode;
+}
+
+bool Entity::isDead()
+{
+  if(health <= 0)
+    return true;
+  return false;
+}
+
 irr::scene::IAnimatedMeshSceneNode* Entity::getEntityNode()
 {
   return entityNode;
+}
+
+float Entity::getDamage()
+{
+  return damage;
 }
 
 void Entity::addCollision()
