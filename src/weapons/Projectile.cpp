@@ -30,7 +30,7 @@ Projectile::Projectile(irr::IrrlichtDevice* dev,irr::core::vector3df start, irr:
 Projectile::~Projectile()
 {
   if(projNode)
-    delete projNode;
+    projNode->remove();
 }
 
 void Projectile::update(float dt)

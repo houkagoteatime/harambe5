@@ -73,9 +73,8 @@ void Level::update(float dt)
     for(i = 0; i<enemies.size(); i++) {
       enemies.at(i)->update(dt);
       if(enemies.at(i)->isDead()) {
-	delete enemies.at(i);
+	delete enemies[i];
 	enemies.erase(enemies.begin() + i);
-	std::cout << "dead" << std::endl;
       }
     }
     for(i = 0; i<npcs.size(); i++) {
@@ -94,17 +93,19 @@ void Level::updateProjectiles(float dt)
   int8_t i;
   int8_t j;
   for(i = 0; i<projectiles.size(); i++) {
-    for(j = 0; j<enemies.size(); j++) {
-      if(projectiles[i]->getNode()->getBoundingBox().intersectsWithBox(enemies[j]->getEntityNode()->getBoundingBox())) {
-	enemies[j]->takeDamage(projectiles[i]->getDamage());
-	printf("damaged\n");
+    if(projectiles[i]->getNode()->getAnimators().empty()) {
+	//delete projectiles[i];
 	projectiles.erase(projectiles.begin() + i);
+    } else {
+      for(j = 0; j<enemies.size(); j++) {
+	if(projectiles[i]->getNode()->getBoundingBox().intersectsWithBox(enemies[j]->getEntityNode()->getBoundingBox())) {
+	  enemies[j]->takeDamage(projectiles[i]->getDamage());
+	  delete projectiles[i];
+	  projectiles.erase(projectiles.begin() + i);
+	}
       }
     }
-    //projectiles.at(i)->update(dt);
-    if(projectiles[i]->getNode()->getAnimators().empty()) {
-	projectiles.erase(projectiles.begin() + i);
-    }
+   
   }
   
 }

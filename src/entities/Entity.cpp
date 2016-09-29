@@ -13,7 +13,6 @@ Entity::Entity(Level* level, const std::string& mediaPath,irr::core::vector3df p
     mesh = manager->getMesh("media/sydney.md2");
   }
   entityNode = manager->addAnimatedMeshSceneNode(mesh, 0, id);
-  //entityNode = manager->addAnimatedMeshSceneNode(mesh, 0);
   gui = device->getGUIEnvironment();
   if(id != -1) {
   entityNode->setPosition(pos);
@@ -28,8 +27,9 @@ Entity::Entity(Level* level, const std::string& mediaPath,irr::core::vector3df p
 
 Entity::~Entity()
 {
-  if(entityNode)
-    delete entityNode;
+  if(entityNode) {
+    entityNode->remove();
+  }
 }
 
 bool Entity::isDead()
