@@ -33,7 +33,7 @@ void Level::createLevel()
 {
   collMan = device->getSceneManager()->getSceneCollisionManager();
   gui = new Gui(device);
-  player = new Player(this,"media/gun.md2", irr::core::vector3df(40,200,0),irr::core::vector3df(0,0,0), mapNode);
+  player = new Player(this,"media/gun.md2", irr::core::vector3df(40,1000,0),irr::core::vector3df(0,0,0), mapNode);
   Enemy* testEnemy = new Enemy(this,"media/faerie.md2", irr::core::vector3df(40, 200, 0), irr::core::vector3df(0,0,0), mapNode, 7);
   Npc* testNpc = new Npc(this,"media/sydney.md2", irr::core::vector3df(-90,-15,-140), irr::core::vector3df(0,0,0), mapNode, 5);
   enemies.push_back(testEnemy);
