@@ -32,12 +32,12 @@ void GameState::init()
     mapNode->setTriangleSelector(selector);    
   }
   level1 = new Level(dev, mapNode);
-  soundManager->startMusic("media/music/aomine.mp3", smgr->getActiveCamera()->getPosition());
+  soundManager->startMusic("media/music/aomine.mp3", irrklang::vec3df(smgr->getActiveCamera()->getPosition()));
 }
 
 
 void GameState::update(float dt)
 {
   level1->update(dt);
-  soundManager->updateMusic(smgr->getActiveCamera()->getPosition());
+  soundManager->updateMusic(irrklang::vec3df(smgr->getActiveCamera()->getPosition()));
 }

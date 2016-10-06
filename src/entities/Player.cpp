@@ -43,7 +43,7 @@ void Player::attack()
     irr::core::vector3df endPos = camera->getTarget() - startPos;
     endPos.normalize();
     startPos+=endPos*20.0f;
-    endPos = startPos + endPos * camera->getFarValue();
+    endPos = startPos + (endPos * camera->getFarValue());
     Projectile* proj = new Projectile(device, startPos, endPos); 
     level->addProjectile(proj);
 }
@@ -93,7 +93,6 @@ void Player::addBillboard()
 	bill = manager->addBillboardSceneNode();
 	bill->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR );
 	bill->setMaterialTexture(0, driver->getTexture("media/icon_crosshairs16x16bw2.png"));
-	bill->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	bill->setMaterialFlag(irr::video::EMF_ZBUFFER, false);
 	bill->setSize(irr::core::dimension2d<irr::f32>(20.0f, 20.0f));
 	bill->setID(0);

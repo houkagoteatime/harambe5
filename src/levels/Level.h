@@ -10,18 +10,21 @@ class Level1Scene;
 class Level {
 public:
   Level(irr::IrrlichtDevice* dev,irr::scene::IMeshSceneNode* map);
-  ~Level();
+  virtual ~Level();
   virtual void createLevel();
   virtual void update(float dt);
+  bool checkCollision(irr::scene::ISceneNode* node1, irr::scene::ISceneNode* node2);
   void updateProjectiles(float dt);
   irr::IrrlichtDevice* getDevice();
   void handlePlayerClick();
   Level1Scene* scene;
   void addProjectile(Projectile* proj);
+  irr::scene::ISceneNode* getIntersectionNode(irr::core::vector3df start, irr::core::vector3df end);
 private:
   std::vector<Enemy*> enemies;
   std::vector<Npc*> npcs;
   std::vector<Projectile*> projectiles;
+  std::vector<Projectile*>::iterator projIt;
   Player *player;
   Gui* gui;
   float prevTime;

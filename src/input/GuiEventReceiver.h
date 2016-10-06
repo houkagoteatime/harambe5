@@ -1,8 +1,9 @@
 #pragma once
 
 #include <irrlicht.h>
+
 #include "EventReceiver.h"
-#include "GuiValues.h"
+#include "../ui/GuiValues.h"
 class GuiEventReceiver : public EventReceiver {
 public:
   GuiEventReceiver();

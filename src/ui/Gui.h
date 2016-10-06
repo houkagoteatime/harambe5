@@ -2,7 +2,7 @@
 #include <irrlicht.h>
 #define dropElement(x)	if (x) { x->remove(); x = 0; }
 #include <string>
-#include "../GuiValues.h"
+#include "GuiValues.h"
 class Gui {
   
 public:

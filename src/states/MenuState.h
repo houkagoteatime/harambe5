@@ -1,7 +1,7 @@
 #pragma once
 
+#include "../input/GuiEventReceiver.h"
 #include "State.h"
-#include "../GuiEventReceiver.h"
 
 class MenuState : public State {
 public:

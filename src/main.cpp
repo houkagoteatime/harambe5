@@ -2,11 +2,12 @@
 #include "entities/Player.h"
 #include <iostream>
 #include "entities/Enemy.h"
-#include "EventReceiver.h"
 #include "entities/Npc.h"
 #include <vector>
 #include "states/StateManager.h"
 #include <irrKlang.h>
+
+#include "input/EventReceiver.h"
 using namespace irr;
 using namespace core;
 using namespace scene;

@@ -1,4 +1,5 @@
 #include "EventReceiver.h"
+
 #include <iostream>
 #include <string>
 EventReceiver::EventReceiver()

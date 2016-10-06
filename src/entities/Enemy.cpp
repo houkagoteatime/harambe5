@@ -41,6 +41,7 @@ void Enemy::update(float delta)
   }
   rot = entityNode->getRotation();
   pos = entityNode->getPosition();
+  entityNode->updateAbsolutePosition();
 }
 
 
@@ -59,6 +60,6 @@ bool Enemy::isPlayerNearby(float range)
 bool Enemy::onClick(bool MouseEvent)
 {
   //health -= player->getDamage();
-  return false;
+  return true;
 }
 

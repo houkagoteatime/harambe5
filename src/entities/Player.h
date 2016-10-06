@@ -1,6 +1,5 @@
 #pragma once
-#include "../EventReceiver.h"
-//#include "../weapons/Projectile.h"
+#include "../input/EventReceiver.h"
 #include "../levels/Level.h"
 #include "Entity.h"
 class Player : public Entity  {

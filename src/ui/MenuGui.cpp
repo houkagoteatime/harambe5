@@ -10,7 +10,7 @@ MenuGui::MenuGui(irr::IrrlichtDevice* dev):Gui(dev)
 
 void MenuGui::addImage(bool visible)
 {
-  elements.Image = gui->addImage(driver->getTexture("media/MonkeyHeaven.png"),irr::core::position2d<int>(0,0));
+  elements.Image = gui->addImage(driver->getTexture("assets/images/harambe.jpg"),irr::core::position2d<int>(0,0));
   irr::gui::IGUIFont* font = gui->getFont("media/bigfont.png");
   if(font) {
     gui->getSkin()->setFont(font);
