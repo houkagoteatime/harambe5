@@ -14,13 +14,6 @@ public:
   virtual void addStartButton(bool visible);
   virtual void addImage(bool visible);
   virtual void setVisibleStartButton(bool visible);
-  
-protected:
-  int width,height;
-  irr::gui::IGUIEnvironment* gui;
-  irr::IrrlichtDevice* device;
-  irr::scene::ISceneManager* manager;
-  irr::video::IVideoDriver* driver;
   struct guiElements
   {
 	guiElements ()
@@ -43,4 +36,12 @@ protected:
 	irr::gui::IGUIButton* startButton;
 	
   }elements;
+  
+protected:
+  int width,height;
+  irr::gui::IGUIEnvironment* gui;
+  irr::IrrlichtDevice* device;
+  irr::scene::ISceneManager* manager;
+  irr::video::IVideoDriver* driver;
+  
 };

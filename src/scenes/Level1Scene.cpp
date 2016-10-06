@@ -20,9 +20,13 @@ Level1Scene::Level1Scene(Level* l):level(l)
 
 Level1Scene::~Level1Scene()
 {
-  delete gui;
+  
 }
 
+void Level1Scene::deleteGui()
+{
+  gui->setVisibleStaticText(false);
+}
 
 void Level1Scene::startScene()
 {

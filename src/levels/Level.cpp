@@ -66,27 +66,28 @@ void Level::createLevel()
 		npcs.at(i)->setGui(gui);
 	}
 	scene = new Level1Scene(this);
-
+	scene->startScene();
 }
 
 void Level::update(float dt)
 {
 	//std::cout << player->getCamera()->getPosition().X  << ","
-	//<< player->getCamera()->getPosition().Y << ","
-	//<< player->getCamera()->getPosition().Z << std::endl;
-	/*
-	scene->startScene();
-	if(scene->sceneStarted) {
-		if(player->getEventReceiver()->GetMouseState()->LeftButtonDown == true) {
-			device->getSceneManager()->setActiveCamera(player->getCamera());
-		}
-	}
-
-	if(scene->sa->hasFinished()) {
-		device->getSceneManager()->setActiveCamera(player->getCamera());
-		scene->sceneStarted = true;
-	}
-	 */
+  //<< player->getCamera()->getPosition().Y << "," 
+  //<< player->getCamera()->getPosition().Z << std::endl;
+  if(scene) {
+  if(scene->sceneStarted) {
+  if(player->getEventReceiver()->GetMouseState()->LeftButtonDown == true) {
+   device->getSceneManager()->setActiveCamera(player->getCamera()); 
+   scene->deleteGui();
+  }
+  }
+  
+  if(scene->sa->hasFinished()) {
+    device->getSceneManager()->setActiveCamera(player->getCamera()); 
+    scene->sceneStarted = true;
+    scene->deleteGui();
+  }
+  }
 	player->update(dt);
 	handlePlayerClick();
 	int8_t i;
