@@ -16,7 +16,9 @@ public:
   static const float SPEED = 50;
   irr::scene::ICameraSceneNode* getCamera();
   void jump();
+  void resetPosition(irr::core::vector3df pos);
   int jumpDelay;
+  irr::scene::ISceneNodeAnimator* anim;
 protected:
   irr::scene::IAnimatedMeshSceneNode* weaponNode;
   irr::scene::ICameraSceneNode* camera;

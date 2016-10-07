@@ -53,9 +53,26 @@ void Level::createLevel()
 	Enemy* testEnemy = new Enemy(this,"media/faerie.md2", irr::core::vector3df(60, 200, 0), irr::core::vector3df(0,0,0), mapNode, 7);
 	Enemy* testEnemy1 = new Enemy(this,"media/faerie.md2", irr::core::vector3df(70, 200, 0), irr::core::vector3df(0,0,0), mapNode, 3);
 	Npc* testNpc = new Npc(this,"media/sydney.md2", irr::core::vector3df(90, 200,-140), irr::core::vector3df(0,0,0), mapNode, 5);
+	Npc* dare = new Npc(this, "media/sydney.md2", irr::core::vector3df(115,210,450),irr::core::vector3df(0,0,0), mapNode, 6);
 
+	testNpc->addMessages("Welcome to harambe 5");
+	testNpc->addMessages("5");
+	testNpc->addMessages("4");
+	testNpc->addMessages("3");
+	testNpc->addMessages("2");
+	testNpc->addMessages("1");
+	
+	dare->addMessages("JuMP_");
+	dare->addMessages("x");
 	enemies.push_back(testEnemy);
 	npcs.push_back(testNpc);
+	
+	
+	std::cout << dare->getEntityNode()->getPosition().X << ","
+	<< dare->getEntityNode()->getPosition().Y << "," 
+	<< dare->getEntityNode()->getPosition().Z
+	<< std::endl;
+	npcs.push_back(dare);
 	enemies.push_back(testEnemy1);
 	int8_t i;
 	for(i = 0; i < enemies.size(); i++) {
@@ -71,9 +88,15 @@ void Level::createLevel()
 
 void Level::update(float dt)
 {
-	//std::cout << player->getCamera()->getPosition().X  << ","
-  //<< player->getCamera()->getPosition().Y << "," 
-  //<< player->getCamera()->getPosition().Z << std::endl;
+  std::cout << player->getCamera()->getPosition().X  << ","
+  << player->getCamera()->getPosition().Y << "," 
+  << player->getCamera()->getPosition().Z << std::endl;
+  
+  if(player->getCamera()->getPosition().Y < -1500) {
+    
+   std::cout << "XXXXXX" << std::endl; 
+   player->resetPosition(irr::core::vector3df(player->getCamera()->getPosition().X, 400, player->getCamera()->getPosition().Z));
+  }
   if(scene) {
   if(scene->sceneStarted) {
   if(player->getEventReceiver()->GetMouseState()->LeftButtonDown == true) {
@@ -94,9 +117,9 @@ void Level::update(float dt)
 	for(i = 0; i<enemies.size(); i++) {
 		enemies.at(i)->update(dt);
 		if(checkCollision(enemies[i]->getEntityNode(), player->getEntityNode())) {
-			std::cout << "OUCH" << player->getEntityNode()->getPosition().X << player->getEntityNode()->getPosition().Y << std::endl;
+			//std::cout << "OUCH" << player->getEntityNode()->getPosition().X << player->getEntityNode()->getPosition().Y << std::endl;
 		} else {
-			std::cout <<"NOU" <<std::endl;
+			//std::cout <<"NOU" <<std::endl;
 		}
 		if(enemies.at(i)->isDead()) {
 			delete enemies[i];
@@ -149,7 +172,8 @@ void Level::handlePlayerClick()
 	player->getBillBoard()->setPosition(intersection);
 	if(selectedSceneNode)
 	{
-		if(selectedSceneNode->getAbsolutePosition().getDistanceFrom(player->getCamera()->getAbsolutePosition()) < 200)
+		//if(selectedSceneNode->getAbsolutePosition().getDistanceFrom(player->getCamera()->getAbsolutePosition()) < 200)
+	  if(selectedSceneNode->getPosition().getDistanceFrom(player->getCamera()->getPosition()) < 200)
 		{
 			//player->getBillBoard()->setPosition(intersection);
 			int j = 0;
@@ -157,6 +181,7 @@ void Level::handlePlayerClick()
 				//if(selectedSceneNode = npcs[j]->getEntityNode()) {
 				if(selectedSceneNode == npcs[j]->getEntityNode()) {
 					npcs[j]->onClick(player->getEventReceiver()->GetMouseState()->LeftButtonDown);
+					break;
 				}
 			}
 		}

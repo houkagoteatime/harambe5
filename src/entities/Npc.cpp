@@ -41,7 +41,10 @@ void Npc::update(float delta)
 
 bool Npc::onClick(bool MouseEvent) {
   entityNode->setMaterialFlag(irr::video::EMF_LIGHTING, MouseEvent);
+  
+    
   if(MouseEvent) {
+    
      dialogue(MouseEvent);
   }
 }
@@ -51,14 +54,13 @@ bool Npc::isPlayerNearby(float range)
   return player->getCamera()->getPosition().getDistanceFrom(entityNode->getPosition()) < range;
 }
 
+void Npc::addMessages(std::string message)
+{
+  messages.push_back(message);
+}
+
 void Npc::initMessages()
 {
-  messages.push_back("Welcome to harambe5");
-  messages.push_back("H");
-  messages.push_back("A");
-  messages.push_back("R");
-  messages.push_back("A");
-  messages.push_back("M");
   messageIt = 0;
   inDialogue = false;
   textAdvanceTimer = device->getTimer()->getTime();
@@ -70,6 +72,7 @@ void Npc::dialogue(bool MouseEvent)
   textAdvanceTimer = device->getTimer()->getTime();
   
   if(messageIt >= messages.size()) {
+    player->resetPosition(irr::core::vector3df(player->getCamera()->getPosition().X, 5000, player->getCamera()->getPosition().Z));
     messageIt = messageIt % messages.size();
     exitDialogue();
     return;

@@ -22,6 +22,7 @@ public:
   void initMessages();
   void dialogue(bool MouseEvent);
   void exitDialogue();
+  void addMessages(std::string message);
 protected:
   Player* player;
   Gui* gui;
