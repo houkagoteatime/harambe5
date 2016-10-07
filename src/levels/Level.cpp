@@ -52,8 +52,11 @@ void Level::createLevel()
 	player = new Player(this,"media/gun.md2", irr::core::vector3df(40,1000,0),irr::core::vector3df(0,0,0), mapNode);
 	Enemy* testEnemy = new Enemy(this,"media/faerie.md2", irr::core::vector3df(60, 200, 0), irr::core::vector3df(0,0,0), mapNode, 7);
 	Enemy* testEnemy1 = new Enemy(this,"media/faerie.md2", irr::core::vector3df(70, 200, 0), irr::core::vector3df(0,0,0), mapNode, 3);
+	Enemy* testEnemy2 = new Enemy(this,"media/faerie.md2", irr::core::vector3df(822.591,208.009,47.9946), irr::core::vector3df(0,0,0), mapNode, 101);
+	Enemy* testEnemy3 = new Enemy(this,"media/faerie.md2", irr::core::vector3df(481.185,208.025,-353.986), irr::core::vector3df(0,0,0), mapNode, 103);
+	Enemy* testEnemy4 = new Enemy(this,"media/faerie.md2", irr::core::vector3df(492.384,208.002,-932.659), irr::core::vector3df(0,0,0), mapNode, 105);
 	Npc* testNpc = new Npc(this,"media/sydney.md2", irr::core::vector3df(90, 200,-140), irr::core::vector3df(0,0,0), mapNode, 5);
-	Npc* dare = new Npc(this, "media/sydney.md2", irr::core::vector3df(115,210,450),irr::core::vector3df(0,0,0), mapNode, 6);
+	Npc* dare = new Npc(this, "media/sydney.md2", irr::core::vector3df(115,210,450),irr::core::vector3df(0,0,0), mapNode, 9);
 
 	testNpc->addMessages("Welcome to harambe 5");
 	testNpc->addMessages("5");
@@ -64,16 +67,15 @@ void Level::createLevel()
 	
 	dare->addMessages("JuMP_");
 	dare->addMessages("x");
-	enemies.push_back(testEnemy);
 	npcs.push_back(testNpc);
-	
-	
-	std::cout << dare->getEntityNode()->getPosition().X << ","
-	<< dare->getEntityNode()->getPosition().Y << "," 
-	<< dare->getEntityNode()->getPosition().Z
-	<< std::endl;
 	npcs.push_back(dare);
+	
+	enemies.push_back(testEnemy);
 	enemies.push_back(testEnemy1);
+	enemies.push_back(testEnemy2);
+	enemies.push_back(testEnemy3);
+	enemies.push_back(testEnemy4);
+	
 	int8_t i;
 	for(i = 0; i < enemies.size(); i++) {
 		enemies.at(i)->setPlayer(player);
