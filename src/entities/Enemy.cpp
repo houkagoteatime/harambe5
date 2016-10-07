@@ -26,6 +26,7 @@ void Enemy::initialize()
 
 void Enemy::update(float delta)
 {
+  //entityNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
   const irr::core::vector3df playerPos = player->getCamera()->getPosition();
   rotateTowardsPosition(playerPos);
   entityNode->setRotation(rot);

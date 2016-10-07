@@ -95,10 +95,13 @@ void Level::update(float dt)
   << player->getCamera()->getPosition().Z << std::endl;
   
   if(player->getCamera()->getPosition().Y < -1500) {
-    
-   std::cout << "XXXXXX" << std::endl; 
    player->resetPosition(irr::core::vector3df(player->getCamera()->getPosition().X, 400, player->getCamera()->getPosition().Z));
   }
+  
+  if(player->getCamera()->getPosition().Y >  2500) {
+    player->resetPosition(irr::core::vector3df(player->getCamera()->getPosition().X, 2000, player->getCamera()->getPosition().Z));
+  }
+  
   if(scene) {
   if(scene->sceneStarted) {
   if(player->getEventReceiver()->GetMouseState()->LeftButtonDown == true) {
