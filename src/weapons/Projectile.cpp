@@ -21,9 +21,9 @@ Projectile::Projectile(irr::IrrlichtDevice* dev,irr::core::vector3df start, irr:
 	irr::scene::ISceneNodeAnimator* anim = smgr->createFlyStraightAnimator(start, end, time);
 	projNode->addAnimator(anim);
 	anim->drop();
-	anim = smgr->createDeleteAnimator(time);
-	projNode->addAnimator(anim);
-	anim->drop();
+	//anim = smgr->createDeleteAnimator(time);
+	//projNode->addAnimator(anim);
+	//anim->drop();
 	timeAlive = 0;
 	dead = false;
 }

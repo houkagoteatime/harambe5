@@ -24,7 +24,6 @@ private:
   std::vector<Enemy*> enemies;
   std::vector<Npc*> npcs;
   std::vector<Projectile*> projectiles;
-  std::vector<Projectile*>::iterator projIt;
   Player *player;
   Gui* gui;
   float prevTime;

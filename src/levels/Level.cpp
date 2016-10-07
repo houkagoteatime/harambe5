@@ -126,7 +126,7 @@ void Level::updateProjectiles(float dt)
 		} else {
 			irr::scene::ISceneNode* collNode = getIntersectionNode(projectiles[i]->getStart(), projectiles[i]->getEnd());
 			for(j = 0; j<enemies.size(); j++) {
-				if(checkCollision(enemies[j]->getEntityNode(), projectiles[i]->getNode())) {
+				if(!projectiles[i]->isDead() && checkCollision(enemies[j]->getEntityNode(), projectiles[i]->getNode())) {
 					//if(collNode == enemies[j]->getEntityNode()) {
 					enemies[j]->takeDamage(projectiles[i]->getDamage());
 					delete projectiles[i];

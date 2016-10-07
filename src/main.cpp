@@ -40,7 +40,7 @@ int main(int argc, char **argv) {
 	  if(device->isWindowActive()) {
 		driver->beginScene(true, true, SColor(255, 100, 101, 140));
 
-		manager.update((current - prev)/1000.0f);
+		manager.update((current - prev));
 		smgr->drawAll();
 		device->getGUIEnvironment()->drawAll();
 		driver->endScene();
