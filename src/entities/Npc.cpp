@@ -4,7 +4,7 @@
 #include <cmath>
 
 Npc::Npc(Level* level, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map, int id): 
-Entity(level, mediaPath, position, rotation, map, id)
+Entity(level, mediaPath, position, rotation, id)
 {
   initialize();
   initMessages();
@@ -47,6 +47,7 @@ bool Npc::onClick(bool MouseEvent) {
     
      dialogue(MouseEvent);
   }
+  return false;
 }
 
 bool Npc::isPlayerNearby(float range)

@@ -18,10 +18,12 @@
 #include <iterator>
 
 #include "../entities/Enemy.h"
+#include "../entities/enemies/Ninja.h"
 #include "../entities/Npc.h"
 #include "../entities/Player.h"
 #include "../input/EventReceiver.h"
 #include "../scenes/Level1Scene.h"
+#include "../entities/EntitySpawner.h"
 
 enum
 {
@@ -32,6 +34,8 @@ enum
 
 Level::Level(irr::IrrlichtDevice* dev, irr::scene::IMeshSceneNode* map) : device(dev), mapNode(map)
 {
+	spawner = EntitySpawner::getInstance();
+	spawner->init(this);
 	createLevel();
 }
 
@@ -49,36 +53,28 @@ void Level::createLevel()
 {
 	collMan = device->getSceneManager()->getSceneCollisionManager();
 	gui = new Gui(device);
-	player = new Player(this,"media/gun.md2", irr::core::vector3df(40,1000,0),irr::core::vector3df(0,0,0), mapNode);
-	Enemy* testEnemy = new Enemy(this,"media/faerie.md2", irr::core::vector3df(60, 200, 0), irr::core::vector3df(0,0,0), mapNode, 7);
-	Enemy* testEnemy1 = new Enemy(this,"media/faerie.md2", irr::core::vector3df(70, 200, 0), irr::core::vector3df(0,0,0), mapNode, 3);
-	Enemy* testEnemy2 = new Enemy(this,"media/faerie.md2", irr::core::vector3df(822.591,208.009,47.9946), irr::core::vector3df(0,0,0), mapNode, 101);
-	Enemy* testEnemy3 = new Enemy(this,"media/faerie.md2", irr::core::vector3df(481.185,208.025,-353.986), irr::core::vector3df(0,0,0), mapNode, 103);
-	Enemy* testEnemy4 = new Enemy(this,"media/faerie.md2", irr::core::vector3df(492.384,208.002,-932.659), irr::core::vector3df(0,0,0), mapNode, 105);
-	Npc* testNpc = new Npc(this,"media/sydney.md2", irr::core::vector3df(90, 200,-140), irr::core::vector3df(0,0,0), mapNode, 5);
-	Npc* dare = new Npc(this, "media/sydney.md2", irr::core::vector3df(115,210,450),irr::core::vector3df(0,0,0), mapNode, 9);
-
+	player = new Player(this,"media/gun.md2", irr::core::vector3df(40,1000,0),irr::core::vector3df(0,0,0));
+	Enemy* chair = spawner->spawnEnemy<Ninja>(irr::core::vector3df(160, 210, 93), irr::core::vector3df(0, 0, 0));
+	Enemy* testEnemy = spawner->spawnEnemy<Ninja>(irr::core::vector3df(60, 125, 90), irr::core::vector3df(0,0,0));
+	Enemy* testEnemy1 = spawner->spawnEnemy<Ninja>(irr::core::vector3df(70, 125, 90), irr::core::vector3df(0,0,0));
+	Npc* testNpc = new Npc(this,"media/sydney.md2", irr::core::vector3df(90, 200,20), irr::core::vector3df(0,0,0), mapNode, 501);
+	Npc* dare = new Npc(this, "media/sydney.md2", irr::core::vector3df(115,210,450),irr::core::vector3df(0,0,0), mapNode, 509);
 	testNpc->addMessages("Welcome to harambe 5");
 	testNpc->addMessages("5");
 	testNpc->addMessages("4");
 	testNpc->addMessages("3");
 	testNpc->addMessages("2");
 	testNpc->addMessages("1");
-	
+
 	dare->addMessages("JuMP_");
 	dare->addMessages("x");
 	npcs.push_back(testNpc);
 	npcs.push_back(dare);
-	
+	enemies.push_back(chair);	
 	enemies.push_back(testEnemy);
 	enemies.push_back(testEnemy1);
-	enemies.push_back(testEnemy2);
-	enemies.push_back(testEnemy3);
-	enemies.push_back(testEnemy4);
-	
 	int8_t i;
 	for(i = 0; i < enemies.size(); i++) {
-		enemies.at(i)->setPlayer(player);
 	}
 	for(i = 0; i<npcs.size(); i++) {
 		npcs.at(i)->setPlayer(player);
@@ -90,32 +86,33 @@ void Level::createLevel()
 
 void Level::update(float dt)
 {
+	/*
   std::cout << player->getCamera()->getPosition().X  << ","
   << player->getCamera()->getPosition().Y << "," 
   << player->getCamera()->getPosition().Z << std::endl;
-  
-  if(player->getCamera()->getPosition().Y < -1500) {
-   player->resetPosition(irr::core::vector3df(player->getCamera()->getPosition().X, 400, player->getCamera()->getPosition().Z));
-  }
-  
-  if(player->getCamera()->getPosition().Y >  2500) {
-    player->resetPosition(irr::core::vector3df(player->getCamera()->getPosition().X, 2000, player->getCamera()->getPosition().Z));
-  }
-  
-  if(scene) {
-  if(scene->sceneStarted) {
-  if(player->getEventReceiver()->GetMouseState()->LeftButtonDown == true) {
-   device->getSceneManager()->setActiveCamera(player->getCamera()); 
-   scene->deleteGui();
-  }
-  }
-  
-  if(scene->sa->hasFinished()) {
-    device->getSceneManager()->setActiveCamera(player->getCamera()); 
-    scene->sceneStarted = true;
-    scene->deleteGui();
-  }
-  }
+	 */
+	if(player->getCamera()->getPosition().Y < -1500) {
+		player->resetPosition(irr::core::vector3df(player->getCamera()->getPosition().X, 400, player->getCamera()->getPosition().Z));
+	}
+
+	if(player->getCamera()->getPosition().Y >  2500) {
+		player->resetPosition(irr::core::vector3df(player->getCamera()->getPosition().X, 2000, player->getCamera()->getPosition().Z));
+	}
+
+	if(scene) {
+		if(scene->sceneStarted) {
+			if(player->getEventReceiver()->GetMouseState()->LeftButtonDown == true) {
+				device->getSceneManager()->setActiveCamera(player->getCamera());
+				scene->deleteGui();
+			}
+		}
+
+		if(scene->sa->hasFinished()) {
+			device->getSceneManager()->setActiveCamera(player->getCamera());
+			scene->sceneStarted = true;
+			scene->deleteGui();
+		}
+	}
 	player->update(dt);
 	handlePlayerClick();
 	int8_t i;
@@ -155,7 +152,7 @@ void Level::updateProjectiles(float dt)
 			irr::scene::ISceneNode* collNode = getIntersectionNode(projectiles[i]->getStart(), projectiles[i]->getEnd());
 			for(j = 0; j<enemies.size(); j++) {
 				if(!projectiles[i]->isDead() && checkCollision(enemies[j]->getEntityNode(), projectiles[i]->getNode())) {
-					//if(collNode == enemies[j]->getEntityNode()) {
+					std::cout << enemies[j]->getHealth() << std::endl;
 					enemies[j]->takeDamage(projectiles[i]->getDamage());
 					delete projectiles[i];
 					projectiles.erase(projectiles.begin() + i);
@@ -177,16 +174,12 @@ void Level::handlePlayerClick()
 	player->getBillBoard()->setPosition(intersection);
 	if(selectedSceneNode)
 	{
-		//if(selectedSceneNode->getAbsolutePosition().getDistanceFrom(player->getCamera()->getAbsolutePosition()) < 200)
-	  if(selectedSceneNode->getPosition().getDistanceFrom(player->getCamera()->getPosition()) < 200)
+		if(selectedSceneNode->getPosition().getDistanceFrom(player->getCamera()->getPosition()) < 200)
 		{
-			//player->getBillBoard()->setPosition(intersection);
 			int j = 0;
 			for(j = 0; j < npcs.size(); j++) {
-				//if(selectedSceneNode = npcs[j]->getEntityNode()) {
 				if(selectedSceneNode == npcs[j]->getEntityNode()) {
 					npcs[j]->onClick(player->getEventReceiver()->GetMouseState()->LeftButtonDown);
-					break;
 				}
 			}
 		}
@@ -208,6 +201,14 @@ bool Level::checkCollision(irr::scene::ISceneNode* node1, irr::scene::ISceneNode
 		return box1.intersectsWithBox(box2);
 	}
 	return false;
+}
+
+const irr::scene::IMeshSceneNode* Level::getMapNode() {
+	return mapNode;
+}
+
+Player* Level::getPlayer() const {
+	return player;
 }
 
 irr::scene::ISceneNode* Level::getIntersectionNode(irr::core::vector3df start, irr::core::vector3df end) {

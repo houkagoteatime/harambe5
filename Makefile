@@ -5,7 +5,7 @@
 # Name of the executable created (.exe will be added automatically if necessary)
 Target := harambe5
 # List of source files, separated by spaces
-Sources := src/*.cpp src/entities/*.cpp src/input/*.cpp src/levels/*.cpp src/states/*.cpp src/ui/*.cpp src/scenes/*.cpp src/weapons/*.cpp src/sound/*.cpp
+Sources := src/*.cpp src/entities/*.cpp src/entities/enemies/*.cpp src/input/*.cpp src/levels/*.cpp src/states/*.cpp src/ui/*.cpp src/scenes/*.cpp src/weapons/*.cpp src/sound/*.cpp 
 # Path to Irrlicht direct
 # Path to Irrlicht directory, should contain include/ and lib/
 IrrlichtHome := .
@@ -14,7 +14,7 @@ BinPath = bin/$(SYSTEM)
 
 # general compiler settings (might need to be set when compiling the lib, too)
 # preprocessor flags, e.g. defines and include paths
-USERCPPFLAGS = -g 
+USERCPPFLAGS = -g
 # compiler flags such as optimization flags
 USERCXXFLAGS = -O3 -ffast-math
 #USERCXXFLAGS = -g -Wall

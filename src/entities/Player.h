@@ -1,10 +1,11 @@
 #pragma once
 #include "../input/EventReceiver.h"
 #include "../levels/Level.h"
+#include "Damageable.h"
 #include "Entity.h"
-class Player : public Entity  {
+class Player : public Entity, public Damageable  {
 public:
-  Player(Level* level, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map);
+  Player(Level* level, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation);
   ~Player();
   virtual void initialize();
   virtual void update(float delta);
@@ -24,5 +25,7 @@ protected:
   irr::scene::ICameraSceneNode* camera;
   EventReceiver* receiver;
 private:
+  float shootDelay;
+  float currTime;
   irr::scene::IBillboardSceneNode * bill;
 };

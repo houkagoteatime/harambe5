@@ -2,13 +2,9 @@
 
 Projectile::Projectile(irr::IrrlichtDevice* dev,irr::core::vector3df start, irr::core::vector3df end) : start(start), end(end)
 {
-	damage = 100;
+	damage = 50;
 	float time = 1000;
 	ttl = time;
-	//irr::core::vector3df stor = end;
-	//end.normalize();
-	//start += end;
-	//end = start + stor;
 	smgr = dev->getSceneManager();
 	projNode = smgr->addBillboardSceneNode(0, irr::core::dimension2d<irr::f32>(10,10), start);
 	projNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
@@ -21,9 +17,6 @@ Projectile::Projectile(irr::IrrlichtDevice* dev,irr::core::vector3df start, irr:
 	irr::scene::ISceneNodeAnimator* anim = smgr->createFlyStraightAnimator(start, end, time);
 	projNode->addAnimator(anim);
 	anim->drop();
-	//anim = smgr->createDeleteAnimator(time);
-	//projNode->addAnimator(anim);
-	//anim->drop();
 	timeAlive = 0;
 	dead = false;
 }
