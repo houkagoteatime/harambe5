@@ -8,8 +8,8 @@ Entity(level, mediaPath, position, rotation, id)
 {
   initialize();
   initMessages();
-  addMessages("assets/data/sydney.dat");
   messages = new std::vector<std::string>();
+  addMessages("assets/data/sydney.dat");
 }
 
 void Npc::setPlayer(Player* play)
@@ -62,10 +62,15 @@ void Npc::addMessages(const char* file)
   std::string line;
   std::ifstream myfile;
   myfile.open(file);
-    while(getline(myfile,line))
-    {
-      messages->push_back(line);
-    }
+  //  while(getline(myfile,line))
+  //  {
+  //    messages->push_back(line);
+ //   }
+  for(std::string line; std::getline(myfile, line);) {
+    std::istringstream stream(line);
+    stream >> line;
+    messages->push_back(line);
+  }
   myfile.close();
 }
 
