@@ -8,6 +8,8 @@ Entity(level, mediaPath, position, rotation, id)
 {
   initialize();
   initMessages();
+  addMessages("assets/data/sydney.dat");
+  messages = new std::vector<std::string>();
 }
 
 void Npc::setPlayer(Player* play)
@@ -55,9 +57,16 @@ bool Npc::isPlayerNearby(float range)
   return player->getCamera()->getPosition().getDistanceFrom(entityNode->getPosition()) < range;
 }
 
-void Npc::addMessages(std::string message)
+void Npc::addMessages(const char* file)
 {
-  messages.push_back(message);
+  std::string line;
+  std::ifstream myfile;
+  myfile.open(file);
+    while(getline(myfile,line))
+    {
+      messages->push_back(line);
+    }
+  myfile.close();
 }
 
 void Npc::initMessages()
@@ -72,16 +81,16 @@ void Npc::dialogue(bool MouseEvent)
  if((device->getTimer()->getTime() - textAdvanceTimer) > 500) {
   textAdvanceTimer = device->getTimer()->getTime();
   
-  if(messageIt >= messages.size()) {
+  if(messageIt >= messages->size()) {
     player->getCamera()->removeAnimator(player->anim);
     player->anim = manager->createCollisionResponseAnimator( mapNode->getTriangleSelector(), player->getCamera(), irr::core::vector3df(30,50,30),irr::core::vector3df(0, 2,0),irr::core::vector3df(0,30,0),0.0005f);
     player->getCamera()->addAnimator(player->anim);
-    messageIt = messageIt % messages.size();
+    messageIt = messageIt % messages->size();
     exitDialogue();
     return;
   }
   inDialogue = true;
-  gui->addStaticText(messages[messageIt++], true);
+  gui->addStaticText(messages->at(messageIt++), true);
   }
 }
 

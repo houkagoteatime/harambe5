@@ -68,15 +68,7 @@ void Level::createLevel()
 	enemySpawns.close();
 	Npc* testNpc = new Npc(this,"media/sydney.md2", irr::core::vector3df(90, 200,20), irr::core::vector3df(0,0,0), mapNode, 501);
 	Npc* dare = new Npc(this, "media/sydney.md2", irr::core::vector3df(115,210,450),irr::core::vector3df(0,0,0), mapNode, 509);
-	testNpc->addMessages("Welcome to harambe 5");
-	testNpc->addMessages("5");
-	testNpc->addMessages("4");
-	testNpc->addMessages("3");
-	testNpc->addMessages("2");
-	testNpc->addMessages("1");
 
-	dare->addMessages("JuMP_");
-	dare->addMessages("x");
 	npcs.push_back(testNpc);
 	npcs.push_back(dare);
 	int8_t i;

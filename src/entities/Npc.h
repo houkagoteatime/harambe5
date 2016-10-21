@@ -6,6 +6,9 @@
 #include "../ui/Gui.h"
 #include "Mob.h"
 #include <vector>
+
+#include <sstream>
+#include <fstream>
 #include <string>
 class Entity;
 class Npc : public Entity, public Mob {
@@ -18,15 +21,14 @@ public:
   virtual bool onClick(bool MouseEvent);
   void setPlayer(Player* play);
   void setGui(Gui* gui);
-  void updateAggroState(const irr::core::vector3df playerPos);
   void initMessages();
   void dialogue(bool MouseEvent);
   void exitDialogue();
-  void addMessages(std::string message);
+  void addMessages(const char* file);
 protected:
   Player* player;
   Gui* gui;
-  std::vector<std::string> messages;
+  std::vector<std::string>* messages;
   int messageIt;
   bool inDialogue;
   int textAdvanceTimer;
