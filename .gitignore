@@ -32,4 +32,5 @@
 bin/
 lib/
 includes/
+include/
 *.kdev4*

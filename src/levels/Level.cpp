@@ -2,6 +2,7 @@
 
 #include <aabbox3d.h>
 #include <irrList.h>
+#include <fstream>
 #include <IAnimatedMeshSceneNode.h>
 #include <IBillboardSceneNode.h>
 #include <ICameraSceneNode.h>
@@ -16,6 +17,8 @@
 #include <triangle3d.h>
 #include <vector3d.h>
 #include <iterator>
+#include <fstream>
+#include <sstream>
 
 #include "../entities/Enemy.h"
 #include "../entities/enemies/Ninja.h"
@@ -54,9 +57,15 @@ void Level::createLevel()
 	collMan = device->getSceneManager()->getSceneCollisionManager();
 	gui = new Gui(device);
 	player = new Player(this,"media/gun.md2", irr::core::vector3df(40,1000,0),irr::core::vector3df(0,0,0));
-	Enemy* chair = spawner->spawnEnemy<Ninja>(irr::core::vector3df(160, 210, 93), irr::core::vector3df(0, 0, 0));
-	Enemy* testEnemy = spawner->spawnEnemy<Ninja>(irr::core::vector3df(60, 125, 90), irr::core::vector3df(0,0,0));
-	Enemy* testEnemy1 = spawner->spawnEnemy<Ninja>(irr::core::vector3df(70, 125, 90), irr::core::vector3df(0,0,0));
+	std::ifstream enemySpawns;
+	enemySpawns.open("assets/data/enemyspawn.dat");
+	float x, y, z;
+	for(std::string line; std::getline(enemySpawns, line);) {
+		std::istringstream stream(line);
+		stream >> x >> y >> z;
+		createEntity<Ninja>(irr::core::vector3df(x, y, z));
+	}
+	enemySpawns.close();
 	Npc* testNpc = new Npc(this,"media/sydney.md2", irr::core::vector3df(90, 200,20), irr::core::vector3df(0,0,0), mapNode, 501);
 	Npc* dare = new Npc(this, "media/sydney.md2", irr::core::vector3df(115,210,450),irr::core::vector3df(0,0,0), mapNode, 509);
 	testNpc->addMessages("Welcome to harambe 5");
@@ -70,9 +79,6 @@ void Level::createLevel()
 	dare->addMessages("x");
 	npcs.push_back(testNpc);
 	npcs.push_back(dare);
-	enemies.push_back(chair);	
-	enemies.push_back(testEnemy);
-	enemies.push_back(testEnemy1);
 	int8_t i;
 	for(i = 0; i < enemies.size(); i++) {
 	}
@@ -101,7 +107,7 @@ void Level::update(float dt)
 
 	if(scene) {
 		if(scene->sceneStarted) {
-			if(player->getEventReceiver()->GetMouseState()->LeftButtonDown == true) {
+			if(player->getEventReceiver()->GetMouseState()->LeftButtonDown) {
 				device->getSceneManager()->setActiveCamera(player->getCamera());
 				scene->deleteGui();
 			}
@@ -152,7 +158,6 @@ void Level::updateProjectiles(float dt)
 			irr::scene::ISceneNode* collNode = getIntersectionNode(projectiles[i]->getStart(), projectiles[i]->getEnd());
 			for(j = 0; j<enemies.size(); j++) {
 				if(!projectiles[i]->isDead() && checkCollision(enemies[j]->getEntityNode(), projectiles[i]->getNode())) {
-					std::cout << enemies[j]->getHealth() << std::endl;
 					enemies[j]->takeDamage(projectiles[i]->getDamage());
 					delete projectiles[i];
 					projectiles.erase(projectiles.begin() + i);

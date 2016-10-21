@@ -3,6 +3,7 @@
 SoundManager::SoundManager()
 {
   engine = irrklang::createIrrKlangDevice();
+  music = 0;
 }
 
 SoundManager::~SoundManager()

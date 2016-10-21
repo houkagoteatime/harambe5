@@ -73,7 +73,6 @@ void Npc::dialogue(bool MouseEvent)
   textAdvanceTimer = device->getTimer()->getTime();
   
   if(messageIt >= messages.size()) {
-    //player->resetPosition(irr::core::vector3df(player->getCamera()->getPosition().X, 5000, player->getCamera()->getPosition().Z));
     player->getCamera()->removeAnimator(player->anim);
     player->anim = manager->createCollisionResponseAnimator( mapNode->getTriangleSelector(), player->getCamera(), irr::core::vector3df(30,50,30),irr::core::vector3df(0, 2,0),irr::core::vector3df(0,30,0),0.0005f);
     player->getCamera()->addAnimator(player->anim);
