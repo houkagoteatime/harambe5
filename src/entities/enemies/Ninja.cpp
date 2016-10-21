@@ -16,7 +16,7 @@ void Ninja::initialize() {
 	entityNode->setMaterialTexture(0, driver->getTexture("media/nskinrd.jpg"));
 	entityNode->setScale(irr::core::vector3df(10.f,10.f,10.f));
 	entityNode->setFrameLoop(0, 13);
-	entityNode->setAnimationSpeed(1);
+	entityNode->setAnimationSpeed(5);
 	entityNode->setLoopMode(true);
 }
 
@@ -29,6 +29,7 @@ void Ninja::updateAggroState(const irr::core::vector3df playerPos) {
 	Enemy::updateAggroState(playerPos);
 	if(isPlayerNearby(200)) {
 		attack();
+		player->takeDamage(damage);
 	} else {
 		//entityNode->setFrameLoop(0, 13);
 	}

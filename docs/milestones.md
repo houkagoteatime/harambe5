@@ -12,5 +12,6 @@ Milestones
 - [ ] 10: Extend functionality of npcs, create multiple ones with different dialogues
 - [x] 11: Add music
 - [ ] 12: Create in game objects: health pots, key to unlock room 
+- [ ] 13: Procedurally generated 3d terrain
 
 Rest tbd 

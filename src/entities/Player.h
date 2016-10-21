@@ -20,12 +20,12 @@ public:
   void resetPosition(irr::core::vector3df pos);
   int jumpDelay;
   irr::scene::ISceneNodeAnimator* anim;
+  const static float PROJECTILE_DELAY_TIME;
 protected:
   irr::scene::IAnimatedMeshSceneNode* weaponNode;
   irr::scene::ICameraSceneNode* camera;
   EventReceiver* receiver;
 private:
   float shootDelay;
-  float currTime;
   irr::scene::IBillboardSceneNode * bill;
 };

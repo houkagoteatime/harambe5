@@ -84,11 +84,7 @@ void Level::createLevel()
 
 void Level::update(float dt)
 {
-	/*
-  std::cout << player->getCamera()->getPosition().X  << ","
-  << player->getCamera()->getPosition().Y << "," 
-  << player->getCamera()->getPosition().Z << std::endl;
-	 */
+	std::cout << player->getHealth();
 	if(player->getCamera()->getPosition().Y < -1500) {
 		player->resetPosition(irr::core::vector3df(player->getCamera()->getPosition().X, 400, player->getCamera()->getPosition().Z));
 	}
@@ -116,11 +112,6 @@ void Level::update(float dt)
 	int8_t i;
 	for(i = 0; i<enemies.size(); i++) {
 		enemies.at(i)->update(dt);
-		if(checkCollision(enemies[i]->getEntityNode(), player->getEntityNode())) {
-			//std::cout << "OUCH" << player->getEntityNode()->getPosition().X << player->getEntityNode()->getPosition().Y << std::endl;
-		} else {
-			//std::cout <<"NOU" <<std::endl;
-		}
 		if(enemies.at(i)->isDead()) {
 			delete enemies[i];
 			enemies.erase(enemies.begin() + i);
@@ -214,6 +205,6 @@ irr::scene::ISceneNode* Level::getIntersectionNode(irr::core::vector3df start, i
 	ray.end = end;
 	irr::core::vector3df intersection;
 	irr::core::triangle3df hitTriangle;
-	irr::scene::ISceneNode * selectedSceneNode = collMan->getSceneNodeAndCollisionPointFromRay(ray,intersection, hitTriangle, IDFlag_IsPickable,0);
+	irr::scene::ISceneNode* selectedSceneNode = collMan->getSceneNodeAndCollisionPointFromRay(ray,intersection, hitTriangle, IDFlag_IsPickable,0);
 	return selectedSceneNode;
 }

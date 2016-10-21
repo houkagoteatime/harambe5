@@ -27,4 +27,5 @@ protected:
   irr::scene::IAnimatedMesh* mesh;
   const irr::scene::IMeshSceneNode* mapNode;
   irr::scene::IAnimatedMeshSceneNode* entityNode;
+  float currTime;
 };

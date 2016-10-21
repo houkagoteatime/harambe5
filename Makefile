@@ -5,8 +5,7 @@
 # Name of the executable created (.exe will be added automatically if necessary)
 Target := harambe5
 # List of source files, separated by spaces
-Sources := src/*.cpp src/entities/*.cpp src/entities/enemies/*.cpp src/input/*.cpp src/levels/*.cpp src/states/*.cpp src/ui/*.cpp src/scenes/*.cpp src/weapons/*.cpp src/sound/*.cpp src/entities/Npcs/*.cpp
-# Path to Irrlicht direct 
+Sources:= $(shell find src -name '*.cpp')
 # Path to Irrlicht directory, should contain include/ and lib/
 IrrlichtHome := .
 # Path for the executable. Note that Irrlicht.dll should usually also be there for win32 systems

@@ -19,6 +19,7 @@ Entity::Entity(Level* level, const std::string& mediaPath,irr::core::vector3df p
 		entityNode->setTriangleSelector(manager->createTriangleSelector(entityNode));
 		addCollision();
 	}
+	currTime = device->getTimer()->getTime();
 }
 
 Entity::~Entity()
