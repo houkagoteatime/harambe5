@@ -3,13 +3,13 @@
 #include "../levels/Level.h"
 #include <cmath>
 
-Npc::Npc(Level* level, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, int id): 
+Npc::Npc(Level* level, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, int id,const char* dialoguePath): 
 Entity(level, mediaPath, position, rotation, id)
 {
   initialize();
   initMessages();
   messages = new std::vector<std::string>();
-  addMessages("assets/data/sydney.dat");
+  addMessages(dialoguePath);
 }
 
 void Npc::setPlayer(Player* play)
@@ -83,9 +83,6 @@ void Npc::dialogue(bool MouseEvent)
   textAdvanceTimer = device->getTimer()->getTime();
   
   if(messageIt >= messages->size()) {
-    player->getCamera()->removeAnimator(player->anim);
-    player->anim = manager->createCollisionResponseAnimator( mapNode->getTriangleSelector(), player->getCamera(), irr::core::vector3df(30,50,30),irr::core::vector3df(0, 2,0),irr::core::vector3df(0,30,0),0.0005f);
-    player->getCamera()->addAnimator(player->anim);
     messageIt = messageIt % messages->size();
     exitDialogue();
     return;

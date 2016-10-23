@@ -24,6 +24,7 @@
 #include "../entities/enemies/Ninja.h"
 #include "../entities/Npc.h"
 #include "../entities/Npcs/Sydney.h"
+#include "../entities/Npcs/Faerie.h"
 #include "../entities/Player.h"
 #include "../input/EventReceiver.h"
 #include "../scenes/Level1Scene.h"
@@ -71,7 +72,7 @@ void Level::createLevel()
 	//Sydney* testNpc = new Sydney(this,"media/sydney.md2", irr::core::vector3df(90, 200,20), irr::core::vector3df(0,0,0), 501);
 	//Sydney* dare = new Sydney(this, irr::core::vector3df(115,210,450),irr::core::vector3df(0,0,0), 509);
 	createNpc<Sydney>(irr::core::vector3df(90, 200,20));
-	createNpc<Sydney>(irr::core::vector3df(115,210,450));
+	createNpc<Faerie>(irr::core::vector3df(115,210,450));
 	//npcs.push_back(testNpc);
 	//npcs.push_back(dare);
 	int8_t i;

@@ -7,6 +7,7 @@ class Npc;
 class Ninja;
 class EntitySpawner;
 class Sydney;
+class Farie;
 #include "../ui/Gui.h"
 #include "../weapons/Projectile.h"
 #include <vector>
