@@ -3,7 +3,7 @@
 #include "../levels/Level.h"
 #include <cmath>
 
-Npc::Npc(Level* level, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map, int id): 
+Npc::Npc(Level* level, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, int id): 
 Entity(level, mediaPath, position, rotation, id)
 {
   initialize();
@@ -62,10 +62,6 @@ void Npc::addMessages(const char* file)
   std::string line;
   std::ifstream myfile;
   myfile.open(file);
-  //  while(getline(myfile,line))
-  //  {
-  //    messages->push_back(line);
- //   }
   for(std::string line; std::getline(myfile, line);) {
     std::istringstream stream(line);
     stream >> line;

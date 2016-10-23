@@ -1,6 +1,6 @@
 #include "Player.h"
 
-const static float Player::PROJECTILE_DELAY_TIME = 500;
+const static float PROJECTILE_DELAY_TIME = 500;
 
 Player::Player(Level* level, const std::string& mediaPath,  irr::core::vector3df position,  irr::core::vector3df rotation) :
 Entity(level, mediaPath, position, rotation, -1), Damageable(20, 240)

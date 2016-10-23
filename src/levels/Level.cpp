@@ -23,6 +23,7 @@
 #include "../entities/Enemy.h"
 #include "../entities/enemies/Ninja.h"
 #include "../entities/Npc.h"
+#include "../entities/Npcs/Sydney.h"
 #include "../entities/Player.h"
 #include "../input/EventReceiver.h"
 #include "../scenes/Level1Scene.h"
@@ -50,6 +51,7 @@ Level::~Level()
 	if(gui)
 		delete gui;
 	enemies.clear();
+	npcs.clear();
 }
 
 void Level::createLevel()
@@ -66,11 +68,12 @@ void Level::createLevel()
 		createEntity<Ninja>(irr::core::vector3df(x, y, z));
 	}
 	enemySpawns.close();
-	Npc* testNpc = new Npc(this,"media/sydney.md2", irr::core::vector3df(90, 200,20), irr::core::vector3df(0,0,0), mapNode, 501);
-	Npc* dare = new Npc(this, "media/sydney.md2", irr::core::vector3df(115,210,450),irr::core::vector3df(0,0,0), mapNode, 509);
-
-	npcs.push_back(testNpc);
-	npcs.push_back(dare);
+	//Sydney* testNpc = new Sydney(this,"media/sydney.md2", irr::core::vector3df(90, 200,20), irr::core::vector3df(0,0,0), 501);
+	//Sydney* dare = new Sydney(this, irr::core::vector3df(115,210,450),irr::core::vector3df(0,0,0), 509);
+	createNpc<Sydney>(irr::core::vector3df(90, 200,20));
+	createNpc<Sydney>(irr::core::vector3df(115,210,450));
+	//npcs.push_back(testNpc);
+	//npcs.push_back(dare);
 	int8_t i;
 	for(i = 0; i < enemies.size(); i++) {
 	}
@@ -90,7 +93,7 @@ void Level::update(float dt)
 	}
 
 	if(player->getCamera()->getPosition().Y >  2500) {
-		player->resetPosition(irr::core::vector3df(player->getCamera()->getPosition().X, 2000, player->getCamera()->getPosition().Z));
+		player->resetPosition(irr::core::vector3df(player->getCamera()->getPosition().X, 2500, player->getCamera()->getPosition().Z));
 	}
 
 	if(scene) {

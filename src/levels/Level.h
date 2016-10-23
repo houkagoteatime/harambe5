@@ -6,11 +6,11 @@ class Enemy;
 class Npc;
 class Ninja;
 class EntitySpawner;
+class Sydney;
 #include "../ui/Gui.h"
 #include "../weapons/Projectile.h"
 #include <vector>
 #include "../entities/EntitySpawner.h"
-
 class Level1Scene;
 class Level {
 public:
@@ -24,6 +24,7 @@ public:
 	void handlePlayerClick();
 	Level1Scene* scene;
 	template<typename T> void createEntity(irr::core::vector3df pos);
+	template<typename T> void createNpc(irr::core::vector3df pos);
 	void addProjectile(Projectile* proj);
 	irr::scene::ISceneNode* getIntersectionNode(irr::core::vector3df start, irr::core::vector3df end);
 	Player* getPlayer() const;
@@ -49,3 +50,8 @@ inline void Level::createEntity(irr::core::vector3df pos) {
 	enemies.push_back(enem);
 }
 
+template<typename T>
+inline void Level::createNpc(irr::core::vector3df pos) {
+	Npc* npc = spawner->spawnNpc<T>(pos, irr::core::vector3df(0, 0, 0));
+	npcs.push_back(npc);
+}

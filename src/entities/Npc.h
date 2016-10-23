@@ -13,7 +13,7 @@
 class Entity;
 class Npc : public Entity, public Mob {
 public:
-  Npc(Level* level, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, irr::scene::IMeshSceneNode* map, int id);
+  Npc(Level* level, const std::string& mediaPath, irr::core::vector3df position, irr::core::vector3df rotation, int id);
   virtual void initialize();
   virtual void update(float delta);
   irr::gui::IGUIEnvironment* guiEnv;
