@@ -10,6 +10,8 @@ StateManager::StateManager(irr::IrrlichtDevice* device) : dev(device)
 StateManager::~StateManager()
 {
   delete dev;
+  if ( gameState != NULL )
+	  delete gameState;
 }
 
 
