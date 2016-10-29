@@ -20,19 +20,24 @@ using namespace gui;
 #pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
 #endif
 
+// Main entry point
 int main(int argc, char **argv) {
-
+	
+	// Create Irrilicht Device
 	IrrlichtDevice* device = createDevice(EDT_OPENGL, dimension2d<u32>(640, 480),16, false, false, false);
+	// Exit if device creation failed
 	if(!device)
 		return 1;
 	device->setWindowCaption(L"Harambe 5: The Labyrinth");
 	IVideoDriver* driver = device->getVideoDriver();
 	ISceneManager* smgr = device->getSceneManager();
+	// Load maps
 	device->getFileSystem()->addFileArchive("media/map-20kdm2.pk3");
 	device->getFileSystem()->addFileArchive("media/maps/lemap.pk3");
 	StateManager manager(device);
 	int prev = device->getTimer()->getTime();
 	int current = 0;
+	// Main game loop
 	while(device->run()) {
 	  
 	  States appState = manager.getState();
