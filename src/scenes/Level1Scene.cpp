@@ -21,7 +21,8 @@ Level1Scene::Level1Scene(Level* l):level(l)
 
 Level1Scene::~Level1Scene()
 {
-
+	if(gui)
+		delete gui;
 }
 
 void Level1Scene::deleteGui()
