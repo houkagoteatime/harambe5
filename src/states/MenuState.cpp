@@ -2,7 +2,6 @@
 
 MenuState::MenuState(irr::IrrlichtDevice* dev): State(dev)
 {
-  //@@@@@@@@@@@@@@@@@@@@@@@
   guiReceiver = new GuiEventReceiver();
   menuGui = new MenuGui(dev);
   dev->setEventReceiver(guiReceiver);
@@ -15,6 +14,9 @@ MenuState::~MenuState()
 {
   if(menuGui) {
     delete menuGui;
+  }
+  if(guiReceiver){
+    delete guiReceiver;
   }
 }
 
