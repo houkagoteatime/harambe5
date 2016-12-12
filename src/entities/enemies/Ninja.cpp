@@ -37,4 +37,5 @@ void Ninja::updateAggroState(const irr::core::vector3df playerPos) {
 
 void Ninja::attack() {
 	entityNode->setFrameLoop(60, 70);
+    player->takeDamage(30);
 }
