@@ -66,7 +66,7 @@ void Level::createLevel()
 	for(std::string line; std::getline(enemySpawns, line);) {
 		std::istringstream stream(line);
 		stream >> x >> y >> z;
-		createEntity<Ninja>(irr::core::vector3df(x, y, z));
+		//createEntity<Ninja>(irr::core::vector3df(x, y, z));
 	}
 	enemySpawns.close();
 	//Sydney* testNpc = new Sydney(this,"media/sydney.md2", irr::core::vector3df(90, 200,20), irr::core::vector3df(0,0,0), 501);

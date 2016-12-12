@@ -23,7 +23,7 @@ void Gui::addStaticText(std::string text, bool visible)
   std::wstring wideText = std::wstring(text.begin(), text.end());
   const wchar_t* wideCText = wideText.c_str();
   elements.staticText = gui->addStaticText(wideCText, 
-  irr::core::rect<irr::s32>(width/8, height * 0.8, width - (width/8), height * 0.9),  true);
+  irr::core::rect<irr::s32>(width/8, height * 0.8, width - (width/8), height * 0.95),  true);
   elements.staticText->setMinSize(irr::core::dimension2d<irr::u32>(20,20));
   elements.staticText->setBackgroundColor(irr::video::SColor(192,192,192,192));
   elements.staticText->setWordWrap(true);

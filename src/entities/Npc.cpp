@@ -63,8 +63,6 @@ void Npc::addMessages(const char* file)
   std::ifstream myfile;
   myfile.open(file);
   for(std::string line; std::getline(myfile, line);) {
-    std::istringstream stream(line);
-    stream >> line;
     messages->push_back(line);
   }
   myfile.close();
