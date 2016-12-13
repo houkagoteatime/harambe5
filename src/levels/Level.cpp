@@ -66,15 +66,11 @@ void Level::createLevel()
 	for(std::string line; std::getline(enemySpawns, line);) {
 		std::istringstream stream(line);
 		stream >> x >> y >> z;
-		//createEntity<Ninja>(irr::core::vector3df(x, y, z));
+		createEntity<Ninja>(irr::core::vector3df(x, y, z));
 	}
 	enemySpawns.close();
-	//Sydney* testNpc = new Sydney(this,"media/sydney.md2", irr::core::vector3df(90, 200,20), irr::core::vector3df(0,0,0), 501);
-	//Sydney* dare = new Sydney(this, irr::core::vector3df(115,210,450),irr::core::vector3df(0,0,0), 509);
 	createNpc<Sydney>(irr::core::vector3df(90, 200,20));
 	createNpc<Faerie>(irr::core::vector3df(115,210,450));
-	//npcs.push_back(testNpc);
-	//npcs.push_back(dare);
 	int8_t i;
 	for(i = 0; i < enemies.size(); i++) {
 	}
@@ -88,7 +84,7 @@ void Level::createLevel()
 
 void Level::update(float dt)
 {
-	std::cout << player->getHealth();
+	std::cout << player->getHealth() << std::endl;
 	if(player->getCamera()->getPosition().Y < -1500) {
 		player->resetPosition(irr::core::vector3df(player->getCamera()->getPosition().X, 400, player->getCamera()->getPosition().Z));
 	}
@@ -96,12 +92,13 @@ void Level::update(float dt)
 	if(player->getCamera()->getPosition().Y >  2500) {
 		player->resetPosition(irr::core::vector3df(player->getCamera()->getPosition().X, 2500, player->getCamera()->getPosition().Z));
 	}
-
-	if(scene) {
+    //this is janky I know; give me a break, I'm doing my econ IA.
+	if(scene && !scene->isDone()) {
 		if(scene->sceneStarted) {
 			if(player->getEventReceiver()->GetMouseState()->LeftButtonDown) {
 				device->getSceneManager()->setActiveCamera(player->getCamera());
 				scene->deleteGui();
+                scene->setDone(1);
 			}
 		}
 
@@ -110,7 +107,7 @@ void Level::update(float dt)
 			scene->sceneStarted = true;
 			scene->deleteGui();
 		}
-	}
+	} else { 
 	player->update(dt);
 	handlePlayerClick();
 	int8_t i;
@@ -125,6 +122,7 @@ void Level::update(float dt)
 		npcs.at(i)->update(dt);
 	}
 	updateProjectiles(dt);
+    }    
 }
 
 void Level::addProjectile(Projectile* proj)

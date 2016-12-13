@@ -5,6 +5,9 @@ const EnemyInfo Ninja::ninjaInfo = {600, 20, 300, STATIONARY};
 
 const std::string Ninja::MEDIA_PATH = "media/ninja.b3d";
 
+/** Cooldown for attack in ms. */
+const float Ninja::COOLDOWN = 3000;
+
 Ninja::Ninja(Level* level, irr::core::vector3df position, irr::core::vector3df rotation, int id) :
 Enemy(level, MEDIA_PATH, position, rotation, id, ninjaInfo)
 {
@@ -18,18 +21,20 @@ void Ninja::initialize() {
 	entityNode->setFrameLoop(0, 13);
 	entityNode->setAnimationSpeed(5);
 	entityNode->setLoopMode(true);
+    time = 0;
 }
 
 void Ninja::update(float delta) {
 	Enemy::update(delta);
 	entityNode->setLoopMode(true);
+    time += delta;
 }
 
 void Ninja::updateAggroState(const irr::core::vector3df playerPos) {
 	Enemy::updateAggroState(playerPos);
-	if(isPlayerNearby(200)) {
+	if(isPlayerNearby(200) && time >= COOLDOWN) {
 		attack();
-		player->takeDamage(damage);
+        time = 0;
 	} else {
 		//entityNode->setFrameLoop(0, 13);
 	}

@@ -4,7 +4,7 @@ Level1Scene::Level1Scene(Level* l):level(l)
 {
 	sa = 0;
 	cam = 0;
-	//points.push_back(core::vector3df(-931.473755f, 138.300003f, 987.279114f)); // -49873
+    done = 0;
 	points.push_back(core::vector3df(-610.17,-9.69,-72.11));
 	points.push_back(core::vector3df(-245.38,-1.76,-68.83));
 	points.push_back(core::vector3df(82.40,24.38,-46.65));
@@ -28,6 +28,16 @@ Level1Scene::~Level1Scene()
 void Level1Scene::deleteGui()
 {
 	gui->setVisibleStaticText(false);
+}
+
+bool Level1Scene::isDone()
+{
+    return done || sa->hasFinished();
+}
+
+void Level1Scene::setDone(bool done)
+{
+    this->done = done;
 }
 
 void Level1Scene::startScene()

@@ -12,8 +12,12 @@ public:
   Level* level;
   void startScene();
   bool sceneStarted;
+  bool isDone();
+  void setDone(bool done);
   void deleteGui();
   irr::scene::ISceneNodeAnimator* sa;
   irr::scene::ICameraSceneNode* cam;
   Gui* gui;
+private:
+  bool done;
 };

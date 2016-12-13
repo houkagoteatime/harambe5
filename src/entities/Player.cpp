@@ -3,7 +3,7 @@
 const static float PROJECTILE_DELAY_TIME = 500;
 
 Player::Player(Level* level, const std::string& mediaPath,  irr::core::vector3df position,  irr::core::vector3df rotation) :
-Entity(level, mediaPath, position, rotation, -1), Damageable(20, 240)
+Entity(level, mediaPath, position, rotation, -1), Damageable(100, 240)
 {
 	receiver = new EventReceiver();
 	device->setEventReceiver(receiver);

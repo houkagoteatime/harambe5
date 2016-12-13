@@ -10,4 +10,7 @@ public:
 	virtual void attack();
 	static const EnemyInfo ninjaInfo;
 	static const std::string MEDIA_PATH;
+    static const float COOLDOWN;
+private:
+    float time;
 };

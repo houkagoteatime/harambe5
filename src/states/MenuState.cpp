@@ -15,9 +15,6 @@ MenuState::~MenuState()
   if(menuGui) {
     delete menuGui;
   }
-  if(guiReceiver){
-    delete guiReceiver;
-  }
 }
 
 void MenuState::init()
