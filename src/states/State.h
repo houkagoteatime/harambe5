@@ -8,7 +8,6 @@ enum States {
 
 class State {
 protected :
-    States currentState;
     irr::IrrlichtDevice* dev;
     irr::scene::ISceneManager* smgr;
     MenuGui* menuGui;
@@ -17,4 +16,5 @@ public:
   virtual ~State();
   virtual void update(float dt) = 0;
   States getState() const;
+  States currentState;
 };

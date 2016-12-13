@@ -13,9 +13,10 @@ class Farie;
 #include <vector>
 #include "../entities/EntitySpawner.h"
 class Level1Scene;
+class GameState;
 class Level {
 public:
-	Level(irr::IrrlichtDevice* dev,irr::scene::IMeshSceneNode* map);
+	Level(irr::IrrlichtDevice* dev,irr::scene::IMeshSceneNode* map, GameState* state);
 	virtual ~Level();
 	virtual void createLevel();
 	virtual void update(float dt);
@@ -38,6 +39,7 @@ private:
 	std::vector<Projectile*> projectiles;
 	Player *player;
 	Gui* gui;
+    GameState* state;
 	float prevTime;
 	irr::IrrlichtDevice* device;
 	irr::scene::IMeshSceneNode* mapNode;

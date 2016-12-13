@@ -20,6 +20,7 @@
 #include <fstream>
 #include <sstream>
 
+#include "../states/GameState.h"
 #include "../entities/Enemy.h"
 #include "../entities/enemies/Ninja.h"
 #include "../entities/Npc.h"
@@ -37,7 +38,7 @@ enum
 	IDFlag_IsHighlightable = 2
 };
 
-Level::Level(irr::IrrlichtDevice* dev, irr::scene::IMeshSceneNode* map) : device(dev), mapNode(map)
+Level::Level(irr::IrrlichtDevice* dev, irr::scene::IMeshSceneNode* map, GameState* state) : device(dev), mapNode(map), state(state)
 {
 	spawner = EntitySpawner::getInstance();
 	spawner->init(this);
@@ -57,7 +58,7 @@ Level::~Level()
 
 void Level::createLevel()
 {
-	collMan = device->getSceneManager()->getSceneCollisionManager();
+    	collMan = device->getSceneManager()->getSceneCollisionManager();
 	gui = new Gui(device);
 	player = new Player(this,"media/gun.md2", irr::core::vector3df(40,1000,0),irr::core::vector3df(0,0,0));
 	std::ifstream enemySpawns;
@@ -108,6 +109,9 @@ void Level::update(float dt)
 			scene->deleteGui();
 		}
 	} else { 
+    if(player->getHealth() <= 0)
+        state->currentState = MENU;
+
 	player->update(dt);
 	handlePlayerClick();
 	int8_t i;

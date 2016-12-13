@@ -27,7 +27,7 @@ void GameState::init()
 				mapNode->getMesh(), mapNode, 128);
     mapNode->setTriangleSelector(selector);    
   }
-  level1 = new Level(dev, mapNode);
+  level1 = new Level(dev, mapNode, this);
   soundManager->startMusic("media/music/aomine.mp3", irrklang::vec3df(smgr->getActiveCamera()->getPosition()));
 }
 
